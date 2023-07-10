@@ -5,7 +5,7 @@
 
 
 
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext,useContext, useState} from 'react';
 const StateContext = createContext();
 
 const StateProvider = ({ children }) => {
