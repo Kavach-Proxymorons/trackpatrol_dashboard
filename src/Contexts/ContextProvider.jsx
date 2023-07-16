@@ -3,12 +3,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 const StateContext = createContext();
 
-const User = {
-    name: '',
-    username: '',
-    token: '',
-    isLogged: false,
-}
 
 
 export const ContextProvider = ({ children }) => {
@@ -17,21 +11,25 @@ export const ContextProvider = ({ children }) => {
 
     const baseUrl = process.env.NODE_ENV === "development" ? process.env.REACT_APP_DEV_URL : process.env.REACT_APP_PROD_URL;
 
-    const [user, setUser] = useState(User);
+    const [userName, setUserName] = useState();
+    const [name, setName] = useState();
+    const [isLogged, setIsLogged] = useState(false);
     const [token, setToken] = useState('');
     const [screenSize, setScreenSize] = useState(window.innerWidth);
     const [activeMenu, setActiveMenu] = useState(window.innerWidth >= 1000 ? true : false);
 
     useEffect(() => {
-        auth();
+        auth();        
     }, []);
 
     const logout = () => {
         localStorage.removeItem('token');
-        setUser((prev) => prev = { username: '', name: '', isLogged: false, token: '' });
         setToken((prev) => prev = '');
-        setActiveMenu(() => { return false; });   
-        navigate('/login'); 
+        setName((prev) => prev = '');
+        setUserName((prev) => prev = '');
+        setIsLogged((prev) => prev = false);
+        setActiveMenu(() => { return false; });
+        navigate('/login');
     };
 
     const validateToken = async (Token) => {
@@ -56,8 +54,9 @@ export const ContextProvider = ({ children }) => {
             token: Token,
         };
 
-
-        setUser(() => { return userInfo; });
+        setName(() => { return userInfo.name; });
+        setUserName(() => { return userInfo.username; });
+        setIsLogged(() => { return userInfo.isLogged; });
         setToken(() => { return userInfo.token; });
 
         if (location.pathname === '/login') navigate('/');
@@ -99,15 +98,18 @@ export const ContextProvider = ({ children }) => {
 
 
         localStorage.setItem('token', userdata.token);
-        setUser(() => { return userdata; });
+        setName(() => { return userdata.name; });
+        setUserName(() => { return userdata.username; });
+        setIsLogged(() => { return userdata.isLogged; });
         setToken(() => { return userdata.token; });
-        setActiveMenu(window.innerWidth >= 1000 ? true : false); 
+        setActiveMenu(window.innerWidth >= 1000 ? true : false);
         navigate('/');
     };
 
     return (
         <StateContext.Provider value={{
-            user, setUser, token, setToken, screenSize, setScreenSize, activeMenu, setActiveMenu,
+            name, setName, userName, setName, isLogged, setIsLogged, token, setToken,
+            screenSize, setScreenSize, activeMenu, setActiveMenu,
             validateToken, login, logout, auth
         }}>
             {children}

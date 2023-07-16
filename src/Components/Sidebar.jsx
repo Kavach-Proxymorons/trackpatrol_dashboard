@@ -12,7 +12,7 @@ import { useStateContext } from '../Contexts/ContextProvider';
 
 
 export default function Sidebar() {
-    const { screenSize, setScreenSize, activeMenu, setActiveMenu, user } = useStateContext();
+    const { screenSize, setScreenSize, activeMenu, setActiveMenu, isLogged } = useStateContext();
 
     useEffect(() => {
         const handleResize = () => {
@@ -22,11 +22,13 @@ export default function Sidebar() {
         return () => window.removeEventListener('resize', handleResize);
     }, [screenSize]);
 
+
     useEffect(() => {
-        if (user.isLogged == false) setActiveMenu(() => { return false; });
+        if (window.localStorage.getItem('token') === '') setActiveMenu(() => { return false; });
         else if (screenSize >= 1000) setActiveMenu(() => { return true; });
         else setActiveMenu(() => { return false; });
-    }, [screenSize])
+    }, [screenSize]);
+
 
     return <>
         <div className={`md:overflow-hidden overflow-auto md:hover:overflow-auto fixed ${activeMenu ? 'shadow-xl w-72' : ''}`}>
@@ -41,7 +43,7 @@ export default function Sidebar() {
                         </NavLink>
 
                         <NavLink to='/register/personnel'>
-                            <HiUsers size={25} /> 
+                            <HiUsers size={25} />
                             <span >Register Personnel</span>
                         </NavLink>
                         <NavLink to='/create/bandobast'>

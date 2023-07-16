@@ -5,7 +5,7 @@ export default function Dashboard() {
     const { user, token } = useStateContext();
 
     return <>
-        <div className="h-screen" >
+        <div className="" >
             
         </div>
     </>;
