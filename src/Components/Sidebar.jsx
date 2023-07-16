@@ -24,7 +24,9 @@ export default function Sidebar() {
 
 
     useEffect(() => {
-        if (window.localStorage.getItem('token') === '') setActiveMenu(() => { return false; });
+        if (window.localStorage.getItem('token') === null || window.localStorage.getItem('token') === undefined) {
+            setActiveMenu(() => { return false; });
+        }
         else if (screenSize >= 1000) setActiveMenu(() => { return true; });
         else setActiveMenu(() => { return false; });
     }, [screenSize]);
