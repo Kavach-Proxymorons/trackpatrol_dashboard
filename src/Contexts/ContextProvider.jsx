@@ -3,8 +3,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 const StateContext = createContext();
 
-const baseUrl = 'http://localhost:3000/api/v1/';
-
 const User = {
     name: '',
     username: '',
@@ -16,6 +14,8 @@ const User = {
 export const ContextProvider = ({ children }) => {
     const navigate = useNavigate();
     const location = useLocation();
+
+    const baseUrl = process.env.NODE_ENV === "development" ? process.env.REACT_APP_DEV_URL : process.env.REACT_APP_PROD_URL;
 
     const [user, setUser] = useState(User);
     const [token, setToken] = useState('');
@@ -35,6 +35,7 @@ export const ContextProvider = ({ children }) => {
     };
 
     const validateToken = async (Token) => {
+        console.log('ye trigger nhi honna tha');
         const response = await fetch(`${baseUrl}auth/`, {
             method: 'GET',
             headers: {
@@ -65,7 +66,7 @@ export const ContextProvider = ({ children }) => {
 
     const auth = () => {
         const Token = localStorage.getItem('token');
-        if (Token === null || Token.length == 0) logout();
+        if (Token === null || Token.length === 0) logout();
         else validateToken(Token);
     };
 

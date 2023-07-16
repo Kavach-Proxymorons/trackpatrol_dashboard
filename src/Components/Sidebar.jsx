@@ -24,7 +24,7 @@ export default function Sidebar() {
     useEffect(() => {
         if (screenSize >= 1200) setActiveMenu(() => { return true; });
         else setActiveMenu(() => { return false; });
-    }, [])
+    }, [screenSize])
 
     return <>
         <div className={`md:overflow-hidden overflow-auto md:hover:overflow-auto fixed ${activeMenu ? 'shadow-xl w-72' : ''}`}>
