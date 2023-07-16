@@ -7,8 +7,12 @@ import { useStateContext } from "../Contexts/ContextProvider";
 
 
 export default function Login() {
-    const [eye, setEye] = useState(false);
+    const navigate = useNavigate();
     const { login } = useStateContext();
+
+    const [eye, setEye] = useState(false);
+
+    // if (window.localStorage.getItem('token') !== null) navigate('/');
 
     const handlerVisiblePassword = () => {
         const password = document.querySelector('input[name="password"]');

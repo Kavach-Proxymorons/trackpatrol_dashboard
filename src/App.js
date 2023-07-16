@@ -14,7 +14,6 @@ function App() {
         <Sidebar />
         <div className={activeMenu ? 'ml-72' : ''}>
           <Navbar />
-          
             <Routes >
               <Route path='/login' element={<Login />} />
               <Route path='/' exact element={<Dashboard />} />
