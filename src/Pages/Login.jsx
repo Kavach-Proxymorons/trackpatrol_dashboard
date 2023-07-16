@@ -8,7 +8,7 @@ import { useStateContext } from "../Contexts/ContextProvider";
 
 export default function Login() {
     const [eye, setEye] = useState(false);
-    const { user, setUser, login } = useStateContext();
+    const { login } = useStateContext();
 
     const handlerVisiblePassword = () => {
         const password = document.querySelector('input[name="password"]');
