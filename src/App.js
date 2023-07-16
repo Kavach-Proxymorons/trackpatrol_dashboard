@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { useStateContext } from './Contexts/ContextProvider';
 import { Login, CreateBandobast, Dashboard, ManageAdmin, RegisterHardware, RegisterPersonnel, Setting } from './Pages';
 import { Sidebar } from './Components';
+import './App.css'
 
 function App() {
   const { user, auth, activeMenu } = useStateContext();
@@ -21,6 +22,8 @@ function App() {
               <Route path='/create/bandobast' element={<CreateBandobast />} />
               <Route path='/manage/admin' element={<ManageAdmin />} />
               <Route path='/setting' element={<Setting />} />
+              {/* <Route path='/logout' element={<Login />} /> */}
+              <Route path='*' element={<Dashboard />} />
             </Routes >
           </div>
         </div>

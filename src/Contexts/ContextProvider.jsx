@@ -20,7 +20,7 @@ export const ContextProvider = ({ children }) => {
     const [user, setUser] = useState(User);
     const [token, setToken] = useState('');
     const [screenSize, setScreenSize] = useState(window.innerWidth);
-    const [activeMenu, setActiveMenu] = useState(window.innerWidth >= 1200 ? true : false);
+    const [activeMenu, setActiveMenu] = useState(window.innerWidth >= 1000 ? true : false);
 
     useEffect(() => {
         auth();
@@ -101,7 +101,7 @@ export const ContextProvider = ({ children }) => {
         localStorage.setItem('token', userdata.token);
         setUser(() => { return userdata; });
         setToken(() => { return userdata.token; });
-        setActiveMenu(() => { return true; }); 
+        setActiveMenu(window.innerWidth >= 1000 ? true : false); 
         navigate('/');
     };
 
