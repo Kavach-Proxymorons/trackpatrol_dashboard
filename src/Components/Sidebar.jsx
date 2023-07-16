@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 import { Logo } from '../Components';
 import { HiUsers } from "react-icons/hi";
 import { HiMiniCpuChip } from 'react-icons/hi2';
@@ -22,7 +23,8 @@ export default function Sidebar() {
     }, [screenSize]);
 
     useEffect(() => {
-        if (screenSize >= 1200) setActiveMenu(() => { return true; });
+        if (user.isLogged == false) setActiveMenu(() => { return false; });
+        else if (screenSize >= 1000) setActiveMenu(() => { return true; });
         else setActiveMenu(() => { return false; });
     }, [screenSize])
 
@@ -33,38 +35,37 @@ export default function Sidebar() {
                     <Logo />
                     <div className='bg-[#DBDBDB] w-full h-[2px] my-6'></div>
                     <div className='flex flex-col gap-y-1 ml-6 mt-20 mr-6 '>
-                        <div className='flex gap-x-2 px-2 py-3 rounded-md'>
-                            <BiSolidDashboard color='#7B7D92' size={25} />
-                            <span className="text-lg text-[#7B7D92] font-medium">Dashboard</span>
-                        </div>
+                        <NavLink to='/'>
+                            <BiSolidDashboard size={25} />
+                            <span >Dashboard</span>
+                        </NavLink>
 
-                        <div className='flex items-center gap-x-2 bg-[#F4F6FA] px-2 py-3 rounded-xl'>
-                            <HiUsers size={25} color='rgb(30, 41, 59)' />
-                            <span className="text-lg font-medium text-slate-800">Register Personnel</span>
-                        </div>
-                        <div className='flex items-center gap-x-2 px-2 py-3 rounded-md'>
-                            <BsFillCarFrontFill color='#7B7D92' size={25} />
-                            <span className="text-lg font-medium text-[#7B7D92]">Create Bandobast</span>
-                        </div>
-                        <div className='flex items-center gap-x-2 px-2 py-3 rounded-md'>
-                            <HiMiniCpuChip color='#7B7D92' size={25} />
-                            <span className="text-lg font-medium text-[#7B7D92]">Register Hardware</span>
-                        </div>
+                        <NavLink to='/register/personnel'>
+                            <HiUsers size={25} /> 
+                            <span >Register Personnel</span>
+                        </NavLink>
+                        <NavLink to='/create/bandobast'>
+                            <BsFillCarFrontFill size={25} />
+                            <span >Create Bandobast</span>
+                        </NavLink>
+                        <NavLink to='/register/hardware'>
+                            <HiMiniCpuChip size={25} />
+                            <span >Register Hardware</span>
+                        </NavLink>
                         <div className='bg-[#DBDBDB] w-full h-[2px] my-6'></div>
 
-                        <div className='flex items-center justify-between pl-4 pr-10 py-3 rounded-md'>
-                            <span className="text-lg font-medium text-[#7B7D92]">SETTINGS</span>
-                            <AiOutlineSetting size={22} color='#7B7D92' />
-                        </div>
-                        <div className='flex items-center gap-x-2 px-2 py-3 rounded-md'>
-                            <MdAdminPanelSettings color='#7B7D92' size={25} />
-                            <span className="text-lg font-medium text-[#7B7D92]">Manage Admin</span>
-                        </div>
-                        {/* <div className='flex items-center gap-x-2 px-2 py-3 rounded-md my-4 mx-8'> */}
-                        <div className="flex items-center gap-x-2 px-2 py-3 rounded-md">
-                            <IoLogOut size={25} color='#7B7D92' />
-                            <span className="text-lg font-medium text-[#7B7D92]">Logout</span>
-                        </div>
+                        <NavLink className='justify-between ' to='/setting'>
+                            <span >SETTINGS</span>
+                            <AiOutlineSetting size={25} />
+                        </NavLink>
+                        <NavLink to='/manage/admin'>
+                            <MdAdminPanelSettings size={25} />
+                            <span>Manage Admin</span>
+                        </NavLink>
+                        <NavLink to='/logout'>
+                            <IoLogOut size={25} />
+                            <span>Logout</span>
+                        </NavLink>
                     </div>
 
                 </div>
