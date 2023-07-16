@@ -1,6 +1,13 @@
+import { useEffect } from "react";
 import { useStateContext } from "../Contexts/ContextProvider";
 
 export default function Dashboard() {
-    const { state, setState } = useStateContext(); // dummy state
-    return <><h1>Dashboard</h1></>;
+    const { user, token } = useStateContext();
+    console.log('Dashboard: ', user);
+
+    return <>
+        <div className="h-screen" >
+            
+        </div>
+    </>;
 }

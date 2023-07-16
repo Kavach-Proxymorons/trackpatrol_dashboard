@@ -1,13 +1,14 @@
-// import { useStateContext } from "../Contexts/ContextProvider";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import logo from '../Assests/logo.png';
 import image from '../Assests/Image4.png';
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
+import { useStateContext } from "../Contexts/ContextProvider";
 
 
 export default function Login() {
-
     const [eye, setEye] = useState(false);
+    const { user, setUser, login } = useStateContext();
 
     const handlerVisiblePassword = () => {
         const password = document.querySelector('input[name="password"]');
@@ -26,16 +27,7 @@ export default function Login() {
         const username = e.target.username.value;
         const password = e.target.password.value;
 
-        const response = await fetch('http://localhost:3000/api/v1/auth/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ username, password }),
-        });
-
-        const data = await response.json();
-        console.log(data);
+        login(username, password);
     };
 
     return <>

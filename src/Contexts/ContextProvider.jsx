@@ -1,20 +1,113 @@
-// we going to use the useContext hook to create a context
-// from this file we going to manage all the state of our app
-// make needed function to pass on the context to the children
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
-
-
-
-import React, { createContext,useContext, useState} from 'react';
 const StateContext = createContext();
 
-const StateProvider = ({ children }) => {
-    const [state, setState] = useState(false); // dummy state
+const baseUrl = 'http://localhost:3000/api/v1/';
+
+const User = {
+    name: '',
+    username: '',
+    token: '',
+    isLogged: false,
+}
+
+
+export const ContextProvider = ({ children }) => {
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const [user, setUser] = useState(User);
+    const [token, setToken] = useState('');
+    const [screenSize, setScreenSize] = useState(window.innerWidth);
+    const [activeMenu, setActiveMenu] = useState(window.innerWidth >= 1200 ? true : false);
+
+    useEffect(() => {
+        auth();
+    }, []);
+
+    const logout = () => {
+        localStorage.removeItem('token');
+        setUser((prev) => prev = { username: '', name: '', isLogged: false, token: '' });
+        setToken((prev) => prev = '');
+        navigate('/login');
+    };
+
+    const validateToken = async (Token) => {
+        const response = await fetch(`${baseUrl}auth/`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${Token}`,
+            }
+        });
+
+        const res = await response.json();
+        console.log(res.message);
+
+        if (!res.success) logout();
+
+        const userInfo = {
+            name: res.data.name,
+            username: res.data.username,
+            isLogged: true,
+            token: Token,
+        };
+
+
+        setUser(() => { return userInfo; });
+        setToken(() => { return userInfo.token; });
+
+        if (location.pathname === '/login') navigate('/');
+    };
+
+
+    const auth = () => {
+        const Token = localStorage.getItem('token');
+        if (Token === null || Token.length == 0) logout();
+        else validateToken(Token);
+    };
+
+
+    const login = async (username, password) => {
+        const response = await fetch(`${baseUrl}auth/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, password }),
+        });
+
+        const res = await response.json();
+        console.log(res.message);
+
+        if (!res.success) {
+            return;
+        }
+
+        const userInfo = res.data.user;
+        const userdata = {
+            token: res.data.token,
+            name: userInfo.name,
+            username: userInfo.username,
+            isLogged: true,
+        };
+
+
+        localStorage.setItem('token', userdata.token);
+        setUser(() => { return userdata; });
+        setToken(() => { return userdata.token; });
+        navigate('/');
+    };
 
     return (
-        <StateContext.Provider value={{ state, setState }}>
+        <StateContext.Provider value={{
+            user, setUser, token, setToken, screenSize, setScreenSize, activeMenu, setActiveMenu,
+            validateToken, login, logout, auth
+        }}>
             {children}
         </StateContext.Provider>
+
     );
 };
 
