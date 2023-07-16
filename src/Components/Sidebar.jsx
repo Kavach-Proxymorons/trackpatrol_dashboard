@@ -11,7 +11,7 @@ import { useStateContext } from '../Contexts/ContextProvider';
 
 
 export default function Sidebar() {
-    const { screenSize, setScreenSize, activeMenu, setActiveMenu } = useStateContext();
+    const { screenSize, setScreenSize, activeMenu, setActiveMenu, user } = useStateContext();
 
     useEffect(() => {
         const handleResize = () => {
@@ -19,15 +19,15 @@ export default function Sidebar() {
         };
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
-    }, []);
+    }, [screenSize]);
 
     useEffect(() => {
         if (screenSize >= 1200) setActiveMenu(() => { return true; });
         else setActiveMenu(() => { return false; });
-    }, [screenSize])
+    }, [])
 
     return <>
-        <div className={`w-72 md:overflow-hidden overflow-auto md:hover:overflow-auto fixed ${activeMenu? 'shadow-xl' : ''}`}>
+        <div className={`md:overflow-hidden overflow-auto md:hover:overflow-auto fixed ${activeMenu ? 'shadow-xl w-72' : ''}`}>
             {activeMenu &&
                 <div className='h-screen drop-shadow-md'>
                     <Logo />
@@ -66,7 +66,7 @@ export default function Sidebar() {
                             <span className="text-lg font-medium text-[#7B7D92]">Logout</span>
                         </div>
                     </div>
-                    
+
                 </div>
             }
         </div>

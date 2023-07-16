@@ -30,7 +30,8 @@ export const ContextProvider = ({ children }) => {
         localStorage.removeItem('token');
         setUser((prev) => prev = { username: '', name: '', isLogged: false, token: '' });
         setToken((prev) => prev = '');
-        navigate('/login');
+        setActiveMenu(() => { return false; });   
+        navigate('/login'); 
     };
 
     const validateToken = async (Token) => {
@@ -70,6 +71,8 @@ export const ContextProvider = ({ children }) => {
 
 
     const login = async (username, password) => {
+        logout();
+
         const response = await fetch(`${baseUrl}auth/login`, {
             method: 'POST',
             headers: {
@@ -97,6 +100,7 @@ export const ContextProvider = ({ children }) => {
         localStorage.setItem('token', userdata.token);
         setUser(() => { return userdata; });
         setToken(() => { return userdata.token; });
+        setActiveMenu(() => { return true; }); 
         navigate('/');
     };
 

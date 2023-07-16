@@ -6,15 +6,12 @@ import { Sidebar } from './Components';
 
 function App() {
   const { user, auth, activeMenu } = useStateContext();
-  // auth();
-
   return (
     <>
-      {
-        user.isLogged &&
+
         <div>
           <Sidebar />
-          <div className={activeMenu ? 'ml-72': ''}>
+          <div className={activeMenu ? 'ml-72' : ''}>
             <Routes >
               <Route path='/login' element={<Login />} />
               <Route path='/' exact element={<Dashboard />} />
@@ -27,8 +24,6 @@ function App() {
             </Routes >
           </div>
         </div>
-      }
-
     </>
   );
 }
