@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { useStateContext } from './Contexts/ContextProvider';
 import { Login, CreateBandobast, Dashboard, ManageAdmin, RegisterHardware, RegisterPersonnel, Setting } from './Pages';
-import { Sidebar } from './Components';
+import { Navbar, Sidebar } from './Components';
 import './App.css'
 
 function App() {
@@ -10,9 +10,11 @@ function App() {
   return (
     <>
 
-        <div>
-          <Sidebar />
-          <div className={activeMenu ? 'ml-72' : ''}>
+      <div className='h-screen'>
+        <Sidebar />
+        <div className={activeMenu ? 'ml-72' : ''}>
+          <Navbar />
+          
             <Routes >
               <Route path='/login' element={<Login />} />
               <Route path='/' exact element={<Dashboard />} />
@@ -25,8 +27,8 @@ function App() {
               {/* <Route path='/logout' element={<Login />} /> */}
               <Route path='*' element={<Dashboard />} />
             </Routes >
-          </div>
         </div>
+      </div>
     </>
   );
 }
