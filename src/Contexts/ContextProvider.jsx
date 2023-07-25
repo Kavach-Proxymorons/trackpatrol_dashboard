@@ -17,7 +17,7 @@ export const ContextProvider = ({ children }) => {
     const [isLogged, setIsLogged] = useState(false);
     const [token, setToken] = useState('');
     const [screenSize, setScreenSize] = useState(window.innerWidth);
-    const [activeMenu, setActiveMenu] = useState(window.innerWidth >= 1000 ? true : false);
+    const [activeMenu, setActiveMenu] = useState(window.innerWidth >= 1200 ? true : false);
 
     useEffect(() => {
         auth();
