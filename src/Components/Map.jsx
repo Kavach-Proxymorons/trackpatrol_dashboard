@@ -4,10 +4,11 @@ import { PiHandTap } from "react-icons/pi";
 import { FaLocationDot } from "react-icons/fa6";
 import { BiSolidTimeFive } from "react-icons/bi";
 import { FaBuilding, FaUser } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function Map() {
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API,
+    // googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API,
   });
 
   if (!isLoaded) return <>Loading</>;
@@ -84,10 +85,10 @@ function RenderMap() {
               </div>
             </div>
           </div>
-          <button className="ml-24 bg-neutral-100 rounded-lg flex justify-between items-center px-3 py-2 gap-x-2">
-            <span className="text-xl font-medium">Monitor</span>
-            <PiHandTap size={28} />
-          </button>
+          <Link to='/dashboard/monitor' className="ml-24  bg-neutral-100 rounded-lg flex justify-between items-center px-3 py-2 gap-x-2">
+            <span className="text-xl text-neutral-800 font-medium">Monitor</span>
+            <PiHandTap size={28} color="#000" />
+          </Link>
         </div>
       </div>
     </div>

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { FaLocationDot } from "react-icons/fa6";
 import { BiSolidTimeFive } from "react-icons/bi";
 import { FaBuilding } from "react-icons/fa";
@@ -44,10 +45,10 @@ export default function DutyCard() {
         </div>
 
         <div className="flex items-center gap-x-6 mr-20 drop-shadow-lg">
-          <div className="flex items-center gap-x-2 bg-[#006ED3] rounded-md py-1 px-3 ">
+          <Link to='/create/bandobast' className="flex items-center gap-x-2 bg-[#006ED3] rounded-md py-1 px-3 ">
             <span className="text-white">Edit</span>
             <AiTwotoneEdit size={25} color="#fff" />
-          </div>
+          </Link>
           <div className="flex items-center gap-x-2 bg-[#D46A43] rounded-md py-1 px-3">
             <span className="text-white">Delete</span>
             <AiFillDelete size={25} color="#fff" />
