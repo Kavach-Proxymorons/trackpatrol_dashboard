@@ -24,7 +24,7 @@ function RenderMap() {
   };
 
   return (
-    <div className="w-auto h-[16rem] rounded-2xl p-[4px] bg-[#0d77d3e0] relative">
+    <div className="w-auto h-[16rem] rounded-2xl p-[4px] bg-[#0d77d3e0] relative ">
       <GoogleMap
         zoom={15}
         center={center}
