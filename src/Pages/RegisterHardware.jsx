@@ -7,7 +7,7 @@ import { useStateContext } from "../Contexts/ContextProvider";
 import { IoIosArrowBack } from "react-icons/io";
 import { Link } from "react-router-dom";
 
-export default function RegisterHardware() {
+export default function RegisterHardare() {
   const { duty, setDuty, postDuty } = useStateContext();
   const [date, setDate] = useState({
     start_time: "",
@@ -41,11 +41,11 @@ export default function RegisterHardware() {
           <span className="text-2xl text-neutral-700 font-semibold">Back</span>
         </Link>
         <h1 className="text-4xl font-semibold text-center mt-16">
-          Register Personnel
+          Create Bandobast
         </h1>
       </div>
       <form onSubmit={handleSubmit}>
-        <div className="grid grid-cols-2 justify-items-center items-center gap-x-12 gap-y-6 mt-16">
+        <div className="grid grid-cols-2 justify-items-center gap-x-24 gap-y-6 mt-12">
           <div className="justify-self-end">
             <Label htmlFor="title">Bandobast Title</Label>
             <Input type="text" placeholder="Title" name="title" />
@@ -65,20 +65,19 @@ export default function RegisterHardware() {
             <Label htmlFor="location">Location</Label>
             <Input type="text" placeholder="Location" name="location" />
           </div>
-          <div className="justify-self-end self-start">
-            <Label htmlFor="venue">Date of Birth</Label>
-            <DatePickerWithRange
-              date={date}
-              setDate={setDate}
-            />
+          <div className="justify-self-end">
+            <Label htmlFor="Date">Duration</Label>
+            <DatePickerWithRange date={date} setDate={setDate} />
           </div>
 
           <div className="justify-self-start">
             <Label htmlFor="note">Note</Label>
             <Input type="text" placeholder="Note" name="note" />
-            <p className="mt-2 font-medium text-base text-gray-500">Optional</p>
+            <p className="mt-2 font-medium text-base text-gray-500 text-right">Optional</p>
           </div>
-          <Button type="submit" className="px-8">
+        </div>
+        <div className="mt-8 flex justify-center">
+          <Button type="submit" className="px-12">
             Create
           </Button>
         </div>
