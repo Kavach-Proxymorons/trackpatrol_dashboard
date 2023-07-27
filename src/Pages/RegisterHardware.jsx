@@ -16,18 +16,7 @@ export default function RegisterHardare() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(typeof date.from);
-    const duty = {
-      title: e.target.title.value,
-      description: e.target.description.value,
-      venue: e.target.venue.value,
-      location: e.target.location.value,
-      start_time: date.from,
-      end_time: date.to,
-      note: e.target.note.value,
-    };
-    setDuty(() => duty);
-    postDuty();
+   
   };
 
   return (
@@ -41,7 +30,7 @@ export default function RegisterHardare() {
           <span className="text-2xl text-neutral-700 font-semibold">Back</span>
         </Link>
         <h1 className="text-4xl font-semibold text-center mt-16">
-          Create Bandobast
+          Register Hardware
         </h1>
       </div>
       <form onSubmit={handleSubmit}>
