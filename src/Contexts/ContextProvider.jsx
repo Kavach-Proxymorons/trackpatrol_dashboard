@@ -1,169 +1,209 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import toast from 'react-hot-toast'
-import { useNavigate, useLocation } from 'react-router-dom';
+import React, { createContext, useContext, useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const StateContext = createContext();
-
-
+const dateNow = new Date();
+const dutyDummyData = {
+  title: "",
+  description: "",
+  venue: "",
+  location: "",
+  start_time: '',
+  end_time: '',
+  note: "Note",
+};
 
 export const ContextProvider = ({ children }) => {
-    const navigate = useNavigate();
-    const location = useLocation();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-    const baseUrl = process.env.NODE_ENV === "development" ? process.env.REACT_APP_DEV_URL : process.env.REACT_APP_PROD_URL;
+  const baseUrl =
+    process.env.NODE_ENV === "development"
+      ? process.env.REACT_APP_DEV_URL
+      : process.env.REACT_APP_PROD_URL;
 
-    const [userName, setUserName] = useState();
-    const [name, setName] = useState();
-    const [isLogged, setIsLogged] = useState(false);
-    const [token, setToken] = useState('');
-    const [screenSize, setScreenSize] = useState(window.innerWidth);
-    const [activeMenu, setActiveMenu] = useState(window.innerWidth >= 1200 ? true : false);
+  const [userName, setUserName] = useState();
+  const [name, setName] = useState();
+  const [isLogged, setIsLogged] = useState(false);
+  const [token, setToken] = useState("");
+  const [screenSize, setScreenSize] = useState(window.innerWidth);
+  const [activeMenu, setActiveMenu] = useState(
+    window.innerWidth >= 1200 ? true : false
+  );
 
-    useEffect(() => {
-        auth();
-    }, []);
+  const [duty, setDuty] = useState(dutyDummyData);
 
-    const logout = () => {
-        localStorage.removeItem('token');
-        setToken((prev) => prev = '');
-        setName((prev) => prev = '');
-        setUserName((prev) => prev = '');
-        setIsLogged((prev) => prev = false);
-        setActiveMenu(() => { return false; });
-        navigate('/login');
+  useEffect(() => {
+    auth();
+  }, []);
+
+  /********************* AUTH ************************/
+  const logout = () => {
+    localStorage.removeItem("token");
+    setToken((prev) => (prev = ""));
+    setName((prev) => (prev = ""));
+    setUserName((prev) => (prev = ""));
+    setIsLogged((prev) => (prev = false));
+    setActiveMenu(() => {
+      return false;
+    });
+    navigate("/login");
+  };
+
+  const validateToken = async (Token) => {
+    const response = await fetch(`${baseUrl}auth/`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${Token}`,
+      },
+    });
+
+    const res = await response.json();
+    console.log(res.message);
+
+    if (!res.success) {
+      logout();
+      return;
+    }
+
+    const userInfo = {
+      name: res.data.name,
+      username: res.data.username,
+      isLogged: true,
+      token: Token,
     };
 
-    const validateToken = async (Token) => {
-        const response = await fetch(`${baseUrl}auth/`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${Token}`,
-            }
-        });
+    setName(() => {
+      return userInfo.name;
+    });
+    setUserName(() => {
+      return userInfo.username;
+    });
+    setIsLogged(() => {
+      return userInfo.isLogged;
+    });
+    setToken(() => {
+      return userInfo.token;
+    });
 
-        const res = await response.json();
-        console.log(res.message);
+    if (location.pathname === "/login") navigate("/");
+  };
 
-        if (!res.success) {
-            logout();
-            return;
-        }
+  const auth = () => {
+    const Token = localStorage.getItem("token");
+    if (Token === null || Token.length === 0) logout();
+    else validateToken(Token);
+  };
 
-        const userInfo = {
-            name: res.data.name,
-            username: res.data.username,
-            isLogged: true,
-            token: Token,
-        };
+  const login = async (username, password) => {
+    logout();
 
-        setName(() => { return userInfo.name; });
-        setUserName(() => { return userInfo.username; });
-        setIsLogged(() => { return userInfo.isLogged; });
-        setToken(() => { return userInfo.token; });
+    const toastId = toast.loading("Loading...");
+    const response = await fetch(`${baseUrl}auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username, password }),
+    });
 
-        if (location.pathname === '/login') navigate('/');
+    const res = await response.json();
+    console.log(res.message);
+    if (!res.success) {
+      logout();
+      toast.error(res.message, { id: toastId });
+      return;
+    }
+
+    toast.success(res.message, { id: toastId });
+
+    const userInfo = res.data.user;
+    const userdata = {
+      token: res.data.token,
+      name: userInfo.name,
+      username: userInfo.username,
+      isLogged: true,
     };
 
+    localStorage.setItem("token", userdata.token);
+    setName(() => {
+      return userdata.name;
+    });
+    setUserName(() => {
+      return userdata.username;
+    });
+    setIsLogged(() => {
+      return userdata.isLogged;
+    });
+    setToken(() => {
+      return userdata.token;
+    });
+    setActiveMenu(window.innerWidth >= 1000 ? true : false);
+    navigate("/");
+  };
 
-    const auth = () => {
-        const Token = localStorage.getItem('token');
-        if (Token === null || Token.length === 0) logout();
-        else validateToken(Token);
-    };
+  /********************* DUTY ************************/
+  const postDuty = async () => {
+    const toastId = toast.loading("Loading...");
+    console.log(duty);
+    const response = await fetch(`${baseUrl}admin/duty/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(duty),
+    });
 
+    const res = await response.json();
+    console.log(res);
+    if (!res.success) {
+      toast.error(res.message, { id: toastId });
+      return;
+    }
 
-    const login = async (username, password) => {
-        logout();
+    toast.success(res.message, { id: toastId });
+    setDuty(() => {
+      return dutyDummyData;
+    });
+  };
 
-        const toastId = toast.loading('Loading...');
-        const response = await fetch(`${baseUrl}auth/login`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ username, password }),
-        });
+  return (
+    <StateContext.Provider
+      value={{
+        name,
+        setName,
 
-        const res = await response.json();
-        console.log(res.message);
-        if (!res.success) {
-            logout();
-            toast.error(res.message, { id: toastId, });
-            return;
-        }
+        userName,
+        setUserName,
 
-        toast.success(res.message, { id: toastId, });
+        isLogged,
+        setIsLogged,
 
-        const userInfo = res.data.user;
-        const userdata = {
-            token: res.data.token,
-            name: userInfo.name,
-            username: userInfo.username,
-            isLogged: true,
-        };
+        token,
+        setToken,
 
+        screenSize,
+        setScreenSize,
 
-        localStorage.setItem('token', userdata.token);
-        setName(() => { return userdata.name; });
-        setUserName(() => { return userdata.username; });
-        setIsLogged(() => { return userdata.isLogged; });
-        setToken(() => { return userdata.token; });
-        setActiveMenu(window.innerWidth >= 1000 ? true : false);
-        navigate('/');
-    };
+        activeMenu,
+        setActiveMenu,
 
-    return (
-        <StateContext.Provider value={{
-            name, setName, userName, setName, isLogged, setIsLogged, token, setToken,
-            screenSize, setScreenSize, activeMenu, setActiveMenu,
-            validateToken, login, logout, auth
-        }}>
-            {children}
-        </StateContext.Provider>
+        validateToken,
+        login,
+        logout,
+        auth,
 
-    );
+        duty,
+        setDuty,
+        postDuty,
+      }}
+    >
+      {children}
+    </StateContext.Provider>
+  );
 };
 
 export const useStateContext = () => useContext(StateContext);
-
-/*
-toast.custom((t) => (
-  <div
-    className={`${
-      t.visible ? 'animate-enter' : 'animate-leave'
-    } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
-  >
-    <div className="flex-1 w-0 p-4">
-      <div className="flex items-start">
-        <div className="flex-shrink-0 pt-0.5">
-          <img
-            className="h-10 w-10 rounded-full"
-            src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixqx=6GHAjsWpt9&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"
-            alt=""
-          />
-        </div>
-        <div className="ml-3 flex-1">
-          <p className="text-sm font-medium text-gray-900">
-            Emilia Gates
-          </p>
-          <p className="mt-1 text-sm text-gray-500">
-            Sure! 8:30pm works great!
-          </p>
-        </div>
-      </div>
-    </div>
-    <div className="flex border-l border-gray-200">
-      <button
-        onClick={() => toast.dismiss(t.id)}
-        className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-      >
-        Close
-      </button>
-    </div>
-  </div>
-))
-
-*/
-
-
