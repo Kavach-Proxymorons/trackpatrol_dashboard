@@ -175,11 +175,11 @@ export const columns = [
             <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(payment.id)}
             >
-              Copy payment ID
+              Lorem.
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+            <DropdownMenuItem>Lorem</DropdownMenuItem>
+            <DropdownMenuItem>Lorem</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
@@ -227,7 +227,7 @@ export default function DataTable() {
         <div>
           <Button variant="outline" className="mr-4" onClick={() => Navigate('/personnel/register')}>
             Add new
-            <Plus size={20} className="ml-2" />
+            <Plus size={20} className="ml-2 h-4 w-4" />
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -235,7 +235,7 @@ export default function DataTable() {
                 Columns <ChevronDown className="ml-2 h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent align="end" className=''>
               {table
                 .getAllColumns()
                 .filter((column) => column.getCanHide())

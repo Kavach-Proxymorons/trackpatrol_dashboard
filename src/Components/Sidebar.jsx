@@ -33,9 +33,9 @@ export default function Sidebar() {
 
 
     return <>
-        <div className={`md:overflow-hidden overflow-auto md:hover:overflow-auto fixed ${activeMenu ? 'shadow-xl w-60' : ''}`}>
+        <div className={`md:overflow-hidden overflow-auto md:hover:overflow-auto fixed ${activeMenu ? 'shadow w-60' : ''}`}>
             {activeMenu &&
-                <div className='flex flex-col justify-between h-screen drop-shadow-md'>
+                <div className='flex flex-col justify-between h-screen drop-shadow'>
                     <div className=''>
                         <Logo />
                         <div className='bg-[#DBDBDB] w-full h-[2px] my-6'></div>

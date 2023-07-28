@@ -10,3 +10,4 @@ export {default as TitlePersonal} from './TitlePersonal';
 export {default as LocationTime} from './LocationTime'; 
 export {default as Map} from './Map';
 export {default as PersonnelRegForm} from './personnelRegForm';
+export {default as Profile} from './profile';
