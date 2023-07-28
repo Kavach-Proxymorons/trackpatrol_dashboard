@@ -1,5 +1,5 @@
 import { useStateContext } from "../Contexts/ContextProvider";
-import { Profile } from "../Components";
+import { Profile } from ".";
 
 export default function Navbar() {
   const { isLogged, activeMenu, name } = useStateContext();

@@ -15,7 +15,7 @@ export default function Monitor() {
           />
           <span className="text-2xl text-neutral-700 font-semibold">Back</span>
         </Link>
-        <div className="flex gap-x-6 mt-6">
+        <div className="flex justify-start gap-x-6 mt-6">
           <div className="flex flex-col justify-between gap-y-6">
             <div className="bg-[#F4F6FA] px-2 py-3 rounded-md shadow-md">
               <div className="flex gap-x-2 ml-2">
@@ -39,15 +39,14 @@ export default function Monitor() {
               <Map />
             </div>
           </div>
-          <div className="flex flex-col bg-[#F4F6FA] p-6 rounded-md gap-y-4 shadow-md">
+          <div className="flex flex-col w-[51rem] bg-[#F4F6FA] p-6 rounded-md gap-y-4 shadow-md">
             <h1 className="text-4xl font-semibold">
               Title: Lorem, ipsum dolor.
             </h1>
             <p className="text-xl text-[#3C3C3C]">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
               facilis quasi, maiores laboriosam nesciunt voluptates sunt
-              asperiores voluptatem, excepturi iste modi nemo tempore odio ipsa
-              distinctio inventore nihil. Omnis cupiditate commodi enim.
+              asperiores voluptatem, excepturi iste modi nemo tempore odio ipsa.
             </p>
             <TitlePersonal />
             <LocationTime />

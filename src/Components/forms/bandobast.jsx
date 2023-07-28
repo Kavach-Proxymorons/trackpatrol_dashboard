@@ -1,9 +1,9 @@
 import { useState } from "react";
-import Input from "../Components/ui-components/Input";
-import Label from "../Components/ui-components/Label";
-import { Button } from "../Components/ui-components/Button";
-import { DatePickerWithRange } from "../Components/ui-components/DatePickerwithRange";
-import { useStateContext } from "../Contexts/ContextProvider";
+import Input from "../ui-components/input";
+import Label from "../ui-components/label";
+import { Button } from "../ui-components/button";
+import { DatePickerWithRange } from '../ui-components/datePickerwithRange';
+import { useStateContext } from "../../Contexts/ContextProvider";
 import { IoIosArrowBack } from "react-icons/io";
 import { Link } from "react-router-dom";
 

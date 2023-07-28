@@ -5,16 +5,17 @@ import { useStateContext } from "./Contexts/ContextProvider";
 
 import {
   Login,
-  CreateBandobast,
+  Bandobast,
   Dashboard,
-  ManageAdmin,
-  RegisterHardware,
-  RegisterPersonnel,
+  Admin,
+  Hardware,
+  Personnel,
   Setting,
   Monitor,
 } from "./Pages";
 
-import { Navbar, Sidebar, PersonnelRegForm } from "./Components";
+import { Navbar, Sidebar } from "./Components";
+import {PersonnelForm, HardwareForm, BandobastForm } from './Components/forms';
 import "./App.css";
 
 function App() {
@@ -55,14 +56,15 @@ function App() {
             <Route path="/" exact element={<Dashboard />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/dashboard/monitor" element={<Monitor />} />
-            <Route path="/personnel" element={<RegisterPersonnel />} />
-            <Route path="/hardware" element={<RegisterHardware />} />
-            <Route path="/create/bandobast" element={<CreateBandobast />} />
-            <Route path="/admin" element={<ManageAdmin />} />
-            <Route path="/personnel/register" element={<PersonnelRegForm />} />
+            <Route path="/personnel" element={<Personnel />} />
+            <Route path="/personnel/register" element={<PersonnelForm />} />
+            <Route path="/hardware" element={<Hardware />} />
+            <Route path="/hardware/register" element={<HardwareForm />} />
+            <Route path="/bandobast/register" element={<BandobastForm />} />
+            <Route path="/admin" element={<Admin />} />
             <Route path="/setting" element={<Setting />} />
             {/* <Route path='/logout' element={<Login />} /> */}
-            <Route path="*" element={<Dashboard />} />
+            <Route path="*" element={<>ERROR 404</>} />
           </Routes>
         </div>
       </div>

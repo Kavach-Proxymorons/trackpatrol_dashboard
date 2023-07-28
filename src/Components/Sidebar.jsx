@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Logo } from '../Components';
+import { Logo } from '.';
 import { HiUsers } from "react-icons/hi";
 import { HiMiniCpuChip } from 'react-icons/hi2';
 import { BsFillCarFrontFill } from 'react-icons/bs';
@@ -45,13 +45,13 @@ export default function Sidebar() {
                                 <span >Dashboard</span>
                             </NavLink>
 
+                            <NavLink to='/bandobast/register'>
+                                <BsFillCarFrontFill size={25} />
+                                <span >Bandobast</span>
+                            </NavLink>
                             <NavLink to='/personnel'>
                                 <HiUsers size={25} />
                                 <span >Personnel</span>
-                            </NavLink>
-                            <NavLink to='/create/bandobast'>
-                                <BsFillCarFrontFill size={25} />
-                                <span >Bandobast</span>
                             </NavLink>
                             <NavLink to='/hardware'>
                                 <HiMiniCpuChip size={25} />

@@ -15,7 +15,7 @@ import {
   Users,
 } from "lucide-react";
 
-import { Button } from "./ui-components/Button";
+import { Button } from "./ui-components/button";
 import { HiCalendar } from "react-icons/hi";
 import { HiEnvelope, HiChevronDown } from "react-icons/hi2";
 import {
