@@ -37,7 +37,7 @@ function App() {
       />
       <div className='h-screen'>
         <Sidebar />
-        <div className={activeMenu ? 'ml-72' : ''}>
+        <div className={activeMenu ? 'ml-60' : ''}>
           <Navbar />
           <Routes >
             <Route path='/login' element={<Login />} />

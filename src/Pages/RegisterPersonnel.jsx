@@ -15,7 +15,7 @@ export default function RegisterPersonnel() {
     e.preventDefault();
     console.log(window.innerWidth/ 420);
   };
-
+//
   return (
     <>
       <div>
@@ -31,7 +31,7 @@ export default function RegisterPersonnel() {
         </h1>
       </div>
       <form onSubmit={handleSubmit}>
-        <div className={`grid grid-cols-${Math.max(1,Math.min(3, Math.floor(window.innerWidth / 470)))} gap-8 justify-items-center mx-20 my-16`}>
+        <div className={`grid grid-cols-${Math.max(1,Math.min(3, Math.floor(window.innerWidth / 470)))} justify-items-center gap-y-6 mt-12`}>
           <div>
             <Label htmlFor="sid">Member Id</Label>
             <Input type="text" placeholder="Member Id" name="sid" />
@@ -82,7 +82,7 @@ export default function RegisterPersonnel() {
             {/* <p className="mt-2 font-medium text-base text-gray-500"></p> */}
           </div>
         </div>
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center mt-8">
           <Button type="submit" className="px-12">
             Create
           </Button>

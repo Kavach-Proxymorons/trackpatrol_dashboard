@@ -33,7 +33,7 @@ export default function Sidebar() {
 
 
     return <>
-        <div className={`md:overflow-hidden overflow-auto md:hover:overflow-auto fixed ${activeMenu ? 'shadow-xl w-72' : ''}`}>
+        <div className={`md:overflow-hidden overflow-auto md:hover:overflow-auto fixed ${activeMenu ? 'shadow-xl w-60' : ''}`}>
             {activeMenu &&
                 <div className='flex flex-col justify-between h-screen drop-shadow-md'>
                     <div className=''>
@@ -47,22 +47,22 @@ export default function Sidebar() {
 
                             <NavLink to='/register/personnel'>
                                 <HiUsers size={25} />
-                                <span >Register Personnel</span>
+                                <span >Personnel</span>
                             </NavLink>
                             <NavLink to='/create/bandobast'>
                                 <BsFillCarFrontFill size={25} />
-                                <span >Create Bandobast</span>
+                                <span >Bandobast</span>
                             </NavLink>
                             <NavLink to='/register/hardware'>
                                 <HiMiniCpuChip size={25} />
-                                <span >Register Hardware</span>
+                                <span >Hardware</span>
                             </NavLink>
                             <div className='bg-[#DBDBDB] w-full h-[2px] my-6'></div>
 
                             
                             <NavLink to='/manage/admin'>
                                 <MdAdminPanelSettings size={25} />
-                                <span>Manage Admin</span>
+                                <span>Admin</span>
                             </NavLink>
 
                         </div>
