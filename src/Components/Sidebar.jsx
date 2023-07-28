@@ -45,7 +45,7 @@ export default function Sidebar() {
                                 <span >Dashboard</span>
                             </NavLink>
 
-                            <NavLink to='/register/personnel'>
+                            <NavLink to='/personnel'>
                                 <HiUsers size={25} />
                                 <span >Personnel</span>
                             </NavLink>
@@ -53,14 +53,14 @@ export default function Sidebar() {
                                 <BsFillCarFrontFill size={25} />
                                 <span >Bandobast</span>
                             </NavLink>
-                            <NavLink to='/register/hardware'>
+                            <NavLink to='/hardware'>
                                 <HiMiniCpuChip size={25} />
                                 <span >Hardware</span>
                             </NavLink>
                             <div className='bg-[#DBDBDB] w-full h-[2px] my-6'></div>
 
                             
-                            <NavLink to='/manage/admin'>
+                            <NavLink to='/admin'>
                                 <MdAdminPanelSettings size={25} />
                                 <span>Admin</span>
                             </NavLink>

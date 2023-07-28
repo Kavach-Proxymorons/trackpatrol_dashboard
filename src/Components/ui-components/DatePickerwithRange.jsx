@@ -3,15 +3,27 @@ import { addDays, format, set } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { DateRange } from "react-day-picker";
 
-import { cn } from "../lib/utils";
+import { cn } from "../../lib/utils";
 import { Button } from "./Button";
 import { Calendar } from "./Calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "./Popover";
 
-export function DatePicker({ date, setDate, className }) {
-  
-  const handleDateSubmit = (date) => {
-    setDate(() => date);
+export function DatePickerWithRange({ date, setDate, className }) {
+
+  const handleDateSubmit = (selectedDate) => {
+    if (selectedDate?.to) {
+      setDate({
+        from: selectedDate.from,
+        to: selectedDate.to,
+      });
+    } else if (selectedDate?.from) {
+      setDate({
+        from: selectedDate.from,
+        to: selectedDate.from,
+      });
+    } else {
+      setDate({});
+    }
   };
 
   return (
@@ -22,10 +34,11 @@ export function DatePicker({ date, setDate, className }) {
             id="date"
             variant={"outline"}
             className={cn(
-              "w-96 text-[#7B7D92] justify-between text-left font-normal",
+              "w-96 text-[#7B7D92]justify-start text-left font-normal",
               !date && "text-muted-foreground"
             )}
           >
+            <CalendarIcon className="mr-2 h-4 w-4" />
             {date?.from ? (
               date.to ? (
                 <>
@@ -38,17 +51,16 @@ export function DatePicker({ date, setDate, className }) {
             ) : (
               <span className="py-4">Pick a date</span>
             )}
-            <CalendarIcon className="mr-2 h-4 w-4" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0" align="start">
           <Calendar
             initialFocus
-            mode="single"
+            mode="range"
             defaultMonth={date?.from}
             selected={date}
             onSelect={handleDateSubmit}
-            numberOfMonths={1}
+            numberOfMonths={2}
           />
         </PopoverContent>
       </Popover>
