@@ -4,7 +4,7 @@ import { headers } from "../Components/ui-components/dataTable/skeletons/hardwar
 const data = [
   {
     _id: "64ac934f0a1b0e81592ef533",
-    hardware_id: "456745",
+    sid: "456745",
     secret: "123456789",
     name: "uhf rfid unit 1",
     description: "uhf rfid unit 1",
@@ -14,7 +14,7 @@ const data = [
   },
   {
     _id: "64ac934f0a1b0e81592ef533",
-    hardware_id: "324354",
+    sid: "324354",
     secret: "123456789",
     name: "uhf rfid unit 1",
     description: "uhf rfid unit 1",
@@ -24,7 +24,7 @@ const data = [
   },
   {
     _id: "64ac934f0a1b0e81592ef533",
-    hardware_id: "324563",
+    sid: "324563",
     secret: "123456789",
     name: "uhf rfid unit 1",
     description: "uhf rfid unit 1",
@@ -34,7 +34,7 @@ const data = [
   },
   {
     _id: "64ac934f0a1b0e81592ef533",
-    hardware_id: "876475",
+    sid: "876475",
     secret: "123456789",
     name: "uhf rfid unit 1",
     description: "uhf rfid unit 1",
@@ -44,7 +44,7 @@ const data = [
   },
   {
     _id: "64ac934f0a1b0e81592ef533",
-    hardware_id: "324562",
+    sid: "324562",
     secret: "123456789",
     name: "uhf rfid unit 1",
     description: "uhf rfid unit 1",

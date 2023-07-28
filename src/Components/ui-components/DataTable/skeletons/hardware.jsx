@@ -13,7 +13,7 @@ import {
 
 export const headers = [
   {
-    accessorKey: "hardware_id",
+    accessorKey: "sid",
     header: ({ column }) => {
       return (
         <Button
@@ -26,7 +26,7 @@ export const headers = [
         </Button>
       );
     },
-    cell: ({ row }) => <div className="">{row.getValue("hardware_id")}</div>,
+    cell: ({ row }) => <div className="">{row.getValue("sid")}</div>,
   },
   {
     accessorKey: "name",
