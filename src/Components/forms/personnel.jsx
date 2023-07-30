@@ -18,7 +18,13 @@ export default function PersonnelRegisterForm() {
     setGridSize(Math.max(1, Math.min(3, Math.floor(window.innerWidth / 470))));
   }, [screenSize]);
 
-  const handleSubmit = (e) => {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData);
+    data.dob = dob;
+    console.log(data);
+  };
 
   return (
     <>
@@ -36,35 +42,37 @@ export default function PersonnelRegisterForm() {
       </div>
       <form onSubmit={handleSubmit}>
         <div
-          className={`grid  ${gridSize === 3 ? 'grid-cols-3' : `grid-cols-${gridSize}`}  justify-items-center gap-y-6 mt-12`}
+          className={`grid  ${
+            gridSize === 3 ? "grid-cols-3" : `grid-cols-${gridSize}`
+          }  justify-items-center gap-y-6 mt-12`}
         >
           <div>
-            <Label htmlFor="sid">Member Id</Label>
+            <Label>Member Id</Label>
             <Input type="text" placeholder="Member Id" name="sid" />
           </div>
 
           <div>
-            <Label htmlFor="name">Member Name</Label>
+            <Label>Member Name</Label>
             <Input type="text" placeholder="Member Name" name="name" />
           </div>
 
           <div>
-            <Label htmlFor="blood_group">Blood Group</Label>
+            <Label>Blood Group</Label>
             <Input type="text" placeholder="Blood Group" name="blood_group" />
           </div>
 
           <div>
-            <Label htmlFor="venue">Date of Birth</Label>
+            <Label>Date of Birth</Label>
             <DatePicker date={dob} setDate={setDob} />
           </div>
 
           <div>
-            <Label htmlFor="designation">Designation</Label>
+            <Label>Designation</Label>
             <Input type="text" placeholder="Designation" name="designation" />
           </div>
 
           <div>
-            <Label htmlFor="identification_mark">Identification Mark</Label>
+            <Label>Identification Mark</Label>
             <Input
               type="text"
               placeholder="Identification Mark"
@@ -73,17 +81,22 @@ export default function PersonnelRegisterForm() {
           </div>
 
           <div>
-            <Label htmlFor="posted_at">Posted At</Label>
+            <Label>Posted At</Label>
             <Input type="text" placeholder="Posted At" name="posted_at" />
           </div>
 
-          <div>
-            <Label htmlFor="photograph">Picture</Label>
+          {/* <div>
+            <Label>Picture</Label>
             <Input type="file" name="photograph" className="pt-1 rounded" />
+          </div> */}
+
+          <div>
+            <Label>Picture</Label>
+            <Input type="url" placeholder="Add image URL" name="photogragh" />
           </div>
 
           <div>
-            <Label htmlFor="address">Address</Label>
+            <Label>Address</Label>
             <Input type="text" placeholder="Address" name="address" />
             {/* <p className="mt-2 font-medium text-base text-gray-500"></p> */}
           </div>

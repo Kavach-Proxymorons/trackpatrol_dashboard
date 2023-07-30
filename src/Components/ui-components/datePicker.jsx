@@ -10,8 +10,9 @@ import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 
 export function DatePicker({ date, setDate, className }) {
   
-  const handleDateSubmit = (date) => {
-    setDate(() => date);
+  const handleDateSubmit = (d) => {
+    console.log(d);
+    setDate(() => d);
   };
 
   return (
@@ -26,18 +27,13 @@ export function DatePicker({ date, setDate, className }) {
               !date && "text-muted-foreground"
             )}
           >
-            {date?.from ? (
-              date.to ? (
+            {date? 
                 <>
-                  {format(date.from, "LLL dd, y")} -{" "}
-                  {format(date.to, "LLL dd, y")}
+                  {format(date, "LLL dd, y")}
                 </>
-              ) : (
-                format(date.from, "LLL dd, y")
-              )
-            ) : (
+              : 
               <span className="py-4">Pick a date</span>
-            )}
+            }
             <CalendarIcon className="mr-2 h-4 w-4" />
           </Button>
         </PopoverTrigger>
@@ -45,7 +41,7 @@ export function DatePicker({ date, setDate, className }) {
           <Calendar
             initialFocus
             mode="single"
-            defaultMonth={date?.from}
+            defaultMonth={date}
             selected={date}
             onSelect={handleDateSubmit}
             numberOfMonths={1}
