@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Logo } from '../Components';
+import { Logo } from '.';
 import { HiUsers } from "react-icons/hi";
 import { HiMiniCpuChip } from 'react-icons/hi2';
 import { BsFillCarFrontFill } from 'react-icons/bs';
@@ -33,9 +33,9 @@ export default function Sidebar() {
 
 
     return <>
-        <div className={`md:overflow-hidden overflow-auto md:hover:overflow-auto fixed ${activeMenu ? 'shadow-xl w-72' : ''}`}>
+        <div className={`md:overflow-hidden overflow-auto md:hover:overflow-auto fixed ${activeMenu ? 'shadow w-60' : ''}`}>
             {activeMenu &&
-                <div className='flex flex-col justify-between h-screen drop-shadow-md'>
+                <div className='flex flex-col justify-between h-screen drop-shadow'>
                     <div className=''>
                         <Logo />
                         <div className='bg-[#DBDBDB] w-full h-[2px] my-6'></div>
@@ -45,24 +45,24 @@ export default function Sidebar() {
                                 <span >Dashboard</span>
                             </NavLink>
 
-                            <NavLink to='/register/personnel'>
-                                <HiUsers size={25} />
-                                <span >Register Personnel</span>
-                            </NavLink>
-                            <NavLink to='/create/bandobast'>
+                            <NavLink to='/bandobast/register'>
                                 <BsFillCarFrontFill size={25} />
-                                <span >Create Bandobast</span>
+                                <span >Bandobast</span>
                             </NavLink>
-                            <NavLink to='/register/hardware'>
+                            <NavLink to='/personnel'>
+                                <HiUsers size={25} />
+                                <span >Personnel</span>
+                            </NavLink>
+                            <NavLink to='/hardware'>
                                 <HiMiniCpuChip size={25} />
-                                <span >Register Hardware</span>
+                                <span >Hardware</span>
                             </NavLink>
                             <div className='bg-[#DBDBDB] w-full h-[2px] my-6'></div>
 
                             
-                            <NavLink to='/manage/admin'>
+                            <NavLink to='/admin'>
                                 <MdAdminPanelSettings size={25} />
-                                <span>Manage Admin</span>
+                                <span>Admin</span>
                             </NavLink>
 
                         </div>

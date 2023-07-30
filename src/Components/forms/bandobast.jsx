@@ -1,9 +1,9 @@
 import { useState } from "react";
-import Input from "../Components/Input";
-import Label from "../Components/Label";
-import { Button } from "../Components/Button";
-import { DatePickerWithRange } from "../Components/DatePickerwithRange";
-import { useStateContext } from "../Contexts/ContextProvider";
+import Input from "../ui-components/input";
+import Label from "../ui-components/label";
+import { Button } from "../ui-components/button";
+import { DatePickerWithRange } from '../ui-components/datePickerwithRange';
+import { useStateContext } from "../../Contexts/ContextProvider";
 import { IoIosArrowBack } from "react-icons/io";
 import { Link } from "react-router-dom";
 
@@ -35,7 +35,7 @@ export default function CreateBandobast() {
       <div>
         <Link
           to="/dashboard"
-          className="inline-flex items-center justify-start pr-4 py-2 bg-[#F4F6FA] shadow-md mt-6 mx-8"
+          className="inline-flex items-center justify-start pr-4 py-2 bg-[#F4F6FA] shadow mt-6 mx-8"
         >
           <IoIosArrowBack size={25} color="#222" />
           <span className="text-2xl text-neutral-700 font-semibold">Back</span>

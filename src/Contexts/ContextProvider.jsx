@@ -9,10 +9,13 @@ const dutyDummyData = {
   description: "",
   venue: "",
   location: "",
-  start_time: '',
-  end_time: '',
+  start_time: "",
+  end_time: "",
   note: "Note",
 };
+
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const toastId = toast.loading("Loading...");
 
 export const ContextProvider = ({ children }) => {
   const navigate = useNavigate();
@@ -52,6 +55,7 @@ export const ContextProvider = ({ children }) => {
   };
 
   const validateToken = async (Token) => {
+    toast.loading("Loading...", { id: toastId });
     const response = await fetch(`${baseUrl}auth/`, {
       method: "GET",
       headers: {
@@ -65,8 +69,11 @@ export const ContextProvider = ({ children }) => {
 
     if (!res.success) {
       logout();
+      toast.error(res.message, { id: toastId });
       return;
     }
+
+    toast.success(res.message, { id: toastId });
 
     const userInfo = {
       name: res.data.name,
@@ -75,18 +82,10 @@ export const ContextProvider = ({ children }) => {
       token: Token,
     };
 
-    setName(() => {
-      return userInfo.name;
-    });
-    setUserName(() => {
-      return userInfo.username;
-    });
-    setIsLogged(() => {
-      return userInfo.isLogged;
-    });
-    setToken(() => {
-      return userInfo.token;
-    });
+    setName(userInfo.name);
+    setUserName(userInfo.username);
+    setIsLogged(userInfo.isLogged);
+    setToken(userInfo.token);
 
     if (location.pathname === "/login") navigate("/");
   };
@@ -94,13 +93,16 @@ export const ContextProvider = ({ children }) => {
   const auth = () => {
     const Token = localStorage.getItem("token");
     if (Token === null || Token.length === 0) logout();
-    else validateToken(Token);
+    else {
+      setToken(Token);
+      validateToken(Token);
+    }
   };
 
   const login = async (username, password) => {
     logout();
 
-    const toastId = toast.loading("Loading...");
+    toast.loading("Loading...", { id: toastId });
     const response = await fetch(`${baseUrl}auth/login`, {
       method: "POST",
       headers: {
@@ -128,25 +130,17 @@ export const ContextProvider = ({ children }) => {
     };
 
     localStorage.setItem("token", userdata.token);
-    setName(() => {
-      return userdata.name;
-    });
-    setUserName(() => {
-      return userdata.username;
-    });
-    setIsLogged(() => {
-      return userdata.isLogged;
-    });
-    setToken(() => {
-      return userdata.token;
-    });
+    setName(userdata.name);
+    setUserName(userdata.username);
+    setIsLogged(userdata.isLogged);
+    setToken(userdata.token);
     setActiveMenu(window.innerWidth >= 1000 ? true : false);
     navigate("/", { replace: true }); 
   };
 
   /********************* DUTY ************************/
   const postDuty = async () => {
-    const toastId = toast.loading("Loading...");
+    toast.loading("Loading...", { id: toastId });
     console.log(duty);
     const response = await fetch(`${baseUrl}admin/duty/`, {
       method: "POST",
@@ -168,6 +162,63 @@ export const ContextProvider = ({ children }) => {
     setDuty(() => {
       return dutyDummyData;
     });
+  };
+
+  /********************** HARWDARE ********************************/
+  const [hardwares, setHardwares] = useState([]);
+  const [RegisterHardware, setRegisterHardware] = useState({
+    hardware_id: "",
+    secret: "",
+    name: "",
+    description: "",
+    type: "",
+    status: "",
+  });
+
+  const getHardwares = async () => {
+    toast.loading("Loading...", { id: toastId });
+    const response = await fetch(
+      `${baseUrl}admin/hardware/?page=1&limit=10000`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const res = await response.json();
+    console.log(res.message);
+    if (!res.success) {
+      toast.error(res.message, { id: toastId });
+      return;
+    }
+
+    toast.success(res.message, { id: toastId });
+    setHardwares(res.data.hardware);
+  };
+
+  const postHardware = async () => {
+    toast.loading("Loading...", { id: toastId });
+    const response = await fetch(`${baseUrl}admin/hardware/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(RegisterHardware),
+    });
+
+    const res = await response.json();
+    console.log(res.message);
+    if (!res.success) {
+      toast.error(res.message, { id: toastId });
+      return;
+    }
+
+    toast.success(res.message, { id: toastId });
+    setRegisterHardware({});
   };
 
   return (
@@ -199,6 +250,13 @@ export const ContextProvider = ({ children }) => {
         duty,
         setDuty,
         postDuty,
+
+        hardwares, // hardware apis
+        setHardwares,
+        RegisterHardware,
+        setRegisterHardware,
+        postHardware,
+        getHardwares,
       }}
     >
       {children}
