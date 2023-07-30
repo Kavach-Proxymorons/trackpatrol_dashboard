@@ -29,6 +29,11 @@ export const headers = [
     cell: ({ row }) => <div className="">{row.getValue("sid")}</div>,
   },
   {
+    accessorKey: "secret",
+    header: "Secret",
+    cell: ({ row }) => <div className="">{row.getValue("secret")}</div>,
+  },
+  {
     accessorKey: "name",
     header: "HARDWARE NAME",
     cell: ({ row }) => <div className="lowercase">{row.getValue("name")}</div>,

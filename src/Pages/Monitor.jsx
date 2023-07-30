@@ -8,11 +8,11 @@ export default function Monitor() {
   return (
     <>
       <div className="mx-12 my-6">
-        <Link to='/dashboard' className="inline-flex items-center justify-start pr-4 py-2 bg-[#F4F6FA] shadow-md">
-          <IoIosArrowBack
-            size={25}
-            color="#222"
-          />
+        <Link
+          to="/dashboard"
+          className="inline-flex items-center justify-start pr-4 py-2 bg-[#F4F6FA] shadow-md"
+        >
+          <IoIosArrowBack size={25} color="#222" />
           <span className="text-2xl text-neutral-700 font-semibold">Back</span>
         </Link>
         <div className="flex justify-start gap-x-6 mt-6">
@@ -35,21 +35,23 @@ export default function Monitor() {
                 </p>
               </div>
             </div>
-            <div className="w-[19rem] h-[24rem] shadow-md overflow-hidden rounded-xl">
+            <div className="w-[20rem] h-[11rem] shadow-md overflow-hidden rounded-xl">
               <Map />
             </div>
           </div>
           <div className="flex flex-col w-[51rem] bg-[#F4F6FA] p-6 rounded-md gap-y-4 shadow-md">
-            <h1 className="text-4xl font-semibold">
+            <h1 className="text-3xl font-semibold">
               Title: Lorem, ipsum dolor.
             </h1>
-            <p className="text-xl text-[#3C3C3C]">
+            <p className="text-base text-[#3C3C3C]">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
               facilis quasi, maiores laboriosam nesciunt voluptates sunt
               asperiores voluptatem, excepturi iste modi nemo tempore odio ipsa.
             </p>
-            <TitlePersonal />
-            <LocationTime />
+            <div className="flex gap-x-3">
+              <TitlePersonal />
+              <LocationTime />
+            </div>
           </div>
         </div>
       </div>
