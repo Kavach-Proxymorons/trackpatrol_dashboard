@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { useStateContext } from './Contexts/ContextProvider';
-import { Login, CreateBandobast, Dashboard, ManageAdmin, RegisterHardware, RegisterPersonnel, Setting,Monitor } from './Pages';
+import { Login, CreateBandobast, Dashboard, ManageAdmin, RegisterHardware, RegisterPersonnel, Setting, Monitor } from './Pages';
 import { Navbar, Sidebar } from './Components';
 import './App.css'
 

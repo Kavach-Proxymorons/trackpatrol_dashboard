@@ -141,7 +141,7 @@ export const ContextProvider = ({ children }) => {
       return userdata.token;
     });
     setActiveMenu(window.innerWidth >= 1000 ? true : false);
-    navigate("/");
+    navigate("/", { replace: true }); 
   };
 
   /********************* DUTY ************************/
