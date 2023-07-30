@@ -10,16 +10,15 @@ import DataTable from "../ui-components/dataTable";
 import { set } from "date-fns";
 
 export default function PersonnelRegisterForm() {
-    const [gridSize, setGridSize] = useState(3);
   const [dob, setDob] = useState(new Date());
   const { screenSize } = useStateContext();
+  const [gridSize, setGridSize] = useState(3);
 
   useEffect(() => {
-    setGridSize(Math.max(1,Math.min(3, Math.floor(window.innerWidth / 470))));
+    setGridSize(Math.max(1, Math.min(3, Math.floor(window.innerWidth / 470))));
   }, [screenSize]);
 
-  const handleSubmit = (e) => {
-  };
+  const handleSubmit = (e) => {};
 
   return (
     <>
@@ -36,7 +35,9 @@ export default function PersonnelRegisterForm() {
         </h1>
       </div>
       <form onSubmit={handleSubmit}>
-        <div className={`grid grid-cols-${gridSize} justify-items-center gap-y-6 mt-12`}>
+        <div
+          className={`grid  ${gridSize === 3 ? 'grid-cols-3' : `grid-cols-${gridSize}`}  justify-items-center gap-y-6 mt-12`}
+        >
           <div>
             <Label htmlFor="sid">Member Id</Label>
             <Input type="text" placeholder="Member Id" name="sid" />

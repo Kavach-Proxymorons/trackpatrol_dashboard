@@ -2,21 +2,39 @@ import { useState } from "react";
 import Input from "../ui-components/input";
 import Label from "../ui-components/label";
 import { Button } from "../ui-components/button";
-import { DatePickerWithRange } from "../ui-components/datePickerwithRange";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import { IoIosArrowBack } from "react-icons/io";
 import { Link } from "react-router-dom";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "../ui-components/select";
+import toast from "react-hot-toast";
+import { set } from "date-fns";
 
 export default function RegisterHardware() {
-  const { duty, setDuty, postDuty } = useStateContext();
-  const [date, setDate] = useState({
-    start_time: "",
-    end_time: "",
-  });
+  const { registerHardware, setRegisterHardware, postHardware } =
+    useStateContext();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-   
+
+    setRegisterHardware({
+      hardware_id: e.target.hardware_id.value,
+      secret: e.target.secret.value,
+      name: e.target.name.value,
+      description: e.target.description.value,
+      type: e.target.type.value,
+      status: e.target.status.value,
+    });
+    const toastId = toast.loading("Loading...");
+    postHardware();
+    toast.success("Success", { id: toastId });
   };
 
   return (
@@ -36,33 +54,88 @@ export default function RegisterHardware() {
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-2 justify-items-center gap-x-24 gap-y-6 mt-12">
           <div className="justify-self-end">
-            <Label htmlFor="title">Bandobast Title</Label>
-            <Input type="text" placeholder="Title" name="title" />
+            <Label>Hardware Id</Label>
+            <Input
+              type="text"
+              placeholder="Hardware id"
+              name="hardware_id"
+              required
+            />
           </div>
 
           <div className="justify-self-start">
-            <Label htmlFor="description">Description</Label>
-            <Input type="text" placeholder="Description" name="description" />
+            <Label>Secret</Label>
+            <Input type="text" placeholder="Secret" name="secret" required />
           </div>
 
           <div className="justify-self-end">
-            <Label htmlFor="venue">Venue</Label>
-            <Input type="text" placeholder="Venue" name="venue" />
+            <Label>Name</Label>
+            <Input type="text" placeholder="Name" name="name" required />
           </div>
 
           <div className="justify-self-start">
-            <Label htmlFor="location">Location</Label>
-            <Input type="text" placeholder="Location" name="location" />
+            <Label>Description</Label>
+            <Input
+              type="text"
+              placeholder="Description"
+              name="description"
+              required
+            />
           </div>
+
           <div className="justify-self-end">
-            <Label htmlFor="Date">Duration</Label>
-            <DatePickerWithRange date={date} setDate={setDate} />
+            <Label>Type</Label>
+            <Input type="text" placeholder="Type" name="type" required />
           </div>
 
           <div className="justify-self-start">
-            <Label htmlFor="note">Note</Label>
-            <Input type="text" placeholder="Note" name="note" />
-            <p className="mt-2 font-medium text-base text-gray-500 text-right">Optional</p>
+            <Label>Status</Label>
+            <Select required name='status'>
+              <SelectTrigger className="h-10 w-96 px-3 rounded-md border border-input bg-background text-lg ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                <SelectValue placeholder="Status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel className="text-lg">Values</SelectLabel>
+                  <SelectItem
+                    className="text-lg text-muted-foreground"
+                    value="idle"
+                  >
+                    Idle
+                  </SelectItem>
+                  <SelectItem
+                    className="text-lg text-muted-foreground"
+                    value="busy"
+                  >
+                    Busy
+                  </SelectItem>
+                  <SelectItem
+                    className="text-lg text-muted-foreground"
+                    value="broken"
+                  >
+                    Broken
+                  </SelectItem>
+                  <SelectItem
+                    className="text-lg text-muted-foreground"
+                    value="lost"
+                  >
+                    Lost
+                  </SelectItem>
+                  <SelectItem
+                    className="text-lg text-muted-foreground"
+                    value="Standy"
+                  >
+                    Standby
+                  </SelectItem>
+                  <SelectItem
+                    className="text-lg text-muted-foreground"
+                    value="overheating"
+                  >
+                    Overheating
+                  </SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </div>
         </div>
         <div className="mt-8 flex justify-center">

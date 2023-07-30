@@ -14,6 +14,9 @@ const dutyDummyData = {
   note: "Note",
 };
 
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const toastId = toast.loading("Loading...");
+
 export const ContextProvider = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -52,6 +55,7 @@ export const ContextProvider = ({ children }) => {
   };
 
   const validateToken = async (Token) => {
+    toast.loading("Loading...", { id: toastId });
     const response = await fetch(`${baseUrl}auth/`, {
       method: "GET",
       headers: {
@@ -65,8 +69,11 @@ export const ContextProvider = ({ children }) => {
 
     if (!res.success) {
       logout();
+      toast.error(res.message, { id: toastId });
       return;
     }
+
+    toast.success(res.message, { id: toastId });
 
     const userInfo = {
       name: res.data.name,
@@ -86,13 +93,16 @@ export const ContextProvider = ({ children }) => {
   const auth = () => {
     const Token = localStorage.getItem("token");
     if (Token === null || Token.length === 0) logout();
-    else validateToken(Token);
+    else {
+      setToken(Token);
+      validateToken(Token);
+    }
   };
 
   const login = async (username, password) => {
     logout();
 
-    const toastId = toast.loading("Loading...");
+    toast.loading("Loading...", { id: toastId });
     const response = await fetch(`${baseUrl}auth/login`, {
       method: "POST",
       headers: {
@@ -130,7 +140,7 @@ export const ContextProvider = ({ children }) => {
 
   /********************* DUTY ************************/
   const postDuty = async () => {
-    const toastId = toast.loading("Loading...");
+    toast.loading("Loading...", { id: toastId });
     console.log(duty);
     const response = await fetch(`${baseUrl}admin/duty/`, {
       method: "POST",
@@ -155,28 +165,60 @@ export const ContextProvider = ({ children }) => {
   };
 
   /********************** HARWDARE ********************************/
-  const [hardware, setHardware] = useState([]);
-  // write a query to get all hardware data of 1st page
+  const [hardwares, setHardwares] = useState([]);
+  const [RegisterHardware, setRegisterHardware] = useState({
+    hardware_id: "",
+    secret: "",
+    name: "",
+    description: "",
+    type: "",
+    status: "",
+  });
 
-  const getHardware = async () => {
-    const toastId = toast.loading("Loading...");
-    const response = await fetch(`${baseUrl}admin/hardware/`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
+  const getHardwares = async () => {
+    toast.loading("Loading...", { id: toastId });
+    const response = await fetch(
+      `${baseUrl}admin/hardware/?page=1&limit=10000`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     const res = await response.json();
-    console.log(res);
+    console.log(res.message);
     if (!res.success) {
       toast.error(res.message, { id: toastId });
       return;
     }
 
     toast.success(res.message, { id: toastId });
-    setHardware(res.data);
+    setHardwares(res.data.hardware);
+  };
+
+  const postHardware = async () => {
+    toast.loading("Loading...", { id: toastId });
+    const response = await fetch(`${baseUrl}admin/hardware/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(RegisterHardware),
+    });
+
+    const res = await response.json();
+    console.log(res.message);
+    if (!res.success) {
+      toast.error(res.message, { id: toastId });
+      return;
+    }
+
+    toast.success(res.message, { id: toastId });
+    setRegisterHardware({});
   };
 
   return (
@@ -208,6 +250,13 @@ export const ContextProvider = ({ children }) => {
         duty,
         setDuty,
         postDuty,
+
+        hardwares, // hardware apis
+        setHardwares,
+        RegisterHardware,
+        setRegisterHardware,
+        postHardware,
+        getHardwares,
       }}
     >
       {children}

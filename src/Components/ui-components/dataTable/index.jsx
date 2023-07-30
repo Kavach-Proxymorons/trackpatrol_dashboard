@@ -13,7 +13,13 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, MoreHorizontal, Plus } from "lucide-react";
+import {
+  ArrowUpDown,
+  ChevronDown,
+  MoreHorizontal,
+  Plus,
+  RefreshCcw,
+} from "lucide-react";
 
 import { Button } from "../button";
 import { Checkbox } from "../checkbox";
@@ -36,16 +42,9 @@ import {
   TableRow,
 } from "./table";
 
+import { useStateContext } from "../../../Contexts/ContextProvider";
 
-
-// export type Payment = {
-//   id: string
-//   amount: number
-//   status: "pending" | "processing" | "success" | "failed"
-//   email: string
-// }
-
-export default function DataTable({columns, path, data}) {
+export default function DataTable({ columns, path, data, fetchData }) {
   const [sorting, setSorting] = useState([]);
   const [columnFilters, setColumnFilters] = useState([]);
   const [columnVisibility, setColumnVisibility] = useState([]);
@@ -82,10 +81,12 @@ export default function DataTable({columns, path, data}) {
           }
           className="max-w-sm"
         />
-        <div>
+        <div className="flex gap-x-3">
+          <Button variant="outline" onClick={fetchData}>
+            <RefreshCcw className="h-6 w-6" />
+          </Button>
           <Button
             variant="outline"
-            className="mr-4"
             onClick={() => Navigate(`/${path}/register`)}
           >
             Add new
