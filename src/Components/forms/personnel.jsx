@@ -73,8 +73,8 @@ export default function PersonnelRegisterForm() {
               type="text"
               placeholder="Member Id"
               name="sid"
-              required
               onChange={handleChange}
+              required
             />
           </div>
 
@@ -92,9 +92,9 @@ export default function PersonnelRegisterForm() {
           <div>
             <Label>Password</Label>
             <Input
-              type="password"
+              type="text"
               placeholder="Password"
-              name="password"
+              name="temp_password"
               onChange={handleChange}
               required
             />
