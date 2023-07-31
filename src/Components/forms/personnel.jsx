@@ -20,22 +20,31 @@ import {
 
 export default function PersonnelRegisterForm() {
   const [dob, setDob] = useState(new Date());
-  const { setRegisterPersonnel, postPersonnel, screenSize } = useStateContext();
+  const [gender, setGender] = useState("");
+  const { registerPersonnel, setRegisterPersonnel, postPersonnel, screenSize } =
+    useStateContext();
   const [gridSize, setGridSize] = useState(3);
 
   useEffect(() => {
     setGridSize(Math.max(1, Math.min(3, Math.floor(window.innerWidth / 470))));
-  }, [screenSize]);
+    setRegisterPersonnel((prev) => (prev = { ...prev, dob }));
+  }, [screenSize, dob]);
 
-  const handleSubmit = (e) => {
+  const handleChange = (e) => {
+    setRegisterPersonnel(
+      (prev) => (prev = { ...prev, [e.target.name]: e.target.value })
+    );
+    console.log(registerPersonnel);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData);
-    data.dob = dob;
-
-    console.log(data);
-    setRegisterPersonnel(data);
+    console.log(registerPersonnel);
     postPersonnel();
+  };
+
+  const handleSelect = (e) => {
+    setRegisterPersonnel((prev) => (prev = { ...prev, gender: e }));
   };
 
   return (
@@ -60,22 +69,46 @@ export default function PersonnelRegisterForm() {
         >
           <div>
             <Label>Member Id</Label>
-            <Input type="text" placeholder="Member Id" name="sid" />
+            <Input
+              type="text"
+              placeholder="Member Id"
+              name="sid"
+              required
+              onChange={handleChange}
+            />
           </div>
 
           <div>
             <Label>Member Name</Label>
-            <Input type="text" placeholder="Member Name" name="official_name" />
+            <Input
+              type="text"
+              placeholder="Member Name"
+              name="official_name"
+              onChange={handleChange}
+              required
+            />
           </div>
 
           <div>
             <Label>Password</Label>
-            <Input type="text" placeholder="Password" name="password" />
+            <Input
+              type="password"
+              placeholder="Password"
+              name="password"
+              onChange={handleChange}
+              required
+            />
           </div>
 
           <div>
             <Label>Blood Group</Label>
-            <Input type="text" placeholder="Blood Group" name="blood_group" />
+            <Input
+              type="text"
+              placeholder="Blood Group"
+              name="blood_group"
+              required
+              onChange={handleChange}
+            />
           </div>
 
           <div>
@@ -85,27 +118,27 @@ export default function PersonnelRegisterForm() {
 
           <div>
             <Label>Gender</Label>
-            <Select required name="gender">
+            <Select name="gender" onValueChange={handleSelect} required>
               <SelectTrigger className="h-10 w-96 px-3 rounded-md border border-input bg-background text-lg ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
-                <SelectValue placeholder="Status" />
+                <SelectValue placeholder="Gender" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectItem
                     className="text-lg text-muted-foreground"
-                    value="idle"
+                    value="Male"
                   >
                     Male
                   </SelectItem>
                   <SelectItem
                     className="text-lg text-muted-foreground"
-                    value="busy"
+                    value="Female"
                   >
                     Female
                   </SelectItem>
                   <SelectItem
                     className="text-lg text-muted-foreground"
-                    value="broken"
+                    value="Others"
                   >
                     Others
                   </SelectItem>
@@ -115,7 +148,13 @@ export default function PersonnelRegisterForm() {
           </div>
           <div>
             <Label>Designation</Label>
-            <Input type="text" placeholder="Designation" name="designation" />
+            <Input
+              type="text"
+              placeholder="Designation"
+              name="designation"
+              required
+              onChange={handleChange}
+            />
           </div>
 
           <div>
@@ -124,12 +163,20 @@ export default function PersonnelRegisterForm() {
               type="text"
               placeholder="Identification Mark"
               name="identification_mark"
+              required
+              onChange={handleChange}
             />
           </div>
 
           <div>
             <Label>Posted At</Label>
-            <Input type="text" placeholder="Posted At" name="posted_at" />
+            <Input
+              type="text"
+              placeholder="Posted At"
+              name="posted_at"
+              required
+              onChange={handleChange}
+            />
           </div>
 
           {/* <div>
@@ -139,7 +186,13 @@ export default function PersonnelRegisterForm() {
 
           <div>
             <Label>Picture</Label>
-            <Input type="url" placeholder="Add image URL" name="photograph" />
+            <Input
+              type="url"
+              placeholder="Add image URL"
+              name="photograph"
+              required
+              onChange={handleChange}
+            />
           </div>
           <div className="">
             <Label>Address</Label>
@@ -147,7 +200,8 @@ export default function PersonnelRegisterForm() {
               type="text"
               placeholder="Address"
               name="address"
-              className=""
+              required
+              onChange={handleChange}
             />
           </div>
         </div>

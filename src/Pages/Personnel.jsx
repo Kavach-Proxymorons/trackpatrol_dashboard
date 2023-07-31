@@ -15,7 +15,7 @@ export default function Personnel() {
   return (
     <>
       <div className="mx-12">
-        <h1 className="text-4xl font-semibold text-start mt-8">
+        <h1 className="text-4xl font-semibold text-start mt-4">
           Personnel's List
         </h1>
         <DataTable

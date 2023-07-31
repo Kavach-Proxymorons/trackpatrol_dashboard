@@ -21,23 +21,26 @@ export default function RegisterHardware() {
   const { registerHardware, setRegisterHardware, postHardware } =
     useStateContext();
 
-  const handleSubmit = async (e) => {
+    const handleChange = (e) => {
+      setRegisterHardware(
+        (prev) => (prev = { ...prev, [e.target.name]: e.target.value })
+      );
+    };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData);
-    
-    console.log(data);
-    setRegisterHardware(data);
-    const toastId = toast.loading("Loading...");
     postHardware();
-    toast.success("Success", { id: toastId });
+  };
+
+  const handleSelect = (e) => {
+    setRegisterHardware((prev) => (prev = { ...prev, status: e }));
   };
 
   return (
     <>
       <div>
         <Link
-          to="/dashboard"
+          to="/hardware"
           className="inline-flex items-center justify-start pr-4 py-2 bg-[#F4F6FA] shadow mt-6 mx-8"
         >
           <IoIosArrowBack size={25} color="#222" />
@@ -55,18 +58,19 @@ export default function RegisterHardware() {
               type="text"
               placeholder="Hardware id"
               name="hardware_id"
+              onChange={handleChange}
               required
             />
           </div>
 
           <div className="justify-self-start">
             <Label>Secret</Label>
-            <Input type="text" placeholder="Secret" name="secret" required />
+            <Input type="text" placeholder="Secret" name="secret" onChange={handleChange} required />
           </div>
 
           <div className="justify-self-end">
             <Label>Name</Label>
-            <Input type="text" placeholder="Name" name="name" required />
+            <Input type="text" placeholder="Name" name="name" onChange={handleChange} required />
           </div>
 
           <div className="justify-self-start">
@@ -75,18 +79,19 @@ export default function RegisterHardware() {
               type="text"
               placeholder="Description"
               name="description"
+              onChange={handleChange}
               required
             />
           </div>
 
           <div className="justify-self-end">
             <Label>Type</Label>
-            <Input type="text" placeholder="Type" name="type" required />
+            <Input type="text" placeholder="Type" name="type" onChange={handleChange} required />
           </div>
 
           <div className="justify-self-start">
             <Label>Status</Label>
-            <Select required name='status'>
+            <Select required name='status' onValueChange={handleSelect}>
               <SelectTrigger className="h-10 w-96 px-3 rounded-md border border-input bg-background text-lg ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
                 <SelectValue placeholder="Status" />
               </SelectTrigger>

@@ -167,7 +167,7 @@ export const ContextProvider = ({ children }) => {
 
   /********************** HARWDARE ********************************/
   const [hardwares, setHardwares] = useState([]);
-  const [RegisterHardware, setRegisterHardware] = useState({
+  const [registerHardware, setRegisterHardware] = useState({
     hardware_id: "",
     secret: "",
     name: "",
@@ -215,7 +215,7 @@ export const ContextProvider = ({ children }) => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(RegisterHardware),
+      body: JSON.stringify(registerHardware),
     });
 
     const res = await response.json();
@@ -231,7 +231,7 @@ export const ContextProvider = ({ children }) => {
 
   /********************** PERSONNEL ********************************/
   const [personnels, setPersonnels] = useState([]);
-  const [RegisterPersonnel, setRegisterPersonnel] = useState({});
+  const [registerPersonnel, setRegisterPersonnel] = useState({});
 
   const postPersonnel = async () => {
     toast.loading("Loading...", { id: toastId });
@@ -241,7 +241,7 @@ export const ContextProvider = ({ children }) => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(RegisterPersonnel),
+      body: JSON.stringify(registerPersonnel),
     });
 
     const res = await response.json();
@@ -311,14 +311,14 @@ export const ContextProvider = ({ children }) => {
 
         hardwares, // hardware apis
         setHardwares,
-        RegisterHardware,
+        registerHardware,
         setRegisterHardware,
         postHardware,
         getHardwares,
 
         personnels, // personnel apis
         setPersonnels,
-        RegisterPersonnel,
+        registerPersonnel,
         setRegisterPersonnel,
         postPersonnel,
         getPersonnels,

@@ -14,7 +14,7 @@ export default function Hardware() {
   return (
     <>
       <div className="mx-12">
-        <h1 className="text-4xl font-semibold text-start mt-8">
+        <h1 className="text-4xl font-semibold text-start mt-4">
           Hardware's List
         </h1>
         <DataTable
