@@ -12,25 +12,25 @@ import {
 } from "../../dropdown-menu"
 
 export const headers = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={table.getIsAllPageRowsSelected()}
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
+  // {
+  //   id: "select",
+  //   header: ({ table }) => (
+  //     <Checkbox
+  //       checked={table.getIsAllPageRowsSelected()}
+  //       onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+  //       aria-label="Select all"
+  //     />
+  //   ),
+  //   cell: ({ row }) => (
+  //     <Checkbox
+  //       checked={row.getIsSelected()}
+  //       onCheckedChange={(value) => row.toggleSelected(!!value)}
+  //       aria-label="Select row"
+  //     />
+  //   ),
+  //   enableSorting: false,
+  //   enableHiding: false,
+  // },
   {
     accessorKey: "sid",
     header: ({ column }) => {
@@ -48,13 +48,23 @@ export const headers = [
     cell: ({ row }) => <div className="lowercase">{row.getValue("sid")}</div>,
   },
   {
-    accessorKey: "name",
-    header: "MEMBER NAME",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("name")}</div>,
+    accessorKey: "official_name",
+    header: "OFFICIAL NAME",
+    cell: ({ row }) => <div className="capitalize">{row.getValue("official_name")}</div>,
+  },
+  {
+    accessorKey: "blood_group",
+    header: "BLOOD GROUP",
+    cell: ({ row }) => <div className="capitalize">{row.getValue("blood_group")}</div>,
+  },
+  {
+    accessorKey: "gender",
+    header: "GENDER",
+    cell: ({ row }) => <div className="capitalize">{row.getValue("gender")}</div>,
   },
   {
     accessorKey: "designation",
-    header: "Designation",
+    header: "DESIGNATION",
     cell: ({ row }) => (
       <div className="capitalize">{row.getValue("designation")}</div>
     ),

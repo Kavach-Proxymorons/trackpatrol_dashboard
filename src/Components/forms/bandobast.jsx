@@ -17,16 +17,10 @@ export default function CreateBandobast() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(typeof date.from);
-    const duty = {
-      title: e.target.title.value,
-      description: e.target.description.value,
-      venue: e.target.venue.value,
-      location: e.target.location.value,
-      start_time: date.from,
-      end_time: date.to,
-      note: e.target.note.value,
-    };
-    setDuty(() => duty);
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData);
+    console.log(data);
+    setDuty(() => data);
     postDuty();
   };
 

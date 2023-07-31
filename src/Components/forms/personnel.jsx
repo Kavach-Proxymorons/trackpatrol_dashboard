@@ -8,10 +8,19 @@ import { IoIosArrowBack } from "react-icons/io";
 import { Link } from "react-router-dom";
 import DataTable from "../ui-components/dataTable";
 import { set } from "date-fns";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "../ui-components/select";
 
 export default function PersonnelRegisterForm() {
   const [dob, setDob] = useState(new Date());
-  const { screenSize } = useStateContext();
+  const { setRegisterPersonnel, postPersonnel, screenSize } = useStateContext();
   const [gridSize, setGridSize] = useState(3);
 
   useEffect(() => {
@@ -23,7 +32,10 @@ export default function PersonnelRegisterForm() {
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
     data.dob = dob;
+
     console.log(data);
+    setRegisterPersonnel(data);
+    postPersonnel();
   };
 
   return (
@@ -44,7 +56,7 @@ export default function PersonnelRegisterForm() {
         <div
           className={`grid  ${
             gridSize === 3 ? "grid-cols-3" : `grid-cols-${gridSize}`
-          }  justify-items-center gap-y-6 mt-12`}
+          }  justify-items-center place-content-center gap-y-6 mt-12`}
         >
           <div>
             <Label>Member Id</Label>
@@ -53,7 +65,12 @@ export default function PersonnelRegisterForm() {
 
           <div>
             <Label>Member Name</Label>
-            <Input type="text" placeholder="Member Name" name="name" />
+            <Input type="text" placeholder="Member Name" name="official_name" />
+          </div>
+
+          <div>
+            <Label>Password</Label>
+            <Input type="text" placeholder="Password" name="password" />
           </div>
 
           <div>
@@ -66,6 +83,36 @@ export default function PersonnelRegisterForm() {
             <DatePicker date={dob} setDate={setDob} />
           </div>
 
+          <div>
+            <Label>Gender</Label>
+            <Select required name="gender">
+              <SelectTrigger className="h-10 w-96 px-3 rounded-md border border-input bg-background text-lg ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                <SelectValue placeholder="Status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem
+                    className="text-lg text-muted-foreground"
+                    value="idle"
+                  >
+                    Male
+                  </SelectItem>
+                  <SelectItem
+                    className="text-lg text-muted-foreground"
+                    value="busy"
+                  >
+                    Female
+                  </SelectItem>
+                  <SelectItem
+                    className="text-lg text-muted-foreground"
+                    value="broken"
+                  >
+                    Others
+                  </SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
           <div>
             <Label>Designation</Label>
             <Input type="text" placeholder="Designation" name="designation" />
@@ -92,15 +139,19 @@ export default function PersonnelRegisterForm() {
 
           <div>
             <Label>Picture</Label>
-            <Input type="url" placeholder="Add image URL" name="photogragh" />
+            <Input type="url" placeholder="Add image URL" name="photograph" />
           </div>
-
-          <div>
+          <div className="">
             <Label>Address</Label>
-            <Input type="text" placeholder="Address" name="address" />
-            {/* <p className="mt-2 font-medium text-base text-gray-500"></p> */}
+            <Input
+              type="text"
+              placeholder="Address"
+              name="address"
+              className=""
+            />
           </div>
         </div>
+
         <div className="flex items-center justify-center mt-8">
           <Button type="submit" className="px-12">
             Create

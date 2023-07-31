@@ -5,10 +5,11 @@ import { useStateContext } from "../Contexts/ContextProvider";
 import toast from "react-hot-toast";
 
 export default function Hardware() {
-  const { hardwares, getHardwares } = useStateContext();
+  const { hardwares, setHardwares, getHardwares } = useStateContext();
   useEffect(() => {
     document.title = "Hardware's List | Bandobast";
     getHardwares();
+    console.log(hardwares);
   }, []);
   return (
     <>
@@ -16,7 +17,12 @@ export default function Hardware() {
         <h1 className="text-4xl font-semibold text-start mt-8">
           Hardware's List
         </h1>
-        <DataTable columns={headers} path={"hardware"} data={hardwares} fetchData={getHardwares} />
+        <DataTable
+          columns={headers}
+          path={"hardware"}
+          data={hardwares}
+          fetchData={getHardwares}
+        />
       </div>
     </>
   );

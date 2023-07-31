@@ -23,15 +23,11 @@ export default function RegisterHardware() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    setRegisterHardware({
-      hardware_id: e.target.hardware_id.value,
-      secret: e.target.secret.value,
-      name: e.target.name.value,
-      description: e.target.description.value,
-      type: e.target.type.value,
-      status: e.target.status.value,
-    });
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData);
+    
+    console.log(data);
+    setRegisterHardware(data);
     const toastId = toast.loading("Loading...");
     postHardware();
     toast.success("Success", { id: toastId });

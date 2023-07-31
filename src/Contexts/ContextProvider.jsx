@@ -197,7 +197,14 @@ export const ContextProvider = ({ children }) => {
     }
 
     toast.success(res.message, { id: toastId });
-    setHardwares(res.data.hardware);
+    setHardwares((prev) => {
+      prev = res.data.hardware.map((item) => {
+        item['sid'] = item['hardware_id']
+        delete item['hardware_id'];
+        return item;
+      });
+      return prev;
+    });
   };
 
   const postHardware = async () => {
@@ -220,6 +227,56 @@ export const ContextProvider = ({ children }) => {
 
     toast.success(res.message, { id: toastId });
     setRegisterHardware({});
+  };
+
+  /********************** PERSONNEL ********************************/
+  const [personnels, setPersonnels] = useState([]);
+  const [RegisterPersonnel, setRegisterPersonnel] = useState({});
+
+  const postPersonnel = async () => {
+    toast.loading("Loading...", { id: toastId });
+    const response = await fetch(`${baseUrl}admin/personnel/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(RegisterPersonnel),
+    });
+
+    const res = await response.json();
+    console.log(res.message);
+    if (!res.success) {
+      toast.error(res.message, { id: toastId });
+      return;
+    }
+
+    toast.success(res.message, { id: toastId });
+    setRegisterPersonnel({});
+  };
+
+  const getPersonnels = async () => {
+    toast.loading("Loading...", { id: toastId });
+    const response = await fetch(
+      `${baseUrl}admin/personnel/?page=1&limit=10000`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const res = await response.json();
+    console.log(res.message);
+    if (!res.success) {
+      toast.error(res.message, { id: toastId });
+      return;
+    }
+
+    toast.success(res.message, { id: toastId });
+    setPersonnels(res.data.personnel);
   };
 
   return (
@@ -258,6 +315,13 @@ export const ContextProvider = ({ children }) => {
         setRegisterHardware,
         postHardware,
         getHardwares,
+
+        personnels, // personnel apis
+        setPersonnels,
+        RegisterPersonnel,
+        setRegisterPersonnel,
+        postPersonnel,
+        getPersonnels,
       }}
     >
       {children}

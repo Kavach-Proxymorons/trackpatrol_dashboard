@@ -42,8 +42,6 @@ import {
   TableRow,
 } from "./table";
 
-import { useStateContext } from "../../../Contexts/ContextProvider";
-
 export default function DataTable({ columns, path, data, fetchData }) {
   const [sorting, setSorting] = useState([]);
   const [columnFilters, setColumnFilters] = useState([]);
