@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import { IoIosArrowBack, IoIosCar } from "react-icons/io";
 import { BiLogoChrome } from "react-icons/bi";
-import Input from '../../Components/ui-components/input';
+import Input from "../../Components/ui-components/input";
+import { Link } from "react-router-dom";
 
 export default function DetailedMap() {
   return (
@@ -11,12 +12,14 @@ export default function DetailedMap() {
       <Input
         className="h-12 px-3 sticky top-0 z-50 w-full border-b-3 focus-visible:outline-none focus-visible:ring-0  focus-visible:ring-offset-0 rounded-none"
         placeholder="🔍 Search a personnel by id..."
-      /> 
+      />
       <div className="absolute top-12 z-50 bg-background w-[280px] rounded-br-xl">
-        <IoIosArrowBack
-          size={25}
-          className="mx-4 mt-4 h-8 w-8 hover:bg-[#efefefb3] rounded"
-        />
+        <Link to="/dashboard/monitor">
+          <IoIosArrowBack
+            size={25}
+            className="mx-4 h-8 w-8 hover:bg-[#efefefb3] rounded"
+          />
+        </Link>
         <div className="flex flex-col justify-center items-start p-4 gap-y-4">
           <div className="w-full border-2 rounded-md p-4">
             <span className="flex items-center justify-start gap-x-2 font-medium mb-2">
