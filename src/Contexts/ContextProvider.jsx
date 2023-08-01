@@ -32,8 +32,10 @@ export const ContextProvider = ({ children }) => {
   const [token, setToken] = useState("");
   const [screenSize, setScreenSize] = useState(window.innerWidth);
   const [activeMenu, setActiveMenu] = useState(
-    window.innerWidth >= 1200 ? true : false
+    window.innerWidth >= 1350 ? true : false
   );
+  const [menuWidth, setMenuWidth] = useState(activeMenu);
+
 
   const [duty, setDuty] = useState(dutyDummyData);
 
@@ -296,6 +298,8 @@ export const ContextProvider = ({ children }) => {
 
         activeMenu,
         setActiveMenu,
+        menuWidth,
+        setMenuWidth,
 
         validateToken,
         login,
