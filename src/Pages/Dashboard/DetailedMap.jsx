@@ -1,3 +1,9 @@
+/*
+I want to set dynamically to map component but it is not working
+When height changes, map component is not updating causing it to be blank
+*/
+
+
 import { Map } from "../../Components";
 import { useEffect, useState } from "react";
 import { useStateContext } from "../../Contexts/ContextProvider";
