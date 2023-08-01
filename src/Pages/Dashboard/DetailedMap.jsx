@@ -4,26 +4,26 @@ import { useStateContext } from "../../Contexts/ContextProvider";
 import { IoIosArrowBack, IoIosCar } from "react-icons/io";
 import { BiLogoChrome } from "react-icons/bi";
 import Input from "../../Components/ui-components/input";
-import useWindowSize from "../../hooks/useWindowSize";
 import { Link } from "react-router-dom";
+import useWindowSize from "../../hooks/useWindowSize";
 
 export default function DetailedMap() {
-
   const { height } = useWindowSize();
-
   return (
-    <div className={`w-auto relative`} style={{height : `${height-133}px`}}>
-      <Input
-        className="h-12 px-3 sticky top-0 z-50 w-full border-b-3 focus-visible:outline-none focus-visible:ring-0  focus-visible:ring-offset-0 rounded-none"
-        placeholder="🔍 Search a personnel by id..."
-      />
-      <div className="absolute top-12 z-50 bg-background w-[280px] rounded-br-xl">
+    <div className={`w-auto relative`} style={{ height: `${height - 150}px` }}>
+      <div className="flex items-center">
         <Link to="/dashboard/monitor">
           <IoIosArrowBack
-            size={25}
-            className="mx-4 h-8 w-8 hover:bg-[#efefefb3] rounded"
+            size={30}
+            className="hover:bg-[#efefefb3] rounded h-10 w-10 cursor-pointer"
           />
         </Link>
+        <Input
+          className="h-12 w-full focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 rounded border-2 border-slate-100 bg-slate-50 hover:bg-secondary"
+          placeholder="🔍 Search a personnel by id..."
+        />
+      </div>
+      <div className="border-t-3 absolute top-13 z-50 w-[280px] bg-background rounded-br-xl">
         <div className="flex flex-col justify-center items-start p-4 gap-y-4">
           <div className="w-full border-2 rounded-md p-4">
             <span className="flex items-center justify-start gap-x-2 font-medium mb-2">

@@ -103,7 +103,7 @@ export default function CreateBandobast() {
               value={duty.note}
               onChange={handleChange}
             />
-            <p className="mt-2 font-medium text-base text-gray-500 text-right">
+            <p className="mt-2 font-medium text-base text-slate-400 text-right">
               Optional
             </p>
           </div>

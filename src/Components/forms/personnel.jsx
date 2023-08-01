@@ -118,8 +118,8 @@ export default function PersonnelRegisterForm() {
 
           <div>
             <Label>Gender</Label>
-            <Select name="gender" onValueChange={handleSelect} required>
-              <SelectTrigger className="h-10 w-96 px-3 rounded-md border border-input bg-background text-lg ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+            <Select name="gender" onValueChange={handleSelect} className='border-2 border-slate-100 bg-slate-50 hover:bg-secondary' required>
+              <SelectTrigger className="h-10 w-96 px-3 rounded-md text-lg ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
                 <SelectValue placeholder="Gender" />
               </SelectTrigger>
               <SelectContent>

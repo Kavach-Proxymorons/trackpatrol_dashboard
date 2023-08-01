@@ -13,6 +13,7 @@ import {
   Setting,
   Monitor,
   DetailedMap,
+  Logout,
 } from "./Pages";
 
 import { Navbar, Sidebar } from "./Components";
@@ -20,7 +21,7 @@ import { PersonnelForm, HardwareForm, BandobastForm } from "./Components/forms";
 import "./App.css";
 
 function App() {
-  const { user, auth, activeMenu } = useStateContext();
+  const { user, auth, activeMenu, isLogged } = useStateContext();
   return (
     <div className="">
 
@@ -49,9 +50,9 @@ function App() {
           },
         }}
       />
-      <div className="h-screen bg-background">
-        <Sidebar />
-        <div className={`${activeMenu ? "ml-60" : ""} `}>
+      <div className="h-screen">
+        {isLogged && <Sidebar />}
+        <div className={`${isLogged ? (activeMenu ? "ml-60" : "ml-[84px]") : ''} `}>
           <Navbar />
           <div className="">
             <Routes>
@@ -67,7 +68,7 @@ function App() {
               <Route path="/bandobast/register" element={<BandobastForm />} />
               <Route path="/admin" element={<Admin />} />
               <Route path="/setting" element={<Setting />} />
-              {/* <Route path='/logout' element={<Login />} /> */}
+              <Route path='/logout' element={<Logout />} />
               <Route path="*" element={<>ERROR 404</>} />
             </Routes>
           </div>

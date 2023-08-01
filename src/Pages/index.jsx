@@ -7,3 +7,4 @@ export {default as Setting} from './Setting';
 export {default as Login} from './Login';
 export {default as Monitor} from './Dashboard/Monitor';
 export {default as DetailedMap} from './Dashboard/DetailedMap';
+export {default as Logout} from './Logout';

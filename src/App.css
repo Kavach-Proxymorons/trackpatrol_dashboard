@@ -2,6 +2,10 @@ a {
     @apply flex items-center  gap-x-2 p-3 rounded-xl;
 }
 
+a:hover {
+    @apply bg-[#F4F6FA];
+}
+
 a span {
     @apply text-lg text-[#7B7D92] font-medium;
 }
