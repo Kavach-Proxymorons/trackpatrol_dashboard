@@ -3,7 +3,6 @@ I want to set dynamically to map component but it is not working
 When height changes, map component is not updating causing it to be blank
 */
 
-
 import { Map } from "../../Components";
 import { useEffect, useState } from "react";
 import { useStateContext } from "../../Contexts/ContextProvider";
@@ -11,10 +10,12 @@ import { IoIosArrowBack, IoIosCar } from "react-icons/io";
 import { BiLogoChrome } from "react-icons/bi";
 import Input from "../../Components/ui-components/input";
 import { Link } from "react-router-dom";
+import useWindowSize from "../../hooks/useWindowSize";
 
 export default function DetailedMap() {
+  const { height } = useWindowSize();
   return (
-    <div className={`w-auto h-[774px] relative`}>
+    <div className={`w-auto relative`} style={{ height: `${height - 150}px` }}>
       <div className="flex items-center">
         <Link to="/dashboard/monitor">
           <IoIosArrowBack

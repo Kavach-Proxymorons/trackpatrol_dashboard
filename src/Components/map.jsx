@@ -3,8 +3,6 @@ import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import marker from '../Assests/marker.png';
 import { useStateContext } from "../Contexts/ContextProvider";
 
-
-
 function RenderMap() {
   const center = useMemo(() => ({ lat: 26.846, lng: 80.946 }), []);
 
