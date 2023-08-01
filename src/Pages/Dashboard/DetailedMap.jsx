@@ -3,12 +3,13 @@ import { useEffect, useState } from "react";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import { IoIosArrowBack, IoIosCar } from "react-icons/io";
 import { BiLogoChrome } from "react-icons/bi";
+import Input from '../../Components/ui-components/input';
 
 export default function DetailedMap() {
   return (
     <div className={`w-auto h-[790px] relative`}>
-      <input
-        className="h-12 px-3 sticky top-0 z-50 w-full border-b-3"
+      <Input
+        className="h-12 px-3 sticky top-0 z-50 w-full border-b-3 focus-visible:outline-none focus-visible:ring-0  focus-visible:ring-offset-0 rounded-none"
         placeholder="🔍 Search a personnel by id..."
       /> 
       <div className="absolute top-12 z-50 bg-background w-[280px] rounded-br-xl">

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Input from "../ui-components/input";
 import Label from "../ui-components/label";
 import { Button } from "../ui-components/button";
@@ -10,17 +10,20 @@ import { Link } from "react-router-dom";
 export default function CreateBandobast() {
   const { duty, setDuty, postDuty } = useStateContext();
   const [date, setDate] = useState({
-    start_time: "",
-    end_time: "",
+    from: '',
+    to: '',
   });
+
+  const handleChange = (e) => {
+    setDuty((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  useEffect(() => {
+    setDuty((prev) => ({ ...prev, 'start_time': date.from, 'end_time': date.to }));
+  },[date]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(typeof date.from);
-    const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData);
-    console.log(data);
-    setDuty(() => data);
     postDuty();
   };
 
@@ -42,22 +45,22 @@ export default function CreateBandobast() {
         <div className="grid grid-cols-2 justify-items-center gap-x-24 gap-y-6 mt-12">
           <div className="justify-self-end">
             <Label htmlFor="title">Bandobast Title</Label>
-            <Input type="text" placeholder="Title" name="title" />
+            <Input type="text" placeholder="Title" name="title" onChange={handleChange} />
           </div>
 
           <div className="justify-self-start">
             <Label htmlFor="description">Description</Label>
-            <Input type="text" placeholder="Description" name="description" />
+            <Input type="text" placeholder="Description" name="description" onChange={handleChange}/>
           </div>
 
           <div className="justify-self-end">
             <Label htmlFor="venue">Venue</Label>
-            <Input type="text" placeholder="Venue" name="venue" />
+            <Input type="text" placeholder="Venue" name="venue" onChange={handleChange}/>
           </div>
 
           <div className="justify-self-start">
             <Label htmlFor="location">Location</Label>
-            <Input type="text" placeholder="Location" name="location" />
+            <Input type="text" placeholder="Location" name="location" onChange={handleChange}/>
           </div>
           <div className="justify-self-end">
             <Label htmlFor="Date">Duration</Label>
@@ -66,7 +69,7 @@ export default function CreateBandobast() {
 
           <div className="justify-self-start">
             <Label htmlFor="note">Note</Label>
-            <Input type="text" placeholder="Note" name="note" />
+            <Input type="text" placeholder="Note" name="note" onChange={handleChange}/>
             <p className="mt-2 font-medium text-base text-gray-500 text-right">
               Optional
             </p>

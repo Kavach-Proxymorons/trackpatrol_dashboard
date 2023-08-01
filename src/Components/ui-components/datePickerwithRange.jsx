@@ -11,7 +11,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 export function DatePickerWithRange({ date, setDate, className }) {
 
   const handleDateSubmit = (selectedDate) => {
-    if (selectedDate?.to) {
+    console.log(selectedDate);
+    if (selectedDate?.from) {
       setDate({
         from: selectedDate.from,
         to: selectedDate.to,
@@ -22,7 +23,10 @@ export function DatePickerWithRange({ date, setDate, className }) {
         to: selectedDate.from,
       });
     } else {
-      setDate({});
+      setDate({
+        from: '',
+        to: '',
+      });
     }
   };
 

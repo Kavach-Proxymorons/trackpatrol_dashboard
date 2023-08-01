@@ -37,7 +37,7 @@ export default function Monitor() {
                 </p>
               </div>
             </div>
-            <Link to='/dashboard/monitor/details' className="w-[20rem] h-[12rem] shadow-md overflow-hidden rounded-xl flex flex-col justify-between bg-[#F4F6FA]">
+            <Link to='/dashboard/monitor/details' className="w-[20rem] h-[12rem] shadow-md overflow-hidden rounded-xl flex flex-col justify-between bg-[#F4F6FA] p-0">
               <div className="flex gap-x-2 items-center py-2 px-3">
                 <IoIosInformationCircle size={25} color="#000" />
                 <span className="text-lg font-semibold">
