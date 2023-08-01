@@ -4,11 +4,15 @@ import { useStateContext } from "../../Contexts/ContextProvider";
 import { IoIosArrowBack, IoIosCar } from "react-icons/io";
 import { BiLogoChrome } from "react-icons/bi";
 import Input from "../../Components/ui-components/input";
+import useWindowSize from "../../hooks/useWindowSize";
 import { Link } from "react-router-dom";
 
 export default function DetailedMap() {
+
+  const { height } = useWindowSize();
+
   return (
-    <div className={`w-auto h-[790px] relative`}>
+    <div className={`w-auto relative`} style={{height : `${height-133}px`}}>
       <Input
         className="h-12 px-3 sticky top-0 z-50 w-full border-b-3 focus-visible:outline-none focus-visible:ring-0  focus-visible:ring-offset-0 rounded-none"
         placeholder="🔍 Search a personnel by id..."
