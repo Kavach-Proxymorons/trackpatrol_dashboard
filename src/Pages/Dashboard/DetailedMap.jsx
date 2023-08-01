@@ -17,7 +17,7 @@ export default function DetailedMap() {
           />
         </Link>
         <Input
-          className="h-12 w-full focus-visible:outline-none focus-visible:ring-0  focus-visible:ring-offset-0 rounded bg-muted"
+          className="h-12 w-full focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 rounded border-2 border-slate-100 bg-slate-50 hover:bg-secondary"
           placeholder="🔍 Search a personnel by id..."
         />
       </div>
