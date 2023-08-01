@@ -9,21 +9,19 @@ import { Link } from "react-router-dom";
 
 export default function CreateBandobast() {
   const { duty, setDuty, postDuty } = useStateContext();
-  const [date, setDate] = useState({
-    from: '',
-    to: '',
-  });
+  const [date, setDate] = useState({});
 
   const handleChange = (e) => {
     setDuty((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   useEffect(() => {
-    setDuty((prev) => ({ ...prev, 'start_time': date.from, 'end_time': date.to }));
-  },[date]);
+    document.title = "Create Bandobast | Bandobast";
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setDate({});
     postDuty();
   };
 
@@ -45,31 +43,66 @@ export default function CreateBandobast() {
         <div className="grid grid-cols-2 justify-items-center gap-x-24 gap-y-6 mt-12">
           <div className="justify-self-end">
             <Label htmlFor="title">Bandobast Title</Label>
-            <Input type="text" placeholder="Title" name="title" onChange={handleChange} />
+            <Input
+              type="text"
+              placeholder="Title"
+              name="title"
+              value={duty.title}
+              onChange={handleChange}
+            />
           </div>
 
           <div className="justify-self-start">
             <Label htmlFor="description">Description</Label>
-            <Input type="text" placeholder="Description" name="description" onChange={handleChange}/>
+            <Input
+              type="text"
+              placeholder="Description"
+              name="description"
+              value={duty.description}
+              onChange={handleChange}
+            />
           </div>
 
           <div className="justify-self-end">
             <Label htmlFor="venue">Venue</Label>
-            <Input type="text" placeholder="Venue" name="venue" onChange={handleChange}/>
+            <Input
+              type="text"
+              placeholder="Venue"
+              name="venue"
+              value={duty.venue}
+              onChange={handleChange}
+            />
           </div>
 
           <div className="justify-self-start">
             <Label htmlFor="location">Location</Label>
-            <Input type="text" placeholder="Location" name="location" onChange={handleChange}/>
+            <Input
+              type="text"
+              placeholder="Location"
+              name="location"
+              value={duty.location}
+              onChange={handleChange}
+            />
           </div>
           <div className="justify-self-end">
             <Label htmlFor="Date">Duration</Label>
-            <DatePickerWithRange date={date} setDate={setDate} />
+            <DatePickerWithRange
+              duty={duty}
+              setDuty={setDuty}
+              date={date}
+              setDate={setDate}
+            />
           </div>
 
           <div className="justify-self-start">
             <Label htmlFor="note">Note</Label>
-            <Input type="text" placeholder="Note" name="note" onChange={handleChange}/>
+            <Input
+              type="text"
+              placeholder="Note"
+              name="note"
+              value={duty.note}
+              onChange={handleChange}
+            />
             <p className="mt-2 font-medium text-base text-gray-500 text-right">
               Optional
             </p>

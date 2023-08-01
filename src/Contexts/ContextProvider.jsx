@@ -11,7 +11,7 @@ const dutyDummyData = {
   location: "",
   start_time: "",
   end_time: "",
-  note: "Note",
+  note: "",
 };
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -142,7 +142,6 @@ export const ContextProvider = ({ children }) => {
   /********************* DUTY ************************/
   const postDuty = async () => {
     toast.loading("Loading...", { id: toastId });
-    console.log(duty);
     const response = await fetch(`${baseUrl}admin/duty/`, {
       method: "POST",
       headers: {
@@ -153,16 +152,14 @@ export const ContextProvider = ({ children }) => {
     });
 
     const res = await response.json();
-    console.log(res);
+    console.log(res.message);
     if (!res.success) {
       toast.error(res.message, { id: toastId });
       return;
     }
 
     toast.success(res.message, { id: toastId });
-    setDuty(() => {
-      return dutyDummyData;
-    });
+    setDuty((prev) => (prev = dutyDummyData));
   };
 
   /********************** HARWDARE ********************************/
@@ -199,8 +196,8 @@ export const ContextProvider = ({ children }) => {
     toast.success(res.message, { id: toastId });
     setHardwares((prev) => {
       prev = res.data.hardware.map((item) => {
-        item['sid'] = item['hardware_id']
-        delete item['hardware_id'];
+        item["sid"] = item["hardware_id"];
+        delete item["hardware_id"];
         return item;
       });
       return prev;

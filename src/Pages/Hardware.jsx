@@ -6,10 +6,10 @@ import toast from "react-hot-toast";
 
 export default function Hardware() {
   const { hardwares, setHardwares, getHardwares } = useStateContext();
+  
   useEffect(() => {
     document.title = "Hardware's List | Bandobast";
     getHardwares();
-    console.log(hardwares);
   }, []);
   return (
     <>

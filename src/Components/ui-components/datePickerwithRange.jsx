@@ -1,4 +1,4 @@
-"use client";
+import { useState, useEffect } from "react";
 import { addDays, format, set } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { DateRange } from "react-day-picker";
@@ -8,10 +8,19 @@ import { Button } from "./button";
 import { Calendar } from "./calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 
-export function DatePickerWithRange({ date, setDate, className }) {
+export function DatePickerWithRange({
+  duty,
+  setDuty,
+  date,
+  setDate,
+  className,
+}) {
+
+  useEffect(() => {
+    setDuty((prev) => ({ ...prev, start_time: date.from, end_time: date.to }));
+  }, [date]);
 
   const handleDateSubmit = (selectedDate) => {
-    console.log(selectedDate);
     if (selectedDate?.from) {
       setDate({
         from: selectedDate.from,
@@ -23,10 +32,7 @@ export function DatePickerWithRange({ date, setDate, className }) {
         to: selectedDate.from,
       });
     } else {
-      setDate({
-        from: '',
-        to: '',
-      });
+      setDate({});
     }
   };
 

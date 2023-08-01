@@ -4,6 +4,9 @@ import {DutyCard, OngoingDutyCard} from '../../Components';
 
 export default function Dashboard() {
     const { user, token } = useStateContext();
+    useEffect(() => {
+        document.title = "Dashboard | Bandobast";
+    }, []);
 
     return <>
         <div className="px-16 pt-8 bg-background" >
