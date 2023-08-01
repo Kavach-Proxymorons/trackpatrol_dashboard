@@ -12,6 +12,13 @@ export default function Login() {
   const [eye, setEye] = useState(false);
 
   // if (window.localStorage.getItem('token') !== null) navigate('/');
+  useEffect(() => {
+    window.addEventListener("popstate", () => {
+      // listen to the popstate event i.e. the browser back button
+      // if page is loaded from the browser back button then ...
+      navigate("/");
+    });
+  }, []);
 
   const handlerVisiblePassword = () => {
     const password = document.querySelector('input[name="password"]');

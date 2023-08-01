@@ -32,7 +32,7 @@ export const ContextProvider = ({ children }) => {
   const [token, setToken] = useState("");
   const [screenSize, setScreenSize] = useState(window.innerWidth);
   const [activeMenu, setActiveMenu] = useState(
-    window.innerWidth >= 1350 ? true : false
+    window.innerWidth >= 1000 ? true : false
   );
   const [menuWidth, setMenuWidth] = useState(activeMenu);
 

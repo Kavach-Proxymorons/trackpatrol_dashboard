@@ -26,7 +26,6 @@ export default function Sidebar() {
         return window.innerWidth;
       });
     };
-    console.log(activeMenu, menuWidth);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [screenSize]);
@@ -39,7 +38,7 @@ export default function Sidebar() {
       setActiveMenu(() => {
         return false;
       });
-    } else if (screenSize >= 1350 && menuWidth)
+    } else if (screenSize >= 1000 && menuWidth)
       setActiveMenu(() => {
         return true;
       });
@@ -59,14 +58,13 @@ export default function Sidebar() {
         <div className="flex flex-col justify-between h-screen border-r-3">
           <div className="">
             <div
-              className="flex justify-center items-center py-6 border-b-3"
+              className="flex justify-center items-center gap-x-2 py-6 border-b-3"
 
               onClick={() => {
-                console.log('clicked');
                 setMenuWidth((prev) => (prev = !prev));
               }}
             >
-              <img className="w-8 mr-2" src={logo} alt="logo" />
+              <img className="w-8" src={logo} alt="logo" />
               {activeMenu && (
                 <span className="text-2xl font-normal text-primary">
                   TrackPatrol
