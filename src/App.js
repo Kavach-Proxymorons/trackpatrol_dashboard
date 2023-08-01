@@ -13,6 +13,7 @@ import {
   Setting,
   Monitor,
   DetailedMap,
+  Logout,
 } from "./Pages";
 
 import { Navbar, Sidebar } from "./Components";
@@ -67,7 +68,7 @@ function App() {
               <Route path="/bandobast/register" element={<BandobastForm />} />
               <Route path="/admin" element={<Admin />} />
               <Route path="/setting" element={<Setting />} />
-              {/* <Route path='/logout' element={<Login />} /> */}
+              <Route path='/logout' element={<Logout />} />
               <Route path="*" element={<>ERROR 404</>} />
             </Routes>
           </div>

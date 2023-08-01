@@ -36,7 +36,6 @@ export const ContextProvider = ({ children }) => {
   );
   const [menuWidth, setMenuWidth] = useState(activeMenu);
 
-
   const [duty, setDuty] = useState(dutyDummyData);
 
   useEffect(() => {
@@ -50,9 +49,9 @@ export const ContextProvider = ({ children }) => {
     setName((prev) => (prev = ""));
     setUserName((prev) => (prev = ""));
     setIsLogged((prev) => (prev = false));
-    setActiveMenu(() => {
-      return false;
-    });
+    setActiveMenu((prev) => (prev = false));
+
+    toast.success("Logged out successfully", { id: toastId });
     navigate(false);
     navigate("/login");
   };

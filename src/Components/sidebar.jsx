@@ -91,7 +91,7 @@ export default function Sidebar() {
                 <HiMiniCpuChip size={25} />
                 {activeMenu && <span>Hardware</span>}
               </NavLink>
-              <div className="bg-[#DBDBDB] w-full h-[2px] my-4 drop-shadow-none"></div>
+              <div className="bg-[#DBDBDB] w-full h-[2px] my-2 drop-shadow-none"></div>
 
               <NavLink to="/admin">
                 <MdAdminPanelSettings size={25} />
