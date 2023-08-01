@@ -19,45 +19,45 @@ export default function DetailedMap() {
         />
         <div className="flex flex-col justify-center items-start p-4 gap-y-4">
           <div className="w-full border-2 rounded-md p-4">
-            <span className="flex items-center justify-start gap-x-2 font-semibold mb-2">
+            <span className="flex items-center justify-start gap-x-2 font-medium mb-2">
               <IoIosCar size={30} /> BB-8891776
             </span>
             <p className="text-sm">
-              <span className="text-base font-semibold"> Total: </span> 500
+              <span className="text-base font-medium"> Total: </span> 500
               Personnel in range
             </p>
             <p className="text-sm">4 Km radius covered</p>
           </div>
 
           <div className="w-full border-2 rounded-md p-4">
-            <span className="flex items-center justify-start gap-x-2 font-semibold mb-2">
+            <span className="flex items-center justify-start gap-x-2 font-medium mb-2">
               <div className="h-5 w-5 bg-[#5030E5] rounded-full"></div> RFID
               Signal Update
             </span>
             <p className="text-sm">
-              <span className="text-base font-semibold"> Total: </span> 240
+              <span className="text-base font-medium"> Total: </span> 240
               Personnel Update
             </p>
           </div>
 
           <div className="w-full border-2 rounded-md p-4">
-            <span className="flex items-center justify-start gap-x-2 font-semibold mb-2">
+            <span className="flex items-center justify-start gap-x-2 font-medium mb-2">
               <div className="h-5 w-5 bg-[#4ACE52] rounded-full"></div> GPS
               Signal Update
             </span>
             <p className="text-sm">
-              <span className="text-base font-semibold"> Total: </span> 240
+              <span className="text-base font-medium"> Total: </span> 240
               Personnel Update
             </p>
           </div>
 
           <div className="w-full border-2 rounded-md p-4">
-            <span className="flex items-center justify-start gap-x-2 font-semibold mb-2">
+            <span className="flex items-center justify-start gap-x-2 font-medium mb-2">
               <div className="h-5 w-5 bg-[#FE8235] rounded-full"></div> Issues
               Tracking
             </span>
             <p className="text-sm">
-              <span className="text-base font-semibold"> Total: </span> 240
+              <span className="text-base font-medium"> Total: </span> 240
               Personnel Update
             </p>
           </div>
