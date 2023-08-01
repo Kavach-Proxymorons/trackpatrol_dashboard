@@ -33,13 +33,12 @@ export default function Sidebar() {
 
 
     return <>
-        <div className={`md:overflow-hidden overflow-auto md:hover:overflow-auto fixed ${activeMenu ? 'shadow w-60' : ''}`}>
+        <div className={`md:overflow-hidden overflow-auto md:hover:overflow-auto fixed ${activeMenu ? 'w-60' : ''} border-r-3`}>
             {activeMenu &&
-                <div className='flex flex-col justify-between h-screen drop-shadow'>
+                <div className='flex flex-col justify-between h-screen '>
                     <div className=''>
                         <Logo />
-                        <div className='bg-[#DBDBDB] w-full h-[2px] my-6'></div>
-                        <div className='flex flex-col gap-y-1 ml-6 mt-20 mr-6 '>
+                        <div className='flex flex-col gap-y-1 ml-6 mt-20 mr-6 drop-shadow'>
                             <NavLink to='/'>
                                 <BiSolidDashboard size={25} />
                                 <span >Dashboard</span>
@@ -57,8 +56,7 @@ export default function Sidebar() {
                                 <HiMiniCpuChip size={25} />
                                 <span >Hardware</span>
                             </NavLink>
-                            <div className='bg-[#DBDBDB] w-full h-[2px] my-6'></div>
-
+                            <div className='bg-[#DBDBDB] w-full h-[2px] my-6 drop-shadow-none'></div>
                             
                             <NavLink to='/admin'>
                                 <MdAdminPanelSettings size={25} />

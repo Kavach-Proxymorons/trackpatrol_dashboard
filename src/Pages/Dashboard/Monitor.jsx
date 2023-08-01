@@ -1,8 +1,10 @@
-import { TitlePersonal, LocationTime } from "../Components";
-import { Map } from "../Components";
+import { TitlePersonal, LocationTime } from "../../Components";
+import { Map } from "../../Components";
 import { LuCalendar } from "react-icons/lu";
 import { IoIosArrowBack } from "react-icons/io";
 import { Link } from "react-router-dom";
+// import { Info } from "lucide-react";
+import { IoIosInformationCircle } from "react-icons/io";
 
 export default function Monitor() {
   return (
@@ -35,9 +37,15 @@ export default function Monitor() {
                 </p>
               </div>
             </div>
-            <div className="w-[20rem] h-[11rem] shadow-md overflow-hidden rounded-xl">
+            <Link to='/dashboard/monitor/details' className="w-[20rem] h-[12rem] shadow-md overflow-hidden rounded-xl flex flex-col justify-between bg-[#F4F6FA]">
+              <div className="flex gap-x-2 items-center py-2 px-3">
+                <IoIosInformationCircle size={25} color="#000" />
+                <span className="text-lg font-semibold">
+                  BANDOBAST INFO
+                </span>
+              </div>
               <Map />
-            </div>
+            </Link>
           </div>
           <div className="flex flex-col w-[51rem] bg-[#F4F6FA] p-6 rounded-md gap-y-4 shadow-md">
             <h1 className="text-3xl font-semibold">

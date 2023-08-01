@@ -2,7 +2,7 @@ import { useState } from "react";
 import Input from "../ui-components/input";
 import Label from "../ui-components/label";
 import { Button } from "../ui-components/button";
-import { DatePickerWithRange } from '../ui-components/datePickerwithRange';
+import { DatePickerWithRange } from "../ui-components/datePickerwithRange";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import { IoIosArrowBack } from "react-icons/io";
 import { Link } from "react-router-dom";
@@ -25,7 +25,7 @@ export default function CreateBandobast() {
   };
 
   return (
-    <>
+    <div>
       <div>
         <Link
           to="/dashboard"
@@ -67,7 +67,9 @@ export default function CreateBandobast() {
           <div className="justify-self-start">
             <Label htmlFor="note">Note</Label>
             <Input type="text" placeholder="Note" name="note" />
-            <p className="mt-2 font-medium text-base text-gray-500 text-right">Optional</p>
+            <p className="mt-2 font-medium text-base text-gray-500 text-right">
+              Optional
+            </p>
           </div>
         </div>
         <div className="mt-8 flex justify-center">
@@ -76,6 +78,6 @@ export default function CreateBandobast() {
           </Button>
         </div>
       </form>
-    </>
+    </div>
   );
 }

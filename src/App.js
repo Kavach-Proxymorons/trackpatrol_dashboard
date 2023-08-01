@@ -12,16 +12,18 @@ import {
   Personnel,
   Setting,
   Monitor,
+  DetailedMap,
 } from "./Pages";
 
 import { Navbar, Sidebar } from "./Components";
-import {PersonnelForm, HardwareForm, BandobastForm } from './Components/forms';
+import { PersonnelForm, HardwareForm, BandobastForm } from "./Components/forms";
 import "./App.css";
 
 function App() {
   const { user, auth, activeMenu } = useStateContext();
   return (
-    <>
+    <div className="">
+
       <Toaster
         position="top-center"
         reverseOrder={false}
@@ -47,28 +49,31 @@ function App() {
           },
         }}
       />
-      <div className="h-screen">
+      <div className="h-screen bg-background">
         <Sidebar />
-        <div className={activeMenu ? "ml-60" : ""}>
+        <div className={`${activeMenu ? "ml-60" : ""} `}>
           <Navbar />
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/" exact element={<Dashboard />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/dashboard/monitor" element={<Monitor />} />
-            <Route path="/personnel" element={<Personnel />} />
-            <Route path="/personnel/register" element={<PersonnelForm />} />
-            <Route path="/hardware" element={<Hardware />} />
-            <Route path="/hardware/register" element={<HardwareForm />} />
-            <Route path="/bandobast/register" element={<BandobastForm />} />
-            <Route path="/admin" element={<Admin />} />
-            <Route path="/setting" element={<Setting />} />
-            {/* <Route path='/logout' element={<Login />} /> */}
-            <Route path="*" element={<>ERROR 404</>} />
-          </Routes>
+          <div className="">
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="/" exact element={<Dashboard />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/dashboard/monitor" element={<Monitor />} />
+              <Route path="/dashboard/monitor/details" element={<DetailedMap />} />
+              <Route path="/personnel" element={<Personnel />} />
+              <Route path="/personnel/register" element={<PersonnelForm />} />
+              <Route path="/hardware" element={<Hardware />} />
+              <Route path="/hardware/register" element={<HardwareForm />} />
+              <Route path="/bandobast/register" element={<BandobastForm />} />
+              <Route path="/admin" element={<Admin />} />
+              <Route path="/setting" element={<Setting />} />
+              {/* <Route path='/logout' element={<Login />} /> */}
+              <Route path="*" element={<>ERROR 404</>} />
+            </Routes>
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

@@ -5,4 +5,5 @@ export {default as Hardware} from './Hardware';
 export {default as Personnel} from './Personnel';
 export {default as Setting} from './Setting';
 export {default as Login} from './Login';
-export {default as Monitor} from './Monitor';
+export {default as Monitor} from './Dashboard/Monitor';
+export {default as DetailedMap} from './Dashboard/DetailedMap';

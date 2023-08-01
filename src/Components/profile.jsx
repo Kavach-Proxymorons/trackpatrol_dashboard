@@ -45,10 +45,10 @@ export default function Profile() {
             className="flex gap-x-4 items-center h-14 rounded-lg"
           >
             <div className="flex flex-col items-end my-2">
-              <span className="text-base font-medium text-neutral-900">
+              <span className="text-base font-medium text-primary">
                 Shahbaz
               </span>
-              <span className="mt-[-2px] text-sm text-[#7B7D92]">
+              <span className="mt-[-2px] text-sm text-neutral-400">
                 UP, INDIA
               </span>
             </div>

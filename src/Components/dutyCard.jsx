@@ -7,16 +7,16 @@ import { AiFillDelete } from "react-icons/ai";
 
 export default function DutyCard() {
   return (
-    <div className="p-4 bg-white rounded-md drop-shadow-sm">
-      <div className="flex justify-between  items-center">
-        <div className="grid grid-cols-2 gap-x-8 gap-y-3 drop-shadow-lg">
+    <div className="p-4 bg-white rounded-md drop-shadow-sm ">
+      <div className="flex justify-between  items-center ">
+        <div className="grid grid-cols-2 gap-x-8 gap-y-3 drop-shadow-lg ">
           <div className="col-span-2 flex gap-x-3 ">
             <div className="bg-[#DD81120d] rounded-lg p-2">
               <div className="p-2 bg-[#DD8112] rounded-full flex justify-center items-center">
                 <FaBuilding size={20} color="#fff" />
               </div>
             </div>
-            <span className="bg-[#DD81120d] rounded-lg p-3">
+            <span className="bg-[#DD81120d] rounded-lg p-3 text-primary">
               BB-889178 : PM Narendra Modi's arrival for the speech
             </span>
           </div>
