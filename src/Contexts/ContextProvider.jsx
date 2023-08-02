@@ -138,7 +138,7 @@ export const ContextProvider = ({ children }) => {
 
   /********************* DUTY ************************/
   const [registerDuty, setRegisterDuty] = useState(dutyDummyData);
-  const [duties, setDuties] = useState({});
+  const [duties, setDuties] = useState([]);
   const [duty, setDuty] = useState([]);
 
   const postDuty = async () => {
@@ -182,7 +182,6 @@ export const ContextProvider = ({ children }) => {
 
     toast.success(res.message, { id: toastId });
     setDuties(res.data.duty);
-    console.log(res.data.duty);
   };
 
   const getDutyById = async (id) => {
@@ -203,7 +202,8 @@ export const ContextProvider = ({ children }) => {
     }
 
     toast.success(res.message, { id: toastId });
-    setDuty((prev) => (prev = res.data.duty));
+    setDuty((prev) => (prev = res.data));
+    console.log(res.data);
   };
 
   /********************** Shift ********************************/
@@ -276,7 +276,7 @@ export const ContextProvider = ({ children }) => {
 
   const postShiftPersonnels = async (id, personnel) => {
     toast.loading("Loading...", { id: toastId });
-    const response = await fetch(`${baseUrl}admin/shift/${id}/personnel`, {
+    const response = await fetch(`${baseUrl}admin/shift/${id}/add_personnel`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -299,13 +299,14 @@ export const ContextProvider = ({ children }) => {
   const deleteShiftPersonnels = async (id, personnel) => {
     toast.loading("Loading...", { id: toastId });
     const response = await fetch(
-      `${baseUrl}admin/shift/${id}/personnel/${personnel}`,
+      `${baseUrl}admin/shift/${id}/remove_personnel`,
       {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
+        body: JSON.stringify(personnel),
       }
     );
 
@@ -322,7 +323,7 @@ export const ContextProvider = ({ children }) => {
 
   const postShiftHardwares = async (id, hardware) => {
     toast.loading("Loading...", { id: toastId });
-    const response = await fetch(`${baseUrl}admin/shift/${id}/hardware`, {
+    const response = await fetch(`${baseUrl}admin/shift/${id}/add_hardware`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -341,6 +342,33 @@ export const ContextProvider = ({ children }) => {
 
     toast.success(res.message, { id: toastId });
   };
+
+  const deleteShiftHardwares = async (id, hardware) => {
+    toast.loading("Loading...", { id: toastId });
+    const response = await fetch(
+      `${baseUrl}admin/shift/${id}/remove_hardware`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(hardware),
+      }
+    );
+
+    const res = await response.json();
+    console.log(res.message);
+
+    if (!res.success) {
+      toast.error(res.message, { id: toastId });
+      return;
+    }
+
+    toast.success(res.message, { id: toastId });
+  };
+
+
 
   /********************** HARWDARE ********************************/
   const [hardwares, setHardwares] = useState([]);
@@ -536,6 +564,7 @@ export const ContextProvider = ({ children }) => {
         getDuties,
         postDuty,
 
+
         shift, // shift apis
         setShift,
         registerShift,
@@ -545,6 +574,9 @@ export const ContextProvider = ({ children }) => {
         deleteShift,
         postShiftPersonnels,
         deleteShiftPersonnels,
+        postShiftHardwares,
+        deleteShiftHardwares,
+
 
         hardwares, // hardware apis
         setHardwares,
@@ -552,6 +584,7 @@ export const ContextProvider = ({ children }) => {
         setRegisterHardware,
         postHardware,
         getHardwares,
+
 
         personnels, // personnel apis
         setPersonnels,

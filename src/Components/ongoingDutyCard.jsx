@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import { PiHandTap } from "react-icons/pi";
 
@@ -6,23 +6,23 @@ import { Link } from "react-router-dom";
 import TitlePersonal from "./titlePersonal";
 import LocationTime from "./locationTime";
 
-export default function OngoingDutyCard() {
+export default function OngoingDutyCard({ duty }) {
   const { isLoaded } = useLoadScript({
     // googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API,
   });
 
   if (!isLoaded) return <>Loading</>;
-  else return <RenderMap />;
+  else return <RenderMap duty={duty} />;
 }
 
-function RenderMap() {
+function RenderMap({ duty }) {
   const center = useMemo(() => ({ lat: 26.846, lng: 80.946 }), []);
   const defaultStyles = [
     {
       featureType: "poi",
       elementType: "labels",
       stylers: [{ visibility: "off" }],
-    }
+    },
   ];
 
   const defaultMapOptions = {
@@ -33,9 +33,12 @@ function RenderMap() {
     styles: defaultStyles,
   };
 
+  useEffect(() => {
+    // console.log(duty._id);
+  }, []);
 
   return (
-    <div className="w-auto h-[12rem] rounded-2xl p-[4px] bg-[#0d77d3e0] relative">
+    <div className="w-auto h-[12rem] rounded-2xl p-[4px] bg-[#0d77d3e0] relative my-4">
       <GoogleMap
         zoom={15}
         center={center}
@@ -52,7 +55,7 @@ function RenderMap() {
         </div>
       </div>
       <Link
-        to="/dashboard/monitor"
+        to={`/dashboard/${duty._id}`}
         className=" bg-neutral-100 rounded-lg flex justify-between items-center px-3 py-2 gap-x-2
         absolute bottom-20 right-16"
       >

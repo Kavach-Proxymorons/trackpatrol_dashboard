@@ -10,10 +10,12 @@ import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 import { useStateContext } from "../../Contexts/ContextProvider";
 
 export function DatePickerWithRange({ date, setDate, className }) {
-  const { setRegisterDuty } = useStateContext();
+  const { setRegisterDuty, setRegisterShift } = useStateContext();
+  
 
   useEffect(() => {
     setRegisterDuty((prev) => ({ ...prev, start_time: date.from, end_time: date.to }));
+    setRegisterShift((prev) => ({ ...prev, start_time: date.from, end_time: date.to }));
   }, [date]);
 
   const handleDateSubmit = (selectedDate) => {

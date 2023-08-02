@@ -3,7 +3,7 @@ import { useStateContext } from "../../Contexts/ContextProvider";
 import { DutyCard, OngoingDutyCard } from "../../Components";
 
 export default function Dashboard() {
-  const { user, token, duty, setDuty, getDuties } = useStateContext();
+  const { duties, getDuties } = useStateContext();
   useEffect(() => {
     document.title = "Dashboard | Bandobast";
     getDuties();
@@ -15,7 +15,9 @@ export default function Dashboard() {
         <h2 className="text-4xl text-primary font-semibold mb-6">
           Ongoing Bandobast
         </h2>
-        {/* {duty.map((duty) => <OngoingDutyCard duty={duty} />)} */}
+        {duties.map((duty) => {
+          return <OngoingDutyCard key={duty._id} duty={duty} />;
+        })}
         {/* <OngoingDutyCard /> */}
         <h2 className="text-4xl text-primary font-semibold mt-12">
           Upcoming Bandobast

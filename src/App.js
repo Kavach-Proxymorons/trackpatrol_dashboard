@@ -59,7 +59,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/" exact element={<Dashboard />} />
               <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/dashboard/monitor" element={<Monitor />} />
+              <Route path="/dashboard/:id" element={<Monitor />} />
               <Route path="/dashboard/monitor/details" element={<DetailedMap />} />
               <Route path="/personnel" element={<Personnel />} />
               <Route path="/personnel/register" element={<PersonnelForm />} />

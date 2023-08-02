@@ -12,21 +12,31 @@ import HardwareList from "./hardwarelist";
 import { useStateContext } from "../../../Contexts/ContextProvider";
 import { useEffect, useState } from "react";
 import { DatePickerWithRange } from "../../../Components/ui-components/datePickerwithRange";
+import { useParams } from "react-router-dom";
 
 export default function Monitor() {
   const [date, setDate] = useState({});
-  const [shift, setShift] = useState({
-    shift_name: "",
-    start_time: "",
-    end_time: "",
-    duty: "",
-  });
+  const { id } = useParams();
+  const { registerShift, setRegisterShift, duty, getDutyById, postShift } =
+    useStateContext();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    setRegisterShift((prev) => {
+      return {
+        ...prev,
+        duty: id,
+      };
+    });
+    postShift(registerShift);
     setDate({});
-  }
+  };
+
+  useEffect(() => {
+    document.title = "Monitor | Bandobast";
+    getDutyById(id);
+    console.log(duty);
+  }, []);
 
   return (
     <>
@@ -71,14 +81,13 @@ export default function Monitor() {
               <Map />
             </Link>
           </div>
-          <div className="flex flex-col w-[51rem] bg-[#F4F6FA] p-6 rounded-md gap-y-4 shadow-md">
+          <div className="flex flex-col w-[34rem] bg-[#F4F6FA] p-6 rounded-md gap-y-4 shadow-md">
             <h1 className="text-3xl font-semibold">
               Title: Lorem, ipsum dolor.
             </h1>
             <p className="text-base text-[#3C3C3C]">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
-              facilis quasi, maiores laboriosam nesciunt voluptates sunt
-              asperiores voluptatem, excepturi iste modi nemo tempore odio ipsa.
+              facilis quasi, maiores laboriosam nesciunt voluptates sunt.
             </p>
             <div className="flex gap-x-3">
               <TitlePersonal />
@@ -90,15 +99,18 @@ export default function Monitor() {
               <h2 className="text-xl font-medium p-3 bg-[#F4F6FA]">
                 Add Shift
               </h2>
-              <form className="p-4 flex flex-col gap-y-6 rounded">
+              <form
+                className="p-4 flex flex-col gap-y-6 rounded"
+                onSubmit={handleSubmit}
+              >
                 <div className="w-auto">
                   <Label>Shift Name</Label>
                   <Input
                     type="text"
                     name="shift_name"
-                    value={shift.shift_name}
+                    value={registerShift.shift_name}
                     onChange={(e) =>
-                      setShift((prev) => ({
+                      setRegisterShift((prev) => ({
                         ...prev,
                         shift_name: e.target.value,
                       }))
@@ -112,7 +124,9 @@ export default function Monitor() {
                   setDate={setDate}
                   className="w-auto"
                 />
-                <Button className="w-32 self-center">Add Shift</Button>
+                <Button type="submit" className="w-32 self-center">
+                  Add Shift
+                </Button>
               </form>
             </div>
           </div>
