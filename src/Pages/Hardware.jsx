@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import DataTable from "../Components/ui-components/dataTable";
 import { headers } from "../Components/ui-components/dataTable/skeletons/hardware";
 import { useStateContext } from "../Contexts/ContextProvider";
-import toast from "react-hot-toast";
 
 export default function Hardware() {
   const { hardwares, setHardwares, getHardwares } = useStateContext();

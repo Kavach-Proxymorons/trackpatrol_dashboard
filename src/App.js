@@ -50,9 +50,9 @@ function App() {
           },
         }}
       />
-      <div className="h-screen">
+      <div className="h-screen bg-background">
         {isLogged && <Sidebar />}
-        <div className={`${isLogged ? (activeMenu ? "ml-60" : "ml-[84px]") : ''} `}>
+        <div className={`${isLogged ? (activeMenu ? "ml-52" : "ml-[84px]") : ''} `}>
           <Navbar />
           <div className="">
             <Routes>

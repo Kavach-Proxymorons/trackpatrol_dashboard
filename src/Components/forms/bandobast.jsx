@@ -8,11 +8,11 @@ import { IoIosArrowBack } from "react-icons/io";
 import { Link } from "react-router-dom";
 
 export default function CreateBandobast() {
-  const { duty, setDuty, postDuty } = useStateContext();
+  const { registerDuty, setRegisterDuty, postDuty } = useStateContext();
   const [date, setDate] = useState({});
 
   const handleChange = (e) => {
-    setDuty((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setRegisterDuty((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export default function CreateBandobast() {
           <IoIosArrowBack size={25} color="#222" />
           <span className="text-2xl text-neutral-700 font-semibold">Back</span>
         </Link>
-        <h1 className="text-4xl font-semibold text-center mt-16">
+        <h1 className="text-4xl font-semibold text-center mt-16 text-primary">
           Create Bandobast
         </h1>
       </div>
@@ -47,7 +47,7 @@ export default function CreateBandobast() {
               type="text"
               placeholder="Title"
               name="title"
-              value={duty.title}
+              value={registerDuty.title}
               onChange={handleChange}
             />
           </div>
@@ -58,7 +58,7 @@ export default function CreateBandobast() {
               type="text"
               placeholder="Description"
               name="description"
-              value={duty.description}
+              value={registerDuty.description}
               onChange={handleChange}
             />
           </div>
@@ -69,7 +69,7 @@ export default function CreateBandobast() {
               type="text"
               placeholder="Venue"
               name="venue"
-              value={duty.venue}
+              value={registerDuty.venue}
               onChange={handleChange}
             />
           </div>
@@ -80,15 +80,13 @@ export default function CreateBandobast() {
               type="text"
               placeholder="Location"
               name="location"
-              value={duty.location}
+              value={registerDuty.location}
               onChange={handleChange}
             />
           </div>
           <div className="justify-self-end">
             <Label htmlFor="Date">Duration</Label>
             <DatePickerWithRange
-              duty={duty}
-              setDuty={setDuty}
               date={date}
               setDate={setDate}
             />
@@ -100,7 +98,7 @@ export default function CreateBandobast() {
               type="text"
               placeholder="Note"
               name="note"
-              value={duty.note}
+              value={registerDuty.note}
               onChange={handleChange}
             />
             <p className="mt-2 font-medium text-base text-slate-400 text-right">
