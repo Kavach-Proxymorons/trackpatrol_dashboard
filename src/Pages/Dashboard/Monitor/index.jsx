@@ -35,7 +35,6 @@ export default function Monitor() {
   useEffect(() => {
     document.title = "Monitor | Bandobast";
     getDutyById(id);
-    console.log(duty);
   }, []);
 
   return (
@@ -48,8 +47,8 @@ export default function Monitor() {
           <IoIosArrowBack size={25} color="#222" />
           <span className="text-2xl text-neutral-700 font-semibold">Back</span>
         </Link>
-        <div className="inline-flex justify-start gap-x-6 mt-6">
-          <div className="flex flex-col justify-between gap-y-6">
+        <div className="flex justify-start gap-x-6 mt-6">
+          <div className="flex flex-col justify-start gap-y-6">
             <div className="bg-[#F4F6FA] px-2 py-3 rounded-md shadow-md">
               <div className="flex gap-x-2 ml-2">
                 <LuCalendar size={24} color="#000" />
@@ -70,7 +69,7 @@ export default function Monitor() {
             </div>
             <Link
               to="/dashboard/monitor/details"
-              className="w-[20rem] h-[12rem] shadow-md overflow-hidden rounded-xl flex flex-col justify-between bg-[#F4F6FA] p-0"
+              className="w-[20rem] h-[14rem] shadow-md overflow-hidden rounded-xl flex flex-col justify-between bg-[#F4F6FA] p-0"
             >
               <div className="flex gap-x-2 items-center py-2 px-3">
                 <IoIosInformationCircle size={30} color="#000" />
@@ -94,7 +93,7 @@ export default function Monitor() {
               <LocationTime />
             </div>
           </div>
-          <div className="w-96 p-4 rounded-md shadow-md bg-[#F4F6FA] ">
+          <div className="w-96 p-4 rounded-md shadow-md bg-[#F4F6FA] mb-12">
             <div className="flex flex-col justify-between gap-y-4 bg-white w-auto">
               <h2 className="text-xl font-medium p-3 bg-[#F4F6FA]">
                 Add Shift
@@ -131,7 +130,7 @@ export default function Monitor() {
             </div>
           </div>
         </div>
-        <HardwareList />
+        {duty && <HardwareList  />}
       </div>
     </>
   );

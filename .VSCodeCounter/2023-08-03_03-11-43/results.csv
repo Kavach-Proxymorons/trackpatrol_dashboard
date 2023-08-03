@@ -1,0 +1,71 @@
+"filename", "language", "JSON with Comments", "JavaScript", "PostCSS", "JavaScript JSX", "JSON", "HTML", "XML", "Markdown", "comment", "blank", "total"
+"d:\KAVACH\trackpatrol_dashboard\README.md", "Markdown", 0, 0, 0, 0, 0, 0, 0, 38, 0, 33, 71
+"d:\KAVACH\trackpatrol_dashboard\components.json", "JSON", 0, 0, 0, 0, 15, 0, 0, 0, 0, 1, 16
+"d:\KAVACH\trackpatrol_dashboard\package-lock.json", "JSON", 0, 0, 0, 0, 18609, 0, 0, 0, 0, 1, 18610
+"d:\KAVACH\trackpatrol_dashboard\package.json", "JSON", 0, 0, 0, 0, 64, 0, 0, 0, 0, 1, 65
+"d:\KAVACH\trackpatrol_dashboard\public\index.html", "HTML", 0, 0, 0, 0, 0, 19, 0, 0, 24, 1, 44
+"d:\KAVACH\trackpatrol_dashboard\public\logo.svg", "XML", 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 5
+"d:\KAVACH\trackpatrol_dashboard\public\manifest.json", "JSON", 0, 0, 0, 0, 15, 0, 0, 0, 0, 1, 16
+"d:\KAVACH\trackpatrol_dashboard\src\App.css", "PostCSS", 0, 0, 21, 0, 0, 0, 0, 0, 0, 8, 29
+"d:\KAVACH\trackpatrol_dashboard\src\App.js", "JavaScript", 0, 73, 0, 0, 0, 0, 0, 0, 2, 7, 82
+"d:\KAVACH\trackpatrol_dashboard\src\App.test.js", "JavaScript", 0, 7, 0, 0, 0, 0, 0, 0, 0, 2, 9
+"d:\KAVACH\trackpatrol_dashboard\src\Assests\index.jsx", "JavaScript JSX", 0, 0, 0, 4, 0, 0, 0, 0, 0, 1, 5
+"d:\KAVACH\trackpatrol_dashboard\src\Assests\invisible.svg", "XML", 0, 0, 0, 0, 0, 0, 4, 0, 1, 1, 6
+"d:\KAVACH\trackpatrol_dashboard\src\Assests\logo.svg", "XML", 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 5
+"d:\KAVACH\trackpatrol_dashboard\src\Components\dutyCard.jsx", "JavaScript JSX", 0, 0, 0, 56, 0, 0, 0, 0, 0, 5, 61
+"d:\KAVACH\trackpatrol_dashboard\src\Components\footer.jsx", "JavaScript JSX", 0, 0, 0, 7, 0, 0, 0, 0, 0, 1, 8
+"d:\KAVACH\trackpatrol_dashboard\src\Components\forms\bandobast.jsx", "JavaScript JSX", 0, 0, 0, 108, 0, 0, 0, 0, 0, 10, 118
+"d:\KAVACH\trackpatrol_dashboard\src\Components\forms\hardware.jsx", "JavaScript JSX", 0, 0, 0, 140, 0, 0, 0, 0, 0, 11, 151
+"d:\KAVACH\trackpatrol_dashboard\src\Components\forms\index.jsx", "JavaScript JSX", 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 3
+"d:\KAVACH\trackpatrol_dashboard\src\Components\forms\personnel.jsx", "JavaScript JSX", 0, 0, 0, 197, 0, 0, 0, 0, 4, 17, 218
+"d:\KAVACH\trackpatrol_dashboard\src\Components\header.jsx", "JavaScript JSX", 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 3
+"d:\KAVACH\trackpatrol_dashboard\src\Components\index.jsx", "JavaScript JSX", 0, 0, 0, 12, 0, 0, 0, 0, 0, 0, 12
+"d:\KAVACH\trackpatrol_dashboard\src\Components\locationTime.jsx", "JavaScript JSX", 0, 0, 0, 28, 0, 0, 0, 0, 0, 3, 31
+"d:\KAVACH\trackpatrol_dashboard\src\Components\logo.jsx", "JavaScript JSX", 0, 0, 0, 9, 0, 0, 0, 0, 0, 1, 10
+"d:\KAVACH\trackpatrol_dashboard\src\Components\map.jsx", "JavaScript JSX", 0, 0, 0, 37, 0, 0, 0, 0, 1, 8, 46
+"d:\KAVACH\trackpatrol_dashboard\src\Components\navbar.jsx", "JavaScript JSX", 0, 0, 0, 19, 0, 0, 0, 0, 0, 2, 21
+"d:\KAVACH\trackpatrol_dashboard\src\Components\ongoingDutyCard.jsx", "JavaScript JSX", 0, 0, 0, 58, 0, 0, 0, 0, 2, 8, 68
+"d:\KAVACH\trackpatrol_dashboard\src\Components\profile.jsx", "JavaScript JSX", 0, 0, 0, 118, 0, 0, 0, 0, 0, 5, 123
+"d:\KAVACH\trackpatrol_dashboard\src\Components\sidebar.jsx", "JavaScript JSX", 0, 0, 0, 109, 0, 0, 0, 0, 0, 8, 117
+"d:\KAVACH\trackpatrol_dashboard\src\Components\titlePersonal.jsx", "JavaScript JSX", 0, 0, 0, 27, 0, 0, 0, 0, 0, 3, 30
+"d:\KAVACH\trackpatrol_dashboard\src\Components\ui-components\button.jsx", "JavaScript JSX", 0, 0, 0, 43, 0, 0, 0, 0, 0, 5, 48
+"d:\KAVACH\trackpatrol_dashboard\src\Components\ui-components\calendar.jsx", "JavaScript JSX", 0, 0, 0, 58, 0, 0, 0, 0, 47, 7, 112
+"d:\KAVACH\trackpatrol_dashboard\src\Components\ui-components\checkbox.jsx", "JavaScript JSX", 0, 0, 0, 19, 0, 0, 0, 0, 0, 4, 23
+"d:\KAVACH\trackpatrol_dashboard\src\Components\ui-components\dataTable\index.jsx", "JavaScript JSX", 0, 0, 0, 193, 0, 0, 0, 0, 0, 5, 198
+"d:\KAVACH\trackpatrol_dashboard\src\Components\ui-components\dataTable\skeletons\hardware.jsx", "JavaScript JSX", 0, 0, 0, 87, 0, 0, 0, 0, 13, 4, 104
+"d:\KAVACH\trackpatrol_dashboard\src\Components\ui-components\dataTable\skeletons\personnel.jsx", "JavaScript JSX", 0, 0, 0, 87, 0, 0, 0, 0, 32, 4, 123
+"d:\KAVACH\trackpatrol_dashboard\src\Components\ui-components\dataTable\table.jsx", "JavaScript JSX", 0, 0, 0, 73, 0, 0, 0, 0, 0, 11, 84
+"d:\KAVACH\trackpatrol_dashboard\src\Components\ui-components\datePicker.jsx", "JavaScript JSX", 0, 0, 0, 49, 0, 0, 0, 0, 0, 5, 54
+"d:\KAVACH\trackpatrol_dashboard\src\Components\ui-components\datePickerwithRange.jsx", "JavaScript JSX", 0, 0, 0, 72, 0, 0, 0, 0, 0, 7, 79
+"d:\KAVACH\trackpatrol_dashboard\src\Components\ui-components\dropdown-menu.jsx", "JavaScript JSX", 0, 0, 0, 138, 0, 0, 0, 0, 0, 18, 156
+"d:\KAVACH\trackpatrol_dashboard\src\Components\ui-components\input.jsx", "JavaScript JSX", 0, 0, 0, 16, 0, 0, 0, 0, 0, 2, 18
+"d:\KAVACH\trackpatrol_dashboard\src\Components\ui-components\label.jsx", "JavaScript JSX", 0, 0, 0, 12, 0, 0, 0, 0, 0, 4, 16
+"d:\KAVACH\trackpatrol_dashboard\src\Components\ui-components\popover.jsx", "JavaScript JSX", 0, 0, 0, 20, 0, 0, 0, 0, 0, 6, 26
+"d:\KAVACH\trackpatrol_dashboard\src\Components\ui-components\radio-group.jsx", "JavaScript JSX", 0, 0, 0, 25, 0, 0, 0, 0, 0, 5, 30
+"d:\KAVACH\trackpatrol_dashboard\src\Components\ui-components\select.jsx", "JavaScript JSX", 0, 0, 0, 84, 0, 0, 0, 0, 0, 12, 96
+"d:\KAVACH\trackpatrol_dashboard\src\Components\userProfile.jsx", "JavaScript JSX", 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 3
+"d:\KAVACH\trackpatrol_dashboard\src\Contexts\ContextProvider.jsx", "JavaScript JSX", 0, 0, 0, 504, 0, 0, 0, 0, 5, 96, 605
+"d:\KAVACH\trackpatrol_dashboard\src\Pages\Admin.jsx", "JavaScript JSX", 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 3
+"d:\KAVACH\trackpatrol_dashboard\src\Pages\Bandobast.jsx", "JavaScript JSX", 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 3
+"d:\KAVACH\trackpatrol_dashboard\src\Pages\Dashboard\DetailedMap.jsx", "JavaScript JSX", 0, 0, 0, 72, 0, 0, 0, 0, 0, 5, 77
+"d:\KAVACH\trackpatrol_dashboard\src\Pages\Dashboard\Monitor\hardwarelist.jsx", "JavaScript JSX", 0, 0, 0, 31, 0, 0, 0, 0, 1, 4, 36
+"d:\KAVACH\trackpatrol_dashboard\src\Pages\Dashboard\Monitor\index.jsx", "JavaScript JSX", 0, 0, 0, 133, 0, 0, 0, 0, 1, 5, 139
+"d:\KAVACH\trackpatrol_dashboard\src\Pages\Dashboard\Monitor\personnel.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1
+"d:\KAVACH\trackpatrol_dashboard\src\Pages\Dashboard\index.jsx", "JavaScript JSX", 0, 0, 0, 28, 0, 0, 0, 0, 1, 3, 32
+"d:\KAVACH\trackpatrol_dashboard\src\Pages\Hardware.jsx", "JavaScript JSX", 0, 0, 0, 26, 0, 0, 0, 0, 0, 3, 29
+"d:\KAVACH\trackpatrol_dashboard\src\Pages\Login.jsx", "JavaScript JSX", 0, 0, 0, 94, 0, 0, 0, 0, 6, 12, 112
+"d:\KAVACH\trackpatrol_dashboard\src\Pages\Logout.jsx", "JavaScript JSX", 0, 0, 0, 14, 0, 0, 0, 0, 0, 3, 17
+"d:\KAVACH\trackpatrol_dashboard\src\Pages\Personnel.jsx", "JavaScript JSX", 0, 0, 0, 26, 0, 0, 0, 0, 0, 5, 31
+"d:\KAVACH\trackpatrol_dashboard\src\Pages\Setting.jsx", "JavaScript JSX", 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 3
+"d:\KAVACH\trackpatrol_dashboard\src\Pages\index.jsx", "JavaScript JSX", 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 10
+"d:\KAVACH\trackpatrol_dashboard\src\hooks\useWindowSize.jsx", "JavaScript JSX", 0, 0, 0, 20, 0, 0, 0, 0, 7, 4, 31
+"d:\KAVACH\trackpatrol_dashboard\src\index.css", "PostCSS", 0, 0, 60, 0, 0, 0, 0, 0, 0, 24, 84
+"d:\KAVACH\trackpatrol_dashboard\src\index.js", "JavaScript", 0, 16, 0, 0, 0, 0, 0, 0, 3, 3, 22
+"d:\KAVACH\trackpatrol_dashboard\src\lib\superClusterAlgorithms.js", "JavaScript", 0, 10, 0, 0, 0, 0, 0, 0, 1, 2, 13
+"d:\KAVACH\trackpatrol_dashboard\src\lib\utils.js", "JavaScript", 0, 5, 0, 0, 0, 0, 0, 0, 0, 2, 7
+"d:\KAVACH\trackpatrol_dashboard\src\logo.svg", "XML", 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1
+"d:\KAVACH\trackpatrol_dashboard\src\reportWebVitals.js", "JavaScript", 0, 12, 0, 0, 0, 0, 0, 0, 0, 2, 14
+"d:\KAVACH\trackpatrol_dashboard\src\setupTests.js", "JavaScript", 0, 1, 0, 0, 0, 0, 0, 0, 4, 1, 6
+"d:\KAVACH\trackpatrol_dashboard\tailwind.config.js", "JavaScript", 0, 83, 0, 0, 0, 0, 0, 0, 1, 2, 86
+"d:\KAVACH\trackpatrol_dashboard\tsconfig.json", "JSON with Comments", 5, 0, 0, 0, 0, 0, 0, 0, 5, 0, 10
+"Total", "-", 5, 207, 81, 2881, 18703, 19, 15, 38, 161, 415, 22525

@@ -3,13 +3,15 @@ import DataTable from "../../../Components/ui-components/dataTable";
 import { headers } from "../../../Components/ui-components/dataTable/skeletons/hardware";
 import { useStateContext } from "../../../Contexts/ContextProvider";
 
+
 export default function HardwareList() {
-  const { hardwares, getHardwares } = useStateContext();
+  const {hardwares, getHardwares} = useStateContext();
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     document.title = "Hardware's List | Bandobast";
     // getHardwares();
+    // console.log(hardwares.hardwares_attached);
   }, []);
 
   return (

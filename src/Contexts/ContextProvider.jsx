@@ -169,7 +169,7 @@ export const ContextProvider = ({ children }) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${window.localStorage.getItem("token")}`,
       },
     });
 
@@ -203,7 +203,6 @@ export const ContextProvider = ({ children }) => {
 
     toast.success(res.message, { id: toastId });
     setDuty((prev) => (prev = res.data));
-    console.log(res.data);
   };
 
   /********************** Shift ********************************/
