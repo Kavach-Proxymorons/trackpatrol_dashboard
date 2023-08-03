@@ -7,17 +7,15 @@ import { cn } from "../../lib/utils";
 import { Button } from "./button";
 import { Calendar } from "./calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
+import { useStateContext } from "../../Contexts/ContextProvider";
 
-export function DatePickerWithRange({
-  duty,
-  setDuty,
-  date,
-  setDate,
-  className,
-}) {
+export function DatePickerWithRange({ date, setDate, className }) {
+  const { setRegisterDuty, setRegisterShift } = useStateContext();
+  
 
   useEffect(() => {
-    setDuty((prev) => ({ ...prev, start_time: date.from, end_time: date.to }));
+    setRegisterDuty((prev) => ({ ...prev, start_time: date.from, end_time: date.to }));
+    setRegisterShift((prev) => ({ ...prev, start_time: date.from, end_time: date.to }));
   }, [date]);
 
   const handleDateSubmit = (selectedDate) => {
@@ -44,8 +42,9 @@ export function DatePickerWithRange({
             id="date"
             variant={"outline"}
             className={cn(
-              "w-96 text-[#7B7D92] justify-start bg-slate-50 border-2 border-slate-100 text-left font-normal rounded",
-              !date && "text-muted-foreground"
+              "w-96 text-[#7B7D92] justify-start bg-background text-left font-normal rounded",
+              !date && "text-muted-foreground",
+              className
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />

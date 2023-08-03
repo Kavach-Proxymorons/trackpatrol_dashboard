@@ -52,8 +52,8 @@ export default function Sidebar() {
     <>
       <div
         className={`md:overflow-hidden overflow-auto md:hover:overflow-auto fixed ${
-          activeMenu ? "w-60" : ""
-        }`}
+          activeMenu ? "w-52" : ""
+        } bg-background z-50 h-screen transition-all duration-500 ease-in-out`}
       >
         <div className="flex flex-col justify-between h-screen border-r-3">
           <div className="">
@@ -64,9 +64,9 @@ export default function Sidebar() {
                 setMenuWidth((prev) => (prev = !prev));
               }}
             >
-              <img className="w-8" src={logo} alt="logo" />
+              <img className="w-7" src={logo} alt="logo" />
               {activeMenu && (
-                <span className="text-2xl font-normal text-primary">
+                <span className="text-xl font-normal text-primary">
                   TrackPatrol
                 </span>
               )}

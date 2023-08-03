@@ -35,8 +35,10 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    
     const username = e.target.username.value;
     const password = e.target.password.value;
+    console.log(username, password);
 
     login(username, password);
   };

@@ -50,16 +50,16 @@ function App() {
           },
         }}
       />
-      <div className="h-screen">
+      <div className="h-screen bg-background">
         {isLogged && <Sidebar />}
-        <div className={`${isLogged ? (activeMenu ? "ml-60" : "ml-[84px]") : ''} `}>
+        <div className={`${isLogged ? (activeMenu ? "ml-52" : "ml-[84px]") : ''} `}>
           <Navbar />
           <div className="">
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route path="/" exact element={<Dashboard />} />
               <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/dashboard/monitor" element={<Monitor />} />
+              <Route path="/dashboard/:id" element={<Monitor />} />
               <Route path="/dashboard/monitor/details" element={<DetailedMap />} />
               <Route path="/personnel" element={<Personnel />} />
               <Route path="/personnel/register" element={<PersonnelForm />} />

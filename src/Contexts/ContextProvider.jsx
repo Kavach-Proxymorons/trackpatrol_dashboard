@@ -34,9 +34,7 @@ export const ContextProvider = ({ children }) => {
   const [activeMenu, setActiveMenu] = useState(
     window.innerWidth >= 1000 ? true : false
   );
-  const [menuWidth, setMenuWidth] = useState(activeMenu);
-
-  const [duty, setDuty] = useState(dutyDummyData);
+  const [menuWidth, setMenuWidth] = useState(false);
 
   useEffect(() => {
     auth();
@@ -102,8 +100,6 @@ export const ContextProvider = ({ children }) => {
   };
 
   const login = async (username, password) => {
-    logout();
-
     toast.loading("Loading...", { id: toastId });
     const response = await fetch(`${baseUrl}auth/login`, {
       method: "POST",
@@ -141,6 +137,10 @@ export const ContextProvider = ({ children }) => {
   };
 
   /********************* DUTY ************************/
+  const [registerDuty, setRegisterDuty] = useState(dutyDummyData);
+  const [duties, setDuties] = useState([]);
+  const [duty, setDuty] = useState([]);
+
   const postDuty = async () => {
     toast.loading("Loading...", { id: toastId });
     const response = await fetch(`${baseUrl}admin/duty/`, {
@@ -149,7 +149,7 @@ export const ContextProvider = ({ children }) => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(duty),
+      body: JSON.stringify(registerDuty),
     });
 
     const res = await response.json();
@@ -160,8 +160,214 @@ export const ContextProvider = ({ children }) => {
     }
 
     toast.success(res.message, { id: toastId });
-    setDuty((prev) => (prev = dutyDummyData));
+    setRegisterDuty((prev) => (prev = dutyDummyData));
   };
+
+  const getDuties = async () => {
+    toast.loading("Loading...", { id: toastId });
+    const response = await fetch(`${baseUrl}admin/duty/?page=1&limit=10000`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+      },
+    });
+
+    const res = await response.json();
+    console.log(res.message);
+    if (!res.success) {
+      toast.error(res.message, { id: toastId });
+      return;
+    }
+
+    toast.success(res.message, { id: toastId });
+    setDuties(res.data.duty);
+  };
+
+  const getDutyById = async (id) => {
+    toast.loading("Loading...", { id: toastId });
+    const response = await fetch(`${baseUrl}admin/duty/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const res = await response.json();
+    console.log(res.message);
+    if (!res.success) {
+      toast.error(res.message, { id: toastId });
+      return;
+    }
+
+    toast.success(res.message, { id: toastId });
+    setDuty((prev) => (prev = res.data));
+  };
+
+  /********************** Shift ********************************/
+  const [shift, setShift] = useState([]);
+  const [registerShift, setRegisterShift] = useState({});
+
+  const postShift = async () => {
+    toast.loading("Loading...", { id: toastId });
+    const response = await fetch(`${baseUrl}admin/shift/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(registerShift),
+    });
+
+    const res = await response.json();
+    console.log(res.message);
+    if (!res.success) {
+      toast.error(res.message, { id: toastId });
+      return;
+    }
+
+    toast.success(res.message, { id: toastId });
+    setRegisterShift({});
+  };
+
+  const getShiftById = async (id) => {
+    toast.loading("Loading...", { id: toastId });
+    const response = await fetch(`${baseUrl}admin/shift/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const res = await response.json();
+    console.log(res.message);
+    if (!res.success) {
+      toast.error(res.message, { id: toastId });
+      return;
+    }
+
+    toast.success(res.message, { id: toastId });
+    shift((prev) => (prev = res.data));
+  };
+
+  const deleteShift = async (id) => {
+    toast.loading("Loading...", { id: toastId });
+    const response = await fetch(`${baseUrl}admin/shift/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const res = await response.json();
+    console.log(res.message);
+
+    if (!res.success) {
+      toast.error(res.message, { id: toastId });
+      return;
+    }
+
+    toast.success(res.message, { id: toastId });
+  };
+
+  const postShiftPersonnels = async (id, personnel) => {
+    toast.loading("Loading...", { id: toastId });
+    const response = await fetch(`${baseUrl}admin/shift/${id}/add_personnel`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(personnel),
+    });
+
+    const res = await response.json();
+    console.log(res.message);
+
+    if (!res.success) {
+      toast.error(res.message, { id: toastId });
+      return;
+    }
+
+    toast.success(res.message, { id: toastId });
+  };
+
+  const deleteShiftPersonnels = async (id, personnel) => {
+    toast.loading("Loading...", { id: toastId });
+    const response = await fetch(
+      `${baseUrl}admin/shift/${id}/remove_personnel`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(personnel),
+      }
+    );
+
+    const res = await response.json();
+    console.log(res.message);
+
+    if (!res.success) {
+      toast.error(res.message, { id: toastId });
+      return;
+    }
+
+    toast.success(res.message, { id: toastId });
+  };
+
+  const postShiftHardwares = async (id, hardware) => {
+    toast.loading("Loading...", { id: toastId });
+    const response = await fetch(`${baseUrl}admin/shift/${id}/add_hardware`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(hardware),
+    });
+
+    const res = await response.json();
+    console.log(res.message);
+
+    if (!res.success) {
+      toast.error(res.message, { id: toastId });
+      return;
+    }
+
+    toast.success(res.message, { id: toastId });
+  };
+
+  const deleteShiftHardwares = async (id, hardware) => {
+    toast.loading("Loading...", { id: toastId });
+    const response = await fetch(
+      `${baseUrl}admin/shift/${id}/remove_hardware`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(hardware),
+      }
+    );
+
+    const res = await response.json();
+    console.log(res.message);
+
+    if (!res.success) {
+      toast.error(res.message, { id: toastId });
+      return;
+    }
+
+    toast.success(res.message, { id: toastId });
+  };
+
+
 
   /********************** HARWDARE ********************************/
   const [hardwares, setHardwares] = useState([]);
@@ -277,6 +483,48 @@ export const ContextProvider = ({ children }) => {
     setPersonnels(res.data.personnel);
   };
 
+  const deteletPersonnel = async (id) => {
+    toast.loading("Loading...", { id: toastId });
+    const response = await fetch(`${baseUrl}admin/personnel/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const res = await response.json();
+    console.log(res.message);
+    if (!res.success) {
+      toast.error(res.message, { id: toastId });
+      return;
+    }
+
+    toast.success(res.message, { id: toastId });
+  };
+
+  const updatePersonnel = async (id) => {
+    toast.loading("Loading...", { id: toastId });
+    const response = await fetch(`${baseUrl}admin/personnel/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(registerPersonnel),
+    });
+
+    const res = await response.json();
+    console.log(res.message);
+    if (!res.success) {
+      toast.error(res.message, { id: toastId });
+      return;
+    }
+
+    toast.success(res.message, { id: toastId });
+    setRegisterPersonnel({});
+  };
+
   return (
     <StateContext.Provider
       value={{
@@ -300,14 +548,34 @@ export const ContextProvider = ({ children }) => {
         menuWidth,
         setMenuWidth,
 
-        validateToken,
-        login,
+        login, // auth apis
         logout,
         auth,
+        validateToken,
 
+        registerDuty, // duty apis
+        setRegisterDuty,
+        duties,
+        setDuties,
         duty,
         setDuty,
+        getDutyById,
+        getDuties,
         postDuty,
+
+
+        shift, // shift apis
+        setShift,
+        registerShift,
+        setRegisterShift,
+        postShift,
+        getShiftById,
+        deleteShift,
+        postShiftPersonnels,
+        deleteShiftPersonnels,
+        postShiftHardwares,
+        deleteShiftHardwares,
+
 
         hardwares, // hardware apis
         setHardwares,
@@ -316,12 +584,15 @@ export const ContextProvider = ({ children }) => {
         postHardware,
         getHardwares,
 
+
         personnels, // personnel apis
         setPersonnels,
         registerPersonnel,
         setRegisterPersonnel,
         postPersonnel,
         getPersonnels,
+        deteletPersonnel,
+        updatePersonnel,
       }}
     >
       {children}
