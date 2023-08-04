@@ -1,6 +1,6 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import toast from "react-hot-toast";
-import { useNavigate, useLocation } from "react-router-dom";
+import AuthContext from "./AuthContext";
 
 const StateContext = createContext();
 const dateNow = new Date();
@@ -11,130 +11,20 @@ const dutyDummyData = {
     location: "",
     start_time: "",
     end_time: "",
-    note: ""
+    note: "",
 };
 
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-const toastId = toast.loading("Loading...");
+const baseUrl = process.env.NODE_ENV === "development" ? process.env.REACT_APP_DEV_URL : process.env.REACT_APP_PROD_URL;
+
+const toastId = "lund"
 
 export const ContextProvider = ({ children }) => {
-    const navigate = useNavigate();
-    const location = useLocation();
 
-    const baseUrl =
-        process.env.NODE_ENV === "development"
-            ? process.env.REACT_APP_DEV_URL
-            : process.env.REACT_APP_PROD_URL;
+    const {token, authenticate} = useContext(AuthContext);
 
-    const [userName, setUserName] = useState();
-    const [name, setName] = useState();
-    const [isLogged, setIsLogged] = useState(false);
-    const [token, setToken] = useState("");
     const [screenSize, setScreenSize] = useState(window.innerWidth);
-    const [activeMenu, setActiveMenu] = useState(
-        window.innerWidth >= 1000 ? true : false
-    );
-    const [menuWidth, setMenuWidth] = useState(false);
-
-    useEffect(() => {
-        auth();
-    }, []);
-
-    /********************* AUTH ************************/
-    const logout = () => {
-        localStorage.removeItem("token");
-        setToken((prev) => (prev = ""));
-        setName((prev) => (prev = ""));
-        setUserName((prev) => (prev = ""));
-        setIsLogged((prev) => (prev = false));
-        setActiveMenu((prev) => (prev = false));
-
-        toast.success("Logged out successfully", { id: toastId });
-        navigate(false);
-        navigate("/login");
-    };
-
-    const validateToken = async (Token) => {
-        toast.loading("Loading...", { id: toastId });
-        const response = await fetch(`${baseUrl}auth/`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${Token}`
-            }
-        });
-
-        const res = await response.json();
-        console.log(res.message);
-
-        if (!res.success) {
-            logout();
-            toast.error(res.message, { id: toastId });
-            return;
-        }
-
-        toast.success(res.message, { id: toastId });
-
-        const userInfo = {
-            name: res.data.name,
-            username: res.data.username,
-            isLogged: true,
-            token: Token
-        };
-
-        setName(userInfo.name);
-        setUserName(userInfo.username);
-        setIsLogged(userInfo.isLogged);
-        setToken(userInfo.token);
-
-        if (location.pathname === "/login") navigate("/");
-    };
-
-    const auth = () => {
-        const Token = localStorage.getItem("token");
-        if (Token === null || Token.length === 0) logout();
-        else {
-            setToken(Token);
-            validateToken(Token);
-        }
-    };
-
-    const login = async (username, password) => {
-        toast.loading("Loading...", { id: toastId });
-        const response = await fetch(`${baseUrl}auth/login`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ username, password })
-        });
-
-        const res = await response.json();
-        console.log(res.message);
-        if (!res.success) {
-            logout();
-            toast.error(res.message, { id: toastId });
-            return;
-        }
-
-        toast.success(res.message, { id: toastId });
-
-        const userInfo = res.data.user;
-        const userdata = {
-            token: res.data.token,
-            name: userInfo.name,
-            username: userInfo.username,
-            isLogged: true
-        };
-
-        localStorage.setItem("token", userdata.token);
-        setName(userdata.name);
-        setUserName(userdata.username);
-        setIsLogged(userdata.isLogged);
-        setToken(userdata.token);
-        setActiveMenu(window.innerWidth >= 1000 ? true : false);
-        navigate("../", { replace: true });
-    };
+    const [activeMenu, setActiveMenu] = useState(true);
+    const [menuWidth, setMenuWidth] = useState(true);
 
     /********************* DUTY ************************/
     const [registerDuty, setRegisterDuty] = useState(dutyDummyData);
@@ -142,72 +32,74 @@ export const ContextProvider = ({ children }) => {
     const [duty, setDuty] = useState([]);
 
     const postDuty = async () => {
-        toast.loading("Loading...", { id: toastId });
+
+        const tid = toast.loading("Creating duty...");
+
         const response = await fetch(`${baseUrl}admin/duty/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`
+                "Authorization": `Bearer ${token}`,
             },
-            body: JSON.stringify(registerDuty)
+            body: JSON.stringify(registerDuty),
         });
 
-        const res = await response.json();
-        console.log(res.message);
-        if (!res.success) {
-            toast.error(res.message, { id: toastId });
+        const json = await response.json();
+        if (json.status > 299) {
+            if(json.status === 401) return authenticate(tid);
+            toast.error(json.message, { id: tid });
             return;
         }
 
-        toast.success(res.message, { id: toastId });
+        // fix this
         setRegisterDuty((prev) => (prev = dutyDummyData));
+        toast.success(json.message, { id: tid });
     };
 
     const getDuties = async () => {
-        toast.loading("Loading...", { id: toastId });
-        const response = await fetch(
-            `${baseUrl}admin/duty/?page=1&limit=10000`,
-            {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${window.localStorage.getItem(
-                        "token"
-                    )}`
-                }
-            }
-        );
 
-        const res = await response.json();
-        console.log(res.message);
-        if (!res.success) {
-            toast.error(res.message, { id: toastId });
+        const tid = toast.loading("Loading duties...");
+
+        const response = await fetch(`${baseUrl}admin/duty/?page=1&limit=10000`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+            },
+        });
+
+        const json = await response.json();
+        if (json.status > 299) {
+            if(json.status === 401) return authenticate(tid);
+            toast.error(json.message, { id: tid });
             return;
         }
 
-        toast.success(res.message, { id: toastId });
-        setDuties(res.data.duty);
+        setDuties(json.data.duty);
+        toast.success(json.message, { id: tid });
     };
 
     const getDutyById = async (id) => {
-        toast.loading("Loading...", { id: toastId });
+        
+        const tid = toast.loading("Loading duty...");
+
         const response = await fetch(`${baseUrl}admin/duty/${id}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`
-            }
+                "Authorization": `Bearer ${token}`,
+            },
         });
 
-        const res = await response.json();
-        console.log(res.message);
-        if (!res.success) {
-            toast.error(res.message, { id: toastId });
+        const json = await response.json();
+        if (json.status > 299) {
+            if(json.status === 401) return authenticate(tid);
+            toast.error(json.message, { id: tid });
             return;
         }
 
-        toast.success(res.message, { id: toastId });
-        setDuty((prev) => (prev = res.data));
+        setDuty(json.data);
+        toast.success(json.message, { id: tid });
     };
 
     /********************** Shift ********************************/
@@ -220,9 +112,9 @@ export const ContextProvider = ({ children }) => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify(registerShift)
+            body: JSON.stringify(registerShift),
         });
 
         const res = await response.json();
@@ -242,8 +134,8 @@ export const ContextProvider = ({ children }) => {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`
-            }
+                Authorization: `Bearer ${token}`,
+            },
         });
 
         const res = await response.json();
@@ -263,8 +155,8 @@ export const ContextProvider = ({ children }) => {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`
-            }
+                Authorization: `Bearer ${token}`,
+            },
         });
 
         const res = await response.json();
@@ -280,17 +172,14 @@ export const ContextProvider = ({ children }) => {
 
     const postShiftPersonnels = async (id, personnel) => {
         toast.loading("Loading...", { id: toastId });
-        const response = await fetch(
-            `${baseUrl}admin/shift/${id}/add_personnel`,
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                },
-                body: JSON.stringify(personnel)
-            }
-        );
+        const response = await fetch(`${baseUrl}admin/shift/${id}/add_personnel`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(personnel),
+        });
 
         const res = await response.json();
         console.log(res.message);
@@ -311,9 +200,9 @@ export const ContextProvider = ({ children }) => {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${token}`,
                 },
-                body: JSON.stringify(personnel)
+                body: JSON.stringify(personnel),
             }
         );
 
@@ -330,17 +219,14 @@ export const ContextProvider = ({ children }) => {
 
     const postShiftHardwares = async (id, hardware) => {
         toast.loading("Loading...", { id: toastId });
-        const response = await fetch(
-            `${baseUrl}admin/shift/${id}/add_hardware`,
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                },
-                body: JSON.stringify(hardware)
-            }
-        );
+        const response = await fetch(`${baseUrl}admin/shift/${id}/add_hardware`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(hardware),
+        });
 
         const res = await response.json();
         console.log(res.message);
@@ -361,9 +247,9 @@ export const ContextProvider = ({ children }) => {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${token}`,
                 },
-                body: JSON.stringify(hardware)
+                body: JSON.stringify(hardware),
             }
         );
 
@@ -378,6 +264,8 @@ export const ContextProvider = ({ children }) => {
         toast.success(res.message, { id: toastId });
     };
 
+
+
     /********************** HARWDARE ********************************/
     const [hardwares, setHardwares] = useState([]);
     const [registerHardware, setRegisterHardware] = useState({
@@ -386,7 +274,7 @@ export const ContextProvider = ({ children }) => {
         name: "",
         description: "",
         type: "",
-        status: ""
+        status: "",
     });
 
     const getHardwares = async () => {
@@ -397,8 +285,8 @@ export const ContextProvider = ({ children }) => {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                }
+                    Authorization: `Bearer ${token}`,
+                },
             }
         );
 
@@ -426,9 +314,9 @@ export const ContextProvider = ({ children }) => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify(registerHardware)
+            body: JSON.stringify(registerHardware),
         });
 
         const res = await response.json();
@@ -452,9 +340,9 @@ export const ContextProvider = ({ children }) => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify(registerPersonnel)
+            body: JSON.stringify(registerPersonnel),
         });
 
         const res = await response.json();
@@ -476,8 +364,8 @@ export const ContextProvider = ({ children }) => {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                }
+                    Authorization: `Bearer ${token}`,
+                },
             }
         );
 
@@ -498,8 +386,8 @@ export const ContextProvider = ({ children }) => {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`
-            }
+                Authorization: `Bearer ${token}`,
+            },
         });
 
         const res = await response.json();
@@ -518,9 +406,9 @@ export const ContextProvider = ({ children }) => {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify(registerPersonnel)
+            body: JSON.stringify(registerPersonnel),
         });
 
         const res = await response.json();
@@ -537,18 +425,6 @@ export const ContextProvider = ({ children }) => {
     return (
         <StateContext.Provider
             value={{
-                name,
-                setName,
-
-                userName,
-                setUserName,
-
-                isLogged,
-                setIsLogged,
-
-                token,
-                setToken,
-
                 screenSize,
                 setScreenSize,
 
@@ -556,11 +432,6 @@ export const ContextProvider = ({ children }) => {
                 setActiveMenu,
                 menuWidth,
                 setMenuWidth,
-
-                login, // auth apis
-                logout,
-                auth,
-                validateToken,
 
                 registerDuty, // duty apis
                 setRegisterDuty,
@@ -571,6 +442,7 @@ export const ContextProvider = ({ children }) => {
                 getDutyById,
                 getDuties,
                 postDuty,
+
 
                 shift, // shift apis
                 setShift,
@@ -584,12 +456,14 @@ export const ContextProvider = ({ children }) => {
                 postShiftHardwares,
                 deleteShiftHardwares,
 
+
                 hardwares, // hardware apis
                 setHardwares,
                 registerHardware,
                 setRegisterHardware,
                 postHardware,
                 getHardwares,
+
 
                 personnels, // personnel apis
                 setPersonnels,
@@ -598,7 +472,7 @@ export const ContextProvider = ({ children }) => {
                 postPersonnel,
                 getPersonnels,
                 deteletPersonnel,
-                updatePersonnel
+                updatePersonnel,
             }}
         >
             {children}
