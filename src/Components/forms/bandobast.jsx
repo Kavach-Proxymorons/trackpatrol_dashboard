@@ -45,7 +45,7 @@ export default function CreateBandobast() {
                 </h1>
             </div>
             <form onSubmit={handleSubmit}>
-                <div className="grid grid-cols-2 justify-items-center gap-x-24 gap-y-6 mt-12">
+                <div className="grid grid-cols-2 justify-items-center place-content-center gap-x-24 gap-y-6 mt-12">
                     <div className="justify-self-end">
                         <Label htmlFor="title">Bandobast Title</Label>
                         <Input

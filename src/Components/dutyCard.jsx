@@ -1,64 +1,72 @@
-import { Link } from "react-router-dom";
-import { FaLocationDot } from "react-icons/fa6";
-import { BiSolidTimeFive } from "react-icons/bi";
-import { FaBuilding } from "react-icons/fa";
-import { AiTwotoneEdit } from "react-icons/ai";
-import { AiFillDelete } from "react-icons/ai";
+import { Button } from "./ui-components/button";
+import Input from "./ui-components/input";
+import Label from "./ui-components/label";
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle
+} from "./ui-components/card";
 
-export default function DutyCard() {
+import { Badge } from "./ui-components/badge";
+import { ArrowUpRight, CalendarRange, Navigation, User2 } from "lucide-react";
+import { Separator } from "./ui-components/separator";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+export default function DashboardCard({ duty }) {
+    const Navigate = useNavigate();
+    const priority = [
+        { color: "red", title: "High" },
+        { color: "yellow", title: "Medium" },
+        { color: "green", title: "Low" }
+    ];
     return (
-        <div className="p-4 bg-white rounded-md drop-shadow-sm ">
-            <div className="flex justify-between  items-center ">
-                <div className="grid grid-cols-2 gap-x-8 gap-y-3 drop-shadow-lg ">
-                    <div className="col-span-2 flex gap-x-3 ">
-                        <div className="bg-[#DD81120d] rounded-lg p-2">
-                            <div className="p-2 bg-[#DD8112] rounded-full flex justify-center items-center">
-                                <FaBuilding size={20} color="#fff" />
-                            </div>
-                        </div>
-                        <span className="bg-[#DD81120d] rounded-lg p-3 text-primary">
-                            BB-889178 : PM Narendra Modi's arrival for the
-                            speech
-                        </span>
-                    </div>
-
-                    <div className="flex items-center gap-x-3">
-                        <div className="bg-[rgba(13,119,211,0.05)] rounded-lg p-2">
-                            <div className="p-2 bg-[#0D76D3] rounded-full flex justify-center items-center">
-                                <FaLocationDot size={20} color="#fff" />
-                            </div>
-                        </div>
-                        <span className="bg-[rgba(13,119,211,0.05)] rounded-lg p-3">
-                            Pune city's Cantonment area, Maharashtra
-                        </span>
-                    </div>
-
-                    <div className="flex items-center  gap-x-3">
-                        <div className="bg-[rgba(13,119,211,0.05)] rounded-lg p-2">
-                            <div className="p-2 bg-[#0D76D3] rounded-full flex justify-center items-center">
-                                <BiSolidTimeFive size={20} color="#fff" />
-                            </div>
-                        </div>
-                        <span className="bg-[rgba(13,119,211,0.05)] rounded-lg p-3">
-                            2nd November, 2023
-                        </span>
-                    </div>
-                </div>
-
-                <div className="flex items-center gap-x-6 mr-20 drop-shadow-lg">
-                    <Link
-                        to="/create/bandobast"
-                        className="flex items-center gap-x-2 bg-[#006ED3] rounded-md py-1 px-3 "
+        <Card className="w-[320px] shadow flex flex-col justify-between">
+            <div>
+                <div className="flex justify-between mt-4 mx-4 items-center">
+                    <Badge
+                        variant={"outline"}
+                        className={`text-${color}-500 bg-${color}-50 px-3`}
                     >
-                        <span className="text-white">Edit</span>
-                        <AiTwotoneEdit size={25} color="#fff" />
-                    </Link>
-                    <div className="flex items-center gap-x-2 bg-[#D46A43] rounded-md py-1 px-3">
-                        <span className="text-white">Delete</span>
-                        <AiFillDelete size={25} color="#fff" />
-                    </div>
+                        {title}
+                    </Badge>
+                    <ArrowUpRight size={30} className="" onClick={() => {Navigate(`/dashboard/${duty._id}`)}}/>
                 </div>
+                <CardHeader className="pt-3 px-4">
+                    <CardTitle>{duty?.title}</CardTitle>
+                    <CardDescription>{duty?.description}</CardDescription>
+                </CardHeader>
             </div>
-        </div>
+            <div>
+                <CardContent className="py-0 px-4">
+                    <div className="flex gap-x-2 items-center bg-blue-50 p-2 rounded">
+                        <div className="w-8 h-10 flex items-center">
+                            {" "}
+                            <Navigation size={25} />
+                        </div>
+                        <span className="">{duty.venue}</span>
+                    </div>
+                </CardContent>
+                <Separator className="my-4" />
+                <CardFooter className="flex justify-between pb-4 px-4">
+                    <div className="flex items-center gap-x-2">
+                        <User2 size={20} />
+                        <p className="pt-1">200 Personnel</p>
+                    </div>
+                    <div className="flex items-center gap-x-2">
+                        <CalendarRange size={20} />
+                        <p className="pt-1">25 Oct - 2 Nov</p>
+                    </div>
+                </CardFooter>
+            </div>
+        </Card>
     );
 }
+
+/*
+title: 
+description: 
+*/

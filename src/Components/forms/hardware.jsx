@@ -53,8 +53,8 @@ export default function RegisterHardware() {
                 </h1>
             </div>
             <form onSubmit={handleSubmit}>
-                <div className="grid grid-cols-2 justify-items-center gap-x-24 gap-y-6 mt-12">
-                    <div className="justify-self-end">
+                <div className="grid grid-cols-2  place-content-center gap-x-24 gap-y-6 mt-12">
+                    <div>
                         <Label>Hardware Id</Label>
                         <Input
                             type="text"
@@ -64,8 +64,7 @@ export default function RegisterHardware() {
                             required
                         />
                     </div>
-
-                    <div className="justify-self-start">
+                    <div>
                         <Label>Secret</Label>
                         <Input
                             type="text"
@@ -75,8 +74,7 @@ export default function RegisterHardware() {
                             required
                         />
                     </div>
-
-                    <div className="justify-self-end">
+                    <div>
                         <Label>Name</Label>
                         <Input
                             type="text"
@@ -86,8 +84,7 @@ export default function RegisterHardware() {
                             required
                         />
                     </div>
-
-                    <div className="justify-self-start">
+                    <div>
                         <Label>Description</Label>
                         <Input
                             type="text"
@@ -98,7 +95,7 @@ export default function RegisterHardware() {
                         />
                     </div>
 
-                    <div className="justify-self-end">
+                    <div>
                         <Label>Type</Label>
                         <Input
                             type="text"
@@ -109,7 +106,7 @@ export default function RegisterHardware() {
                         />
                     </div>
 
-                    <div className="justify-self-start">
+                    <div>
                         <Label>Status</Label>
                         <Select
                             required

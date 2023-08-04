@@ -73,7 +73,7 @@ export default function PersonnelRegisterForm() {
                 <div
                     className={`grid  ${
                         gridSize === 3 ? "grid-cols-3" : `grid-cols-${gridSize}`
-                    }  justify-items-center place-content-center gap-y-6 mt-12`}
+                    }  justify-items-center place-content-center gap-x-32 gap-y-6 mt-12`}
                 >
                     <div>
                         <Label>Member Id</Label>

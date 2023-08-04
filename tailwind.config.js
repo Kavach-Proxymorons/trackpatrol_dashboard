@@ -21,6 +21,14 @@ module.exports = {
             6: "6px",
             8: "8px"
         },
+        gridTemplateColumns: {
+            1: "repeat(1, 320px)",
+            2: "repeat(2, 320px)",
+            3: "repeat(3, 320px)",
+            4: "repeat(4, 320px)",
+            5: "repeat(5, 320px)",
+            6: "repeat(6, 320px)",
+        },
         extend: {
             colors: {
                 border: "hsl(var(--border))",
