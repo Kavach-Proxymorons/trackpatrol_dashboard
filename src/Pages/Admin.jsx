@@ -1,3 +1,7 @@
 export default function ManageAdmin() {
-    return <><h1>ManageAdmin</h1></>;
+    return (
+        <>
+            <h1>ManageAdmin</h1>
+        </>
+    );
 }
