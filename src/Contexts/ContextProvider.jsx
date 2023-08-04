@@ -213,7 +213,10 @@ export const ContextProvider = ({ children }) => {
   const [shift, setShift] = useState([]);
   const [registerShift, setRegisterShift] = useState({});
   const [assignedAndIdleHardwares, setAssignedAndIdleHardwares] = useState([]);
-
+  const [assignedAndAvailablePersonnel, setAssignedAndAvailablePersonnel] = useState([]);
+  const [assignedPersonnelsId, setAssignedPersonnelsId] = useState({}); // key: is  value is array of personnel id
+  
+  
   const postShift = async () => {
     toast.loading("Loading...", { id: toastId });
     const response = await fetch(`${baseUrl}admin/shift/`, {
@@ -299,6 +302,9 @@ export const ContextProvider = ({ children }) => {
 
     toast.success(res.message, { id: toastId });
   };
+
+
+
 
   const getAssignedAndIdleHardwares = async (shift_id) => {
     toast.loading("Loading...", { id: toastId });
@@ -622,6 +628,9 @@ export const ContextProvider = ({ children }) => {
         deleteShiftHardwares,
         assignedAndIdleHardwares,
         getAssignedAndIdleHardwares,
+        assignedAndAvailablePersonnel,
+        getAssignedAndAvailablePersonnel,
+        assignedPersonnelsId,
 
 
         hardwares, // hardware apis
