@@ -77,7 +77,7 @@ export default function Monitor() {
                   BANDOBAST INFO
                 </span>
               </div>
-              <Map />
+              {/* <Map /> */} 
             </Link>
           </div>
           <div className="flex flex-col w-[34rem] bg-[#F4F6FA] p-6 rounded-md gap-y-4 shadow-md">
@@ -130,7 +130,19 @@ export default function Monitor() {
             </div>
           </div>
         </div>
-        {duty && <HardwareList  />}
+
+        {/* loop over duty.shifts array */}
+        {
+          duty && duty.shifts && duty.shifts.map((shift) => {
+            return (
+                <div className="border-2" key={shift._id}>
+                {/* below div contains the hardware list and personnel list for every shift */}
+                  <h1 className="text-3xl mt-8 font-semibold"  >{shift.shift_name}</h1>
+                  {shift.hardwares_attached && <HardwareList shift_id={shift._id} data={shift.hardwares_attached} />}
+                </div>
+            )
+          })
+        }
       </div>
     </>
   );
