@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import useLocalStorage from "../hooks/useLocalStorage";
@@ -12,10 +12,15 @@ const AuthProvider = ({ children }) => {
     const navigate = useNavigate();
     const [token, setToken] = useLocalStorage("token", "");
     const [user, setUser] = useLocalStorage("user", {});
+    const [isLoggedIn, setIsLoggedIn] = useState(token ? true : false);
+
+    useEffect(()=>{
+        setIsLoggedIn(token ? true : false);
+    }, [token]);
 
     const login = async (username, password) => {
 
-        const tid = toast.loading("Loading...");
+        const tid = toast.loading("Logging in...");
 
         const response = await fetch(`${baseurl}auth/login`, {
             method: "POST",
@@ -26,7 +31,7 @@ const AuthProvider = ({ children }) => {
         });
 
         const json = await response.json();
-        if (json.status != 200) {
+        if (json.status !== 200) {
             toast.error(json.message, { id: tid });
             return;
         }
@@ -39,39 +44,36 @@ const AuthProvider = ({ children }) => {
 
     const logout = () => {
         setToken("");
-        toast.success("Logged out successfully");
+        toast.success("Logged out");
         navigate("/login");
     }
 
-    const authenticate = async () => {
-
-        const tid = toast.loading("Loading...");
-
-        const response = await fetch(`${baseurl}auth`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-            }
-        });
-
-        const json = await response.json();
-        if (json.status != 200) {
+    const authenticate = async (tid) => {
+        if(token) {
+            const response = await fetch(`${baseurl}auth`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                }
+            });
+    
+            const json = await response.json();
+            if (json.status === 200) return;
             setToken("");
-            toast.error(json.message, { id: tid });
-            return;
         }
-
-        setToken(json.data.token);
-        setUser(json.data.user);
-        toast.success(json.message, { id: tid });
+        toast.error("Session expired", {id: tid});
+        navigate("/login");
     }
 
     return (
         <AuthContext.Provider value={{
             login,
             logout,
-            authenticate
+            authenticate,
+            user,
+            token,
+            isLoggedIn
         }}>
             {children}
         </AuthContext.Provider>
