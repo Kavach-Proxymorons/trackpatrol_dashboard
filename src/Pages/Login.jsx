@@ -71,10 +71,7 @@ export default function Login() {
                                 type="password"
                                 placeholder="Password"
                             />
-                            <div
-                                className="absolute right-0 bottom-3 mt-8 mr-8"
-                                onClick={handlerVisiblePassword}
-                            >
+                            <div className="absolute right-0 bottom-3 mt-8 mr-8" onClick={handlerVisiblePassword}>
                                 {eye ? (
                                     <AiFillEye size={25} color="#0D76D3" />
                                 ) : (
@@ -82,10 +79,7 @@ export default function Login() {
                                 )}
                             </div>
                         </div>
-                        <button
-                            className="bg-[#0D76D3] text-white rounded-lg mt-12 text-center py-4"
-                            type="submit"
-                        >
+                        <button className="bg-[#0D76D3] text-white rounded-lg mt-12 text-center py-4" type="submit">
                             Login
                         </button>
                     </form>

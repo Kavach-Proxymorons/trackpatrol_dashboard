@@ -13,6 +13,10 @@ export default function Dashboard() {
         if (error) toast.error(error.message, { id: tid });
     }, [loading, error, response]);
 
+    useEffect(() => {
+        document.title = "Dashboard | Bandobast";
+    }, []);
+
     return (
         <>
             <div className="px-8 pt-8 bg-background">

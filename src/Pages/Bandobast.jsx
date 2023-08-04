@@ -1,3 +1,3 @@
 export default function Bandobast() {
-  return <>BANDOBAST</>;
+    return <>BANDOBAST</>;
 }
