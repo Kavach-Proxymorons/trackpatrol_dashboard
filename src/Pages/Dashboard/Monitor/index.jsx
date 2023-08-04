@@ -21,6 +21,16 @@ export default function Monitor() {
   const { registerShift, setRegisterShift, duty, getDutyById, postShift } =
     useStateContext();
 
+  // Initialize shiftToggle with default values for each shift ID
+  const initialShiftToggle = {};
+  if (duty && duty.shifts) {
+    for (const shift of duty.shifts) {
+      initialShiftToggle[shift._id] = false; // Initialize with a default value (true in this case)
+    }
+  }
+  const [shiftToggle, setShiftToggle] = useState(initialShiftToggle);
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setRegisterShift((prev) => {
@@ -136,13 +146,23 @@ export default function Monitor() {
         {
           duty && duty.shifts && duty.shifts.map((shift) => {
             return (
-              <div className="border-2" key={shift._id}>
+              <div className="border-3 mt-6 cursor-pointeryyyyyy" key={shift._id} >
                 {/* below div contains the hardware list and personnel list for every shift */}
-                <h1 className="text-3xl mt-8 font-semibold"  >{shift.shift_name}</h1>
-                <h1>{shift.start_time}</h1>
-                <h1>{shift.end_time}</h1>
-                {shift.hardwares_attached && <HardwareList shift_id={shift._id} data={shift.hardwares_attached} />}
-                {shift.personnel_assigned && <PersonnelList shift_id={shift._id} data={shift.personnel_assigned} />}
+                <div onClick={() => {
+                  setShiftToggle(prevShiftToggle => ({
+                    ...prevShiftToggle,
+                    [shift._id]: !prevShiftToggle[shift._id]  // Toggle the value
+                  }));
+                }}>
+                  <h1 className="text-3xl mt-8 font-semibold"  >{shift.shift_name}</h1>
+                </div>
+                {shiftToggle[shift._id] && <div>
+                  <h1>{shift.start_time}</h1>
+                  <h1>{shift.end_time}</h1>
+                  {shift.hardwares_attached && <HardwareList shift_id={shift._id} data={shift.hardwares_attached} />}
+                  {shift.personnel_assigned && <PersonnelList shift_id={shift._id} data={shift.personnel_assigned} />}
+                </div>
+                }
               </div>
             )
           })
