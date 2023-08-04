@@ -8,7 +8,8 @@ import Input from "../../../Components/ui-components/input";
 import Label from "../../../Components/ui-components/label";
 import { Button } from "../../../Components/ui-components/button";
 import { IoIosInformationCircle } from "react-icons/io";
-import HardwareList from "./hardwarelist";
+import HardwareList from "./hardwareList";
+import PersonnelList from "./personnelList";
 import { useStateContext } from "../../../Contexts/ContextProvider";
 import { useEffect, useState } from "react";
 import { DatePickerWithRange } from "../../../Components/ui-components/datePickerwithRange";
@@ -77,7 +78,7 @@ export default function Monitor() {
                   BANDOBAST INFO
                 </span>
               </div>
-              {/* <Map /> */} 
+              {/* <Map /> */}
             </Link>
           </div>
           <div className="flex flex-col w-[34rem] bg-[#F4F6FA] p-6 rounded-md gap-y-4 shadow-md">
@@ -135,11 +136,14 @@ export default function Monitor() {
         {
           duty && duty.shifts && duty.shifts.map((shift) => {
             return (
-                <div className="border-2" key={shift._id}>
+              <div className="border-2" key={shift._id}>
                 {/* below div contains the hardware list and personnel list for every shift */}
-                  <h1 className="text-3xl mt-8 font-semibold"  >{shift.shift_name}</h1>
-                  {shift.hardwares_attached && <HardwareList shift_id={shift._id} data={shift.hardwares_attached} />}
-                </div>
+                <h1 className="text-3xl mt-8 font-semibold"  >{shift.shift_name}</h1>
+                <h1>{shift.start_time}</h1>
+                <h1>{shift.end_time}</h1>
+                {shift.hardwares_attached && <HardwareList shift_id={shift._id} data={shift.hardwares_attached} />}
+                {shift.personnel_assigned && <PersonnelList shift_id={shift._id} data={shift.personnel_assigned} />}
+              </div>
             )
           })
         }
