@@ -1,3 +1,4 @@
+import { set } from "date-fns";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -190,9 +191,11 @@ export const ContextProvider = ({ children }) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGI1N2ZkNmNlNmYyMTc4YjVhNWM5NWQiLCJpYXQiOjE2OTExMTkyMDgsImV4cCI6MTY5MzcxMTIwOH0.f1tZ8kR033p5B3ieiZvy3X8IEQ-2l7qjAjBBP2o3UMI"}`,
       },
     });
+
+    // console.log(token)
 
     const res = await response.json();
     console.log(res.message);
@@ -200,14 +203,16 @@ export const ContextProvider = ({ children }) => {
       toast.error(res.message, { id: toastId });
       return;
     }
+    console.log(res.data);
 
     toast.success(res.message, { id: toastId });
-    setDuty((prev) => (prev = res.data));
+    setDuty(res.data);
   };
 
   /********************** Shift ********************************/
   const [shift, setShift] = useState([]);
   const [registerShift, setRegisterShift] = useState({});
+  const [assignedAndIdleHardwares, setAssignedAndIdleHardwares] = useState([]);
 
   const postShift = async () => {
     toast.loading("Loading...", { id: toastId });
@@ -295,6 +300,46 @@ export const ContextProvider = ({ children }) => {
     toast.success(res.message, { id: toastId });
   };
 
+  const getAssignedAndIdleHardwares = async (shift_id) => {
+    toast.loading("Loading...", { id: toastId });
+    
+    // fetch all hardwares
+    const response = await fetch(`${baseUrl}admin/hardware/?page=1&limit=100000`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const res = await response.json();
+
+    // all idle hardwares
+    const idleHardwares = res.data.hardware.filter((hardware) => hardware.status === "idle");
+
+    // fetch all hardwares assigned to shift /api/v1/admin/shift/{id}
+    const response2 = await fetch(`${baseUrl}admin/shift/${shift_id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const res2 = await response2.json();
+
+    // all hardwares assigned to shift 
+    const assignedHardwares = res2.data.hardwares_attached;
+
+    // assigned and idle hardwares
+    const assignedAndIdleHardwares = [...assignedHardwares, ...idleHardwares];
+
+    setAssignedAndIdleHardwares(assignedAndIdleHardwares);
+
+    toast.success(res.message, { id: toastId });
+
+  };
+  
   const deleteShiftPersonnels = async (id, personnel) => {
     toast.loading("Loading...", { id: toastId });
     const response = await fetch(
@@ -575,6 +620,8 @@ export const ContextProvider = ({ children }) => {
         deleteShiftPersonnels,
         postShiftHardwares,
         deleteShiftHardwares,
+        assignedAndIdleHardwares,
+        getAssignedAndIdleHardwares,
 
 
         hardwares, // hardware apis
