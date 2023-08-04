@@ -15,7 +15,7 @@ export default function PersonnelList(props) {
 
   return (
     <>
-      <h1 className="text-3xl mt-8 font-semibold">Assign Personnel</h1>
+      <h1 className="text-3xl mt-8 font-semibold">Assigned Personnel</h1>
       <DataTable
             columns={headers}
             path={"hardware"}
