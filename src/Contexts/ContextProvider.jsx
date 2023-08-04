@@ -1,7 +1,6 @@
-import { set } from "date-fns";
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import toast from "react-hot-toast";
-import { useNavigate, useLocation } from "react-router-dom";
+import AuthContext from "./AuthContext";
 
 const StateContext = createContext();
 const dateNow = new Date();
@@ -15,127 +14,17 @@ const dutyDummyData = {
   note: "",
 };
 
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-const toastId = toast.loading("Loading...");
+const baseUrl = process.env.NODE_ENV === "development" ? process.env.REACT_APP_DEV_URL : process.env.REACT_APP_PROD_URL;
+
+const toastId = "lund"
 
 export const ContextProvider = ({ children }) => {
-  const navigate = useNavigate();
-  const location = useLocation();
 
-  const baseUrl =
-    process.env.NODE_ENV === "development"
-      ? process.env.REACT_APP_DEV_URL
-      : process.env.REACT_APP_PROD_URL;
+  const { token, authenticate } = useContext(AuthContext);
 
-  const [userName, setUserName] = useState();
-  const [name, setName] = useState();
-  const [isLogged, setIsLogged] = useState(false);
-  const [token, setToken] = useState("");
   const [screenSize, setScreenSize] = useState(window.innerWidth);
-  const [activeMenu, setActiveMenu] = useState(
-    window.innerWidth >= 1000 ? true : false
-  );
-  const [menuWidth, setMenuWidth] = useState(false);
-
-  useEffect(() => {
-    auth();
-  }, []);
-
-  /********************* AUTH ************************/
-  const logout = () => {
-    localStorage.removeItem("token");
-    setToken((prev) => (prev = ""));
-    setName((prev) => (prev = ""));
-    setUserName((prev) => (prev = ""));
-    setIsLogged((prev) => (prev = false));
-    setActiveMenu((prev) => (prev = false));
-
-    toast.success("Logged out successfully", { id: toastId });
-    navigate(false);
-    navigate("/login");
-  };
-
-  const validateToken = async (Token) => {
-    toast.loading("Loading...", { id: toastId });
-    const response = await fetch(`${baseUrl}auth/`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${Token}`,
-      },
-    });
-
-    const res = await response.json();
-    console.log(res.message);
-
-    if (!res.success) {
-      logout();
-      toast.error(res.message, { id: toastId });
-      return;
-    }
-
-    toast.success(res.message, { id: toastId });
-
-    const userInfo = {
-      name: res.data.name,
-      username: res.data.username,
-      isLogged: true,
-      token: Token,
-    };
-
-    setName(userInfo.name);
-    setUserName(userInfo.username);
-    setIsLogged(userInfo.isLogged);
-    setToken(userInfo.token);
-
-    if (location.pathname === "/login") navigate("/");
-  };
-
-  const auth = () => {
-    const Token = localStorage.getItem("token");
-    if (Token === null || Token.length === 0) logout();
-    else {
-      setToken(Token);
-      validateToken(Token);
-    }
-  };
-
-  const login = async (username, password) => {
-    toast.loading("Loading...", { id: toastId });
-    const response = await fetch(`${baseUrl}auth/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username, password }),
-    });
-
-    const res = await response.json();
-    console.log(res.message);
-    if (!res.success) {
-      logout();
-      toast.error(res.message, { id: toastId });
-      return;
-    }
-
-    toast.success(res.message, { id: toastId });
-
-    const userInfo = res.data.user;
-    const userdata = {
-      token: res.data.token,
-      name: userInfo.name,
-      username: userInfo.username,
-      isLogged: true,
-    };
-
-    localStorage.setItem("token", userdata.token);
-    setName(userdata.name);
-    setUserName(userdata.username);
-    setIsLogged(userdata.isLogged);
-    setToken(userdata.token);
-    setActiveMenu(window.innerWidth >= 1000 ? true : false);
-    navigate("../", { replace: true });
-  };
+  const [activeMenu, setActiveMenu] = useState(true);
+  const [menuWidth, setMenuWidth] = useState(true);
 
   /********************* DUTY ************************/
   const [registerDuty, setRegisterDuty] = useState(dutyDummyData);
@@ -143,70 +32,74 @@ export const ContextProvider = ({ children }) => {
   const [duty, setDuty] = useState([]);
 
   const postDuty = async () => {
-    toast.loading("Loading...", { id: toastId });
+
+    const tid = toast.loading("Creating duty...");
+
     const response = await fetch(`${baseUrl}admin/duty/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        "Authorization": `Bearer ${token}`,
       },
       body: JSON.stringify(registerDuty),
     });
 
-    const res = await response.json();
-    console.log(res.message);
-    if (!res.success) {
-      toast.error(res.message, { id: toastId });
+    const json = await response.json();
+    if (json.status > 299) {
+      if (json.status === 401) return authenticate(tid);
+      toast.error(json.message, { id: tid });
       return;
     }
 
-    toast.success(res.message, { id: toastId });
+    // fix this
     setRegisterDuty((prev) => (prev = dutyDummyData));
+    toast.success(json.message, { id: tid });
   };
 
   const getDuties = async () => {
-    toast.loading("Loading...", { id: toastId });
+
+    const tid = toast.loading("Loading duties...");
+
     const response = await fetch(`${baseUrl}admin/duty/?page=1&limit=10000`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+        "Authorization": `Bearer ${token}`,
       },
     });
 
-    const res = await response.json();
-    console.log(res.message);
-    if (!res.success) {
-      toast.error(res.message, { id: toastId });
+    const json = await response.json();
+    if (json.status > 299) {
+      if (json.status === 401) return authenticate(tid);
+      toast.error(json.message, { id: tid });
       return;
     }
 
-    toast.success(res.message, { id: toastId });
-    setDuties(res.data.duty);
+    setDuties(json.data.duty);
+    toast.success(json.message, { id: tid });
   };
 
   const getDutyById = async (id) => {
-    toast.loading("Loading...", { id: toastId });
+
+    const tid = toast.loading("Loading duty...");
+
     const response = await fetch(`${baseUrl}admin/duty/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGI1N2ZkNmNlNmYyMTc4YjVhNWM5NWQiLCJpYXQiOjE2OTExMTkyMDgsImV4cCI6MTY5MzcxMTIwOH0.f1tZ8kR033p5B3ieiZvy3X8IEQ-2l7qjAjBBP2o3UMI"}`,
+        "Authorization": `Bearer ${token}`,
       },
     });
 
-    // console.log(token)
-
-    const res = await response.json();
-    console.log(res.message);
-    if (!res.success) {
-      toast.error(res.message, { id: toastId });
+    const json = await response.json();
+    if (json.status > 299) {
+      if (json.status === 401) return authenticate(tid);
+      toast.error(json.message, { id: tid });
       return;
     }
-    console.log(res.data);
 
-    toast.success(res.message, { id: toastId });
-    setDuty(res.data);
+    setDuty(json.data);
+    toast.success(json.message, { id: tid });
   };
 
   /********************** Shift ********************************/
@@ -215,8 +108,7 @@ export const ContextProvider = ({ children }) => {
   const [assignedAndIdleHardwares, setAssignedAndIdleHardwares] = useState([]);
   const [assignedAndAvailablePersonnel, setAssignedAndAvailablePersonnel] = useState([]);
   const [assignedPersonnelsId, setAssignedPersonnelsId] = useState({}); // key: is  value is array of personnel id
-  
-  
+
   const postShift = async () => {
     toast.loading("Loading...", { id: toastId });
     const response = await fetch(`${baseUrl}admin/shift/`, {
@@ -333,7 +225,7 @@ export const ContextProvider = ({ children }) => {
 
     const allAssignedPersonnelId = allAssignedPersonnel.map((assignedPersonnel) => assignedPersonnel.personnel._id);
     setAssignedPersonnelsId({
-      [shift_id] : allAssignedPersonnelId, 
+      [shift_id]: allAssignedPersonnelId,
     })
 
     console.log(allAssignedPersonnelId);
@@ -348,10 +240,9 @@ export const ContextProvider = ({ children }) => {
     toast.success("Personnel list fetched successfully", { id: toastId });
   };
 
-
   const getAssignedAndIdleHardwares = async (shift_id) => {
     toast.loading("Loading...", { id: toastId });
-    
+
     // fetch all hardwares
     const response = await fetch(`${baseUrl}admin/hardware/?page=1&limit=100000`, {
       method: "GET",
@@ -388,7 +279,7 @@ export const ContextProvider = ({ children }) => {
     toast.success(res.message, { id: toastId });
 
   };
-  
+
   const deleteShiftPersonnels = async (id, personnel) => {
     toast.loading("Loading...", { id: toastId });
     const response = await fetch(
@@ -622,18 +513,6 @@ export const ContextProvider = ({ children }) => {
   return (
     <StateContext.Provider
       value={{
-        name,
-        setName,
-
-        userName,
-        setUserName,
-
-        isLogged,
-        setIsLogged,
-
-        token,
-        setToken,
-
         screenSize,
         setScreenSize,
 
@@ -641,11 +520,6 @@ export const ContextProvider = ({ children }) => {
         setActiveMenu,
         menuWidth,
         setMenuWidth,
-
-        login, // auth apis
-        logout,
-        auth,
-        validateToken,
 
         registerDuty, // duty apis
         setRegisterDuty,

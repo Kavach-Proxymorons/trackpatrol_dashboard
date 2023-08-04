@@ -8,7 +8,7 @@ import Input from "../../../Components/ui-components/input";
 import Label from "../../../Components/ui-components/label";
 import { Button } from "../../../Components/ui-components/button";
 import { IoIosInformationCircle } from "react-icons/io";
-import HardwareList from "./hardwareList";
+import HardwareList from "./hardwarelist";
 import PersonnelList from "./personnelList";
 import { useStateContext } from "../../../Contexts/ContextProvider";
 import { useEffect, useState } from "react";
