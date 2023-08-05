@@ -10,7 +10,7 @@ import useWindowSize from "../../hooks/useWindowSize";
 import toast from "react-hot-toast";
 
 export default function DetailedMap() {
-    const upadteFrequency = 10; // in seconds // to store in env
+    const upadteFrequency = 5; // in seconds // to store in env
     const { height } = useWindowSize();
     const { id, shift_id } = useParams(); // duty_id and shift_id from url to be used for fetching data
     const { token } = useStateContext();

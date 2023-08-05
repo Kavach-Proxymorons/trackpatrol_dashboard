@@ -3,10 +3,18 @@ import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import blue_marker from "../Assests/blue_marker.png";
 import grey_marker from "../Assests/grey_marker.png";
 import blue_star_marker from "../Assests/blue_star_marker.png";
-import { useStateContext } from "../Contexts/ContextProvider";
+import orange_marker from "../Assests/orange_marker.png";
+
+const stateColorMap = {
+    GPS_inactive_RFID_inactive: grey_marker,
+    GPS_active_RFID_active: blue_star_marker,
+    GPS_active_RFID_inactive: blue_marker,
+    GPS_inactive_RFID_active: orange_marker,
+};
 
 function RenderMap(props) {
-    const staleThreshold = 10 // in seconds to check i
+    const staleThresholdGPS = 10 // in seconds to marker will trun grey
+    const staleThresholdRFID = 30 // in seconds to marker will trun grey; to update it to a larger value
     const { shiftData } = props ; // This shift Data is coming from Map Element which renders this map.
     const [ markerData, setMarkerData ] = useState([]); // This will be used to render markers on the map
     const [ dutyLocation, setDutyLocation ] = useState({}); // This is stored in separate state to prevent re-rendering of the map
@@ -49,30 +57,33 @@ function RenderMap(props) {
             const now = new Date(); // for comparing how old is the gps data
 
             shiftData.personnel_assigned.forEach(personnel => {
-                const gpsData = personnel.gps_data;
-                const lastGpsData = gpsData[gpsData.length - 1];
+                const lastGpsData = personnel.gps_data[personnel.gps_data.length - 1];
+                const latestRFIDData = personnel.rfid_data[personnel.rfid_data.length - 1];
                 const lastGpsDataTime = new Date(lastGpsData.timestamp);
-                const timeDiff = (now - lastGpsDataTime) / 1000; // in seconds
+                const lastRFIDDataTime = new Date(latestRFIDData.timestamp);
+                const timeDiffGPS = (now - lastGpsDataTime) / 1000; // in seconds
+                const timeDiffRFID = (now - lastRFIDDataTime) / 1000; // in seconds
                 const lat = Number(lastGpsData.location.split(",")[0]);
                 const lng = Number(lastGpsData.location.split(",")[1]);
             
+                let state = "GPS_inactive_RFID_inactive";
 
-                // if timeDiff is greater than 10 then the personnel is inactive
-                if (timeDiff > staleThreshold ) {
-                    markerDataTemp.push({
-                        personnel: personnel._id,
-                        lat,
-                        lng,
-                        state: "GPS_inactive"
-                    });
-                } else {
-                    markerDataTemp.push({
-                        personnel: personnel._id,
-                        lat,
-                        lng,
-                        state: "GPS_active"
-                    });
+                if (timeDiffGPS < staleThresholdGPS && timeDiffRFID < staleThresholdRFID) {
+                    state = "GPS_active_RFID_active";
+                } else if (timeDiffGPS < staleThresholdGPS && timeDiffRFID > staleThresholdRFID) {
+                    state = "GPS_active_RFID_inactive";
+                } else if (timeDiffGPS > staleThresholdGPS && timeDiffRFID < staleThresholdRFID) {
+                    state = "GPS_inactive_RFID_active";
+                }else {
+                    state = "GPS_inactive_RFID_inactive";
                 }
+
+                markerDataTemp.push({
+                    personnel: personnel._id,
+                    lat,
+                    lng,
+                    state
+                });
             });
 
             console.log("Marker Data", markerDataTemp);
@@ -88,23 +99,13 @@ function RenderMap(props) {
             mapContainerClassName="w-full h-full"
         >   
             {markerData.map((point, index) => {
-                if (point.state === "GPS_active") {
-                    return (
-                        <Marker
-                            key={index}
-                            position={{ lat: point.lat, lng: point.lng }}
-                            icon={blue_marker} // Green Dot
-                        />
-                    );
-                } else {
-                    return (
-                        <Marker
-                            key={index}
-                            position={{ lat: point.lat, lng: point.lng }}
-                            icon={grey_marker} // Grey Dot
-                        />
-                    );
-                }
+                return (
+                    <Marker
+                        key={index}
+                        position={{ lat: point.lat, lng: point.lng }}
+                        icon={stateColorMap[point.state]}
+                    />
+                );
             })}
             {/* <Marker position={center} icon={marker} /> */}
         </GoogleMap>
