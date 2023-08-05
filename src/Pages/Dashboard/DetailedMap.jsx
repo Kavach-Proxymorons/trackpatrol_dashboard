@@ -10,7 +10,7 @@ import useWindowSize from "../../hooks/useWindowSize";
 import toast from "react-hot-toast";
 
 export default function DetailedMap() {
-    const upadteFrequency = 3; // in seconds
+    const upadteFrequency = 10; // in seconds // to store in env
     const { height } = useWindowSize();
     const { id, shift_id } = useParams(); // duty_id and shift_id from url to be used for fetching data
     const { token } = useStateContext();
@@ -47,6 +47,11 @@ export default function DetailedMap() {
 
     useEffect(() => {
         fetchShiftData();
+        const interval = setInterval(fetchShiftData, upadteFrequency * 1000); 
+        // Clean up interval when the component unmounts
+        return () => {
+            clearInterval(interval);
+        };
     },[])
 
     return (

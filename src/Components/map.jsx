@@ -1,10 +1,12 @@
 import { useState, useEffect, useMemo } from "react";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
-import marker_blue from "../Assests/marker_blue.png";
+import blue_marker from "../Assests/blue_marker.png";
+import grey_marker from "../Assests/grey_marker.png";
+import blue_star_marker from "../Assests/blue_star_marker.png";
 import { useStateContext } from "../Contexts/ContextProvider";
 
 function RenderMap(props) {
-    const updateFrequency = 10 // in seconds
+    const staleThreshold = 10 // in seconds to check i
     const { shiftData } = props ; // This shift Data is coming from Map Element which renders this map.
     const [ markerData, setMarkerData ] = useState([]); // This will be used to render markers on the map
     const [ dutyLocation, setDutyLocation ] = useState({}); // This is stored in separate state to prevent re-rendering of the map
@@ -56,7 +58,7 @@ function RenderMap(props) {
             
 
                 // if timeDiff is greater than 10 then the personnel is inactive
-                if (timeDiff > 10) {
+                if (timeDiff > staleThreshold ) {
                     markerDataTemp.push({
                         personnel: personnel._id,
                         lat,
@@ -91,7 +93,7 @@ function RenderMap(props) {
                         <Marker
                             key={index}
                             position={{ lat: point.lat, lng: point.lng }}
-                            icon={marker} // Green Dot
+                            icon={blue_marker} // Green Dot
                         />
                     );
                 } else {
@@ -99,7 +101,7 @@ function RenderMap(props) {
                         <Marker
                             key={index}
                             position={{ lat: point.lat, lng: point.lng }}
-                            icon={marker_blue} // Grey Dot
+                            icon={grey_marker} // Grey Dot
                         />
                     );
                 }
