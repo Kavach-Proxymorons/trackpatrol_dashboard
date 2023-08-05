@@ -23,6 +23,13 @@ export default function DashboardCard({ duty }) {
         { color: "yellow", title: "Medium" },
         { color: "green", title: "Low" }
     ];
+
+    let title = priority[Math.min(2, duty.shifts.length)].title;
+    let color = priority[Math.min(2, duty.shifts.length)].color;
+    useEffect(() => {
+        title = priority[Math.min(2, duty.shifts.length)].title;
+        color = priority[Math.min(2, duty.shifts.length)].color;
+    }, []);
     return (
         <Card className="w-[320px] shadow flex flex-col justify-between">
             <div>
@@ -33,7 +40,13 @@ export default function DashboardCard({ duty }) {
                     >
                         {title}
                     </Badge>
-                    <ArrowUpRight size={30} className="" onClick={() => {Navigate(`/dashboard/${duty._id}`)}}/>
+                    <ArrowUpRight
+                        size={30}
+                        className=""
+                        onClick={() => {
+                            Navigate(`/dashboard/${duty._id}`);
+                        }}
+                    />
                 </div>
                 <CardHeader className="pt-3 px-4">
                     <CardTitle>{duty?.title}</CardTitle>
