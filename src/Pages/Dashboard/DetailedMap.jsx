@@ -10,7 +10,9 @@ import useWindowSize from "../../hooks/useWindowSize";
 
 export default function DetailedMap() {
     const { height } = useWindowSize();
-    const { id, shift_id } = useParams();
+    const { id, shift_id } = useParams(); // duty_id and shift_id from url to be used for fetching data
+    const { token } = useStateContext();
+    const [ shiftData, setShiftData ] = useState({});
 
     return (
         <div
@@ -86,9 +88,12 @@ export default function DetailedMap() {
                             240 Personnel Update
                         </p>
                     </div>
+
                 </div>
             </div>
-            <Map />
+            <Map 
+                shiftData = {shiftData}
+            />
         </div>
     );
 }
