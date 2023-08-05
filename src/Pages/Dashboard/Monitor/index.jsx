@@ -24,17 +24,32 @@ import {
 
 import { DatePicker } from "../../../Components/ui-components/datePicker";
 import { AlarmCheck, BadgeInfo } from "lucide-react";
+import useFetch from "../../../hooks/useFetch";
+import { toast } from "react-hot-toast";
+
+const tid = "duty_detail_toast";
 
 export default function Monitor() {
-    const [date, setDate] = useState({});
     const { id } = useParams();
-    const { registerShift, setRegisterShift, duty, getDutyById, postShift } =
-        useStateContext();
+    const [date, setDate] = useState({});
+    const { registerShift, setRegisterShift, postShift } = useStateContext();
+
+    const { response, loading, error } = useFetch(`/api/v1/admin/duty/${id}`);
+    useEffect(() => {
+        if (loading) toast.loading("Loading duties...", { id: tid });
+        if (response) toast.success(response.message, { id: tid });
+        if (error) toast.error(error.message, { id: tid });
+        console.log(response);
+    }, [loading, error, response]);
+
+    useEffect(() => {
+        document.title = "Monitor | Bandobast";
+    }, []);
 
     // Initialize shiftToggle with default values for each shift ID
     const initialShiftToggle = {};
-    if (duty && duty.shifts) {
-        for (const shift of duty.shifts) {
+    if (response?.data?.shifts) {
+        for (const shift of response?.data?.shifts) {
             initialShiftToggle[shift._id] = false; // Initialize with a default value (true in this case)
         }
     }
@@ -51,11 +66,6 @@ export default function Monitor() {
         postShift(registerShift);
         setDate({});
     };
-
-    useEffect(() => {
-        document.title = "Monitor | Bandobast";
-        getDutyById(id);
-    }, []);
 
     return (
         <div className="mx-8 my-6">
@@ -202,42 +212,77 @@ export default function Monitor() {
                 </Card>
             </div>
 
-            {/* loop over duty.shifts array */}
-            {duty &&
-                duty.shifts &&
-                duty.shifts.map((shift) => {
+                {/* loop over duty.shifts array */}
+                {response?.data?.shifts.map((shift) => {
                     return (
-                        <div
-                            className="border-3 mt-6 cursor-pointeryyyyyy"
-                            key={shift._id}
-                        >
+                        <div className="border-3 mt-6 p-3 cursor-pointer" key={shift._id}>
                             {/* below div contains the hardware list and personnel list for every shift */}
+                            {/* ------------Shift Name Bar ------------ */}
                             <div
                                 onClick={() => {
                                     setShiftToggle((prevShiftToggle) => ({
                                         ...prevShiftToggle,
-                                        [shift._id]: !prevShiftToggle[shift._id] // Toggle the value
+                                        [shift._id]:
+                                            !prevShiftToggle[shift._id] // Toggle the value
                                     }));
                                 }}
                             >
-                                <h1 className="text-3xl mt-8 font-semibold">
-                                    {shift.shift_name}
-                                </h1>
+                                <h1 className="text-3xl mt-8 font-semibold">{shift.shift_name}</h1>
                             </div>
                             {shiftToggle[shift._id] && (
                                 <div>
-                                    <h1>{shift.start_time}</h1>
-                                    <h1>{shift.end_time}</h1>
-                                    {shift.hardwares_attached && (
-                                        <HardwareList
-                                            shift_id={shift._id}
-                                            data={shift.hardwares_attached}
-                                        />
-                                    )}
+                                    {/* ------------Shift Info Box ------------ */}
+                                    <div className="flex justify-start gap-x-6 mt-6">
+                                        {/* ------------Shift schedule Box ------------ */}
+                                        <div className="bg-[#F4F6FA] px-2 py-3 rounded-md shadow-md">
+                                            <div className="flex gap-x-2 ml-2">
+                                                <LuCalendar size={24} color="#000" />
+                                                <span className="text-lg font-semibold">SHIFT SCHEDULE</span>
+                                            </div>
+                                            <div className="flex flex-col justify-center items-start bg-white mt-2 rounded text-sm pl-2 py-3">
+                                                <p>
+                                                    <span className="text-[#7B7D92]">Start:{" "}</span>
+                                                    {new Date(shift.start_time).toString().split("G")[0]}
+                                                </p>
+                                                <p>
+                                                    <span className="text-[#7B7D92] pr-2">End:{" "}</span>
+                                                    {new Date(shift.end_time).toString().split("G")[0]}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        {/* ------------Shift Monitor Box ------------ */}
+                                        <Link
+                                            to={`/dashboard/${id}/${shift._id}/monitor/details`}
+                                            className="w-[20rem] h-[12rem] shadow-md overflow-hidden rounded-xl flex flex-col justify-between bg-[#F4F6FA] p-0"
+                                        >
+                                            <div className="flex gap-x-2 items-center py-2 px-3">
+                                                <IoIosInformationCircle size={30} color="#000" />
+                                                <span className="text-lg font-semibold text-black">
+                                                    Monitor Info
+                                                </span>
+                                            </div>
+                                            <iframe
+                                                src={`https://maps.google.com/maps?q=${response?.data?.location}&z=15&output=embed`}
+                                                width="360"
+                                                height="200"
+                                                border="0"
+                                            ></iframe>
+                                        </Link>
+                                    </div>
+                                    {/* ------------Shift Assigned Personnel Table ------------ */}
+                                    <br />
                                     {shift.personnel_assigned && (
                                         <PersonnelList
                                             shift_id={shift._id}
                                             data={shift.personnel_assigned}
+                                        />
+                                    )}
+                                    {/* ------------Shift Hardware Attached Table ------------ */}
+                                    <br />
+                                    {shift.hardwares_attached && (
+                                        <HardwareList
+                                            shift_id={shift._id}
+                                            data={shift.hardwares_attached}
                                         />
                                     )}
                                 </div>
@@ -245,8 +290,7 @@ export default function Monitor() {
                         </div>
                     );
                 })}
-        </div>
+            </div>
+        </>
     );
 }
-
-// to="/dashboard/monitor/details"

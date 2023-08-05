@@ -27,7 +27,7 @@ const useFetch = (route) => {
                 if(json.status > 299) {
                     if(json.status === 401) return authenticate();
                     if(json.status === 500) throw new Error("Internal server error");
-                    throw new Error("Invalid request");
+                    throw new Error(json.message);
                 }
                 setResponse((json));
 
