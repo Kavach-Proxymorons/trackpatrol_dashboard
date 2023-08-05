@@ -80,8 +80,8 @@ export default function Monitor() {
             </Link>
             <div className="flex justify-start gap-x-6 mt-6">
                 <div className="flex flex-col justify-start gap-y-6">
-                    <Card>
-                        <CardHeader>
+                    <Card className='shadow'>
+                        <CardHeader className='pt-4'>
                             <CardTitle className="flex items-center scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight transition-colors first:mt-0">
                                 <div className="w-10">
                                     <LuCalendar size={24} color="#000" />
@@ -104,9 +104,9 @@ export default function Monitor() {
                             </p>
                         </CardContent>
                     </Card>
-                    <Card>
-                        <CardHeader className='pb-0'>
-                            <CardTitle className="flex items-center scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight transition-colors first:mt-0">
+                    <Card className='shadow'>
+                        <CardHeader className='pb-0 pt-4'>
+                            <CardTitle className="flex items-center justify-center scroll-m-20 pb-2 text-2xl font-semibold tracking-tight transition-colors first:mt-0">
                                 <div className="w-10">
                                     <BadgeInfo size={24} color="#000" />
                                 </div>
@@ -114,11 +114,11 @@ export default function Monitor() {
                             </CardTitle>
                         </CardHeader>
 
-                        <CardContent className="pb-4 w-full h-[10rem] p-0">
+                        <CardContent className="pb-4 p-0 overflow-hidden">
                             <iframe
                                 src={`https://maps.google.com/maps?q=${response?.data?.location}&z=15&output=embed`}
                                 width="360"
-                                // height="200"
+                                height="190"
                                 border="0"
                             ></iframe>
                         </CardContent>

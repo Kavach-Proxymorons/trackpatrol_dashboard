@@ -12,7 +12,20 @@ import { ArrowUpRight, CalendarRange, Navigation, User2 } from "lucide-react";
 import { Separator } from "./ui-components/separator";
 import { useNavigate } from "react-router-dom";
 
-const month = ["Jan","Feb","Mar","Apr","May","June","July","Aug","Sep","Oct","Nov","Dec"];
+const month = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "June",
+    "July",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+];
 
 export default function DashboardCard({ duty }) {
     const Navigate = useNavigate();
@@ -26,7 +39,7 @@ export default function DashboardCard({ duty }) {
     const startTime = new Date(duty.start_time);
     const endTime = new Date(duty.end_time);
 
-    console.log(duty);;
+    console.log(duty);
 
     return (
         <Card
@@ -65,7 +78,10 @@ export default function DashboardCard({ duty }) {
                     </div>
                     <div className="flex items-center gap-x-2">
                         <CalendarRange size={20} />
-                        <p className="pt-1">{startTime.getDate()} {month[startTime.getMonth()]} - {endTime.getDate()} {month[endTime.getMonth()]}</p>
+                        <p className="pt-1">
+                            {startTime.getDate()} {month[startTime.getMonth()]}{" "}
+                            - {endTime.getDate()} {month[endTime.getMonth()]}
+                        </p>
                     </div>
                 </CardFooter>
             </div>
