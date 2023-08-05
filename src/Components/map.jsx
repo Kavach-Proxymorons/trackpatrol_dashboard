@@ -55,35 +55,57 @@ function RenderMap(props) {
             const now = new Date(); // for comparing how old is the gps data
 
             shiftData.personnel_assigned.forEach(personnel => {
-                const lastGpsData = personnel.gps_data[personnel.gps_data.length - 1];
-                const latestRFIDData = personnel.rfid_data[personnel.rfid_data.length - 1];
+
+                if( personnel.gps_data.length === 0 ) // if there is no GPS data for the personnel no point of creating the marker
+                    return;
+                
                 const lastGpsDataTime = new Date(lastGpsData.timestamp);
-                const lastRFIDDataTime = new Date(latestRFIDData.timestamp);
+                const lastGpsData = personnel.gps_data[personnel.gps_data.length - 1];
                 const timeDiffGPS = (now - lastGpsDataTime) / 1000; // in seconds
-                const timeDiffRFID = (now - lastRFIDDataTime) / 1000; // in seconds
                 const lat = Number(lastGpsData.location.split(",")[0]);
                 const lng = Number(lastGpsData.location.split(",")[1]);
-            
-                let state = "GPS_inactive_RFID_inactive";
 
-                if (timeDiffGPS < staleThresholdGPS && timeDiffRFID < staleThresholdRFID) {
-                    state = "GPS_active_RFID_active";
-                } else if (timeDiffGPS < staleThresholdGPS && timeDiffRFID > staleThresholdRFID) {
-                    state = "GPS_active_RFID_inactive";
-                } else if (timeDiffGPS > staleThresholdGPS && timeDiffRFID < staleThresholdRFID) {
-                    state = "GPS_inactive_RFID_active";
-                }else {
-                    state = "GPS_inactive_RFID_inactive";
+                if( personnel.rfid_data.length > 0 ){ // if there is RFID data for the personnel (GPS + RFID)
+                    const latestRFIDData = personnel.rfid_data[personnel.rfid_data.length - 1];
+                    const lastRFIDDataTime = new Date(latestRFIDData.timestamp);
+                    const timeDiffRFID = (now - lastRFIDDataTime) / 1000; // in seconds
+                
+                    let state = "GPS_inactive_RFID_inactive";
+
+                    if (timeDiffGPS < staleThresholdGPS && timeDiffRFID < staleThresholdRFID) {
+                        state = "GPS_active_RFID_active";
+                    } else if (timeDiffGPS < staleThresholdGPS && timeDiffRFID > staleThresholdRFID) {
+                        state = "GPS_active_RFID_inactive";
+                    } else if (timeDiffGPS > staleThresholdGPS && timeDiffRFID < staleThresholdRFID) {
+                        state = "GPS_inactive_RFID_active";
+                    }else {
+                        state = "GPS_inactive_RFID_inactive";
+                    }
+
+                    markerDataTemp.push({
+                        personnel: personnel._id,
+                        lat,
+                        lng,
+                        state
+                    });
+
+                }else{ // if there is no RFID data for the personnel (only GPS data)
+                    let state = "GPS_inactive_RFID_inactive";
+
+                    if (timeDiffGPS < staleThresholdGPS) {
+                        state = "GPS_active_RFID_inactive";
+                    }else {
+                        state = "GPS_inactive_RFID_inactive";
+                    }
+
+                    markerDataTemp.push({
+                        personnel: personnel._id,
+                        lat,
+                        lng,
+                        state
+                    });
                 }
-
-                markerDataTemp.push({
-                    personnel: personnel._id,
-                    lat,
-                    lng,
-                    state
-                });
             });
-
             setMarkerData(markerDataTemp);
         }
     }, [shiftData]);
