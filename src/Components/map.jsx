@@ -1,9 +1,12 @@
 import { useState, useEffect, useMemo } from "react";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
+import marker_blue from "../Assests/marker_blue.png";
 import { useStateContext } from "../Contexts/ContextProvider";
 
 function RenderMap(props) {
+    const updateFrequency = 10 // in seconds
     const { shiftData } = props ; // This shift Data is coming from Map Element which renders this map.
+    const [ markerData, setMarkerData ] = useState([]); // This will be used to render markers on the map
     const [ dutyLocation, setDutyLocation ] = useState({}); // This is stored in separate state to prevent re-rendering of the map
     
     const center = useMemo(() => {
@@ -36,6 +39,43 @@ function RenderMap(props) {
             const lng = Number(shiftData.duty.location.split(",")[1]);
             setDutyLocation({ lat, lng });
         }
+
+        console.log(shiftData);
+
+        if (shiftData && shiftData.personnel_assigned) {
+            const markerDataTemp = [];
+            const now = new Date(); // for comparing how old is the gps data
+
+            shiftData.personnel_assigned.forEach(personnel => {
+                const gpsData = personnel.gps_data;
+                const lastGpsData = gpsData[gpsData.length - 1];
+                const lastGpsDataTime = new Date(lastGpsData.timestamp);
+                const timeDiff = (now - lastGpsDataTime) / 1000; // in seconds
+                const lat = Number(lastGpsData.location.split(",")[0]);
+                const lng = Number(lastGpsData.location.split(",")[1]);
+            
+
+                // if timeDiff is greater than 10 then the personnel is inactive
+                if (timeDiff > 10) {
+                    markerDataTemp.push({
+                        personnel: personnel._id,
+                        lat,
+                        lng,
+                        state: "GPS_inactive"
+                    });
+                } else {
+                    markerDataTemp.push({
+                        personnel: personnel._id,
+                        lat,
+                        lng,
+                        state: "GPS_active"
+                    });
+                }
+            });
+
+            console.log("Marker Data", markerDataTemp);
+            setMarkerData(markerDataTemp);
+        }
     }, [shiftData]);
 
     return (
@@ -51,7 +91,7 @@ function RenderMap(props) {
                         <Marker
                             key={index}
                             position={{ lat: point.lat, lng: point.lng }}
-                            icon={marker_blue} // Green Dot
+                            icon={marker} // Green Dot
                         />
                     );
                 } else {
