@@ -7,12 +7,47 @@ import { BiLogoChrome } from "react-icons/bi";
 import Input from "../../Components/ui-components/input";
 import { Link } from "react-router-dom";
 import useWindowSize from "../../hooks/useWindowSize";
+import toast from "react-hot-toast";
 
 export default function DetailedMap() {
+    const upadteFrequency = 3; // in seconds
     const { height } = useWindowSize();
     const { id, shift_id } = useParams(); // duty_id and shift_id from url to be used for fetching data
     const { token } = useStateContext();
     const [ shiftData, setShiftData ] = useState({});
+    const toastId = "asdkfjlaksd";
+
+    
+    const fetchShiftData = async () => {
+        console.log("fetched");
+        /* Function to fetch shift data from shift_id */
+        const baseUrl = process.env.NODE_ENV === "development" ? process.env.REACT_APP_DEV_URL : process.env.REACT_APP_PROD_URL;
+        
+        toast.loading("Loading...", { id: toastId });
+
+        const response = await fetch(`${baseUrl}admin/shift/${shift_id}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
+        });
+
+        const res = await response.json();
+
+        if (!res.success) {
+        toast.error(res.message, { id: toastId });
+            return;
+        }
+
+        setShiftData(res.data);
+        console.log("Monkey", shiftData);
+        toast.success(res.message, { id: toastId });
+    }
+
+    useEffect(() => {
+        fetchShiftData();
+    },[])
 
     return (
         <div
@@ -88,7 +123,6 @@ export default function DetailedMap() {
                             240 Personnel Update
                         </p>
                     </div>
-
                 </div>
             </div>
             <Map 
