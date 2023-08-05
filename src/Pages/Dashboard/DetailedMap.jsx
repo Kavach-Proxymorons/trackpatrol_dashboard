@@ -14,15 +14,18 @@ export default function DetailedMap() {
     const { height } = useWindowSize();
     const { id, shift_id } = useParams(); // duty_id and shift_id from url to be used for fetching data
     const { token } = useStateContext();
+    const [lastUpdated, setLastUpdated] = useState();
     const [ shiftData, setShiftData ] = useState({});
     const toastId = "asdkfjlaksd";
 
     
-    const fetchShiftData = async () => {
-        console.log("fetched");
+    const fetchShiftData = async () => {        
         /* Function to fetch shift data from shift_id */
-        const baseUrl = process.env.NODE_ENV === "development" ? process.env.REACT_APP_DEV_URL : process.env.REACT_APP_PROD_URL;
+        console.log("fetched");
 
+        const now = new Date(); // current time for updating last updated time
+
+        const baseUrl = process.env.NODE_ENV === "development" ? process.env.REACT_APP_DEV_URL : process.env.REACT_APP_PROD_URL;
         const response = await fetch(`${baseUrl}admin/shift/${shift_id}`, {
         method: "GET",
         headers: {
@@ -38,6 +41,7 @@ export default function DetailedMap() {
             return;
         }
         setShiftData(res.data);
+        setLastUpdated(now.toLocaleTimeString());
     }
 
     useEffect(() => {
@@ -68,6 +72,11 @@ export default function DetailedMap() {
             </div>
             <div className="border-t-3 absolute top-13 z-50 w-[280px] bg-background rounded-br-xl">
                 <div className="flex flex-col justify-center items-start p-4 gap-y-4">
+                    {/* To update below indexes as follows
+                        blue Marker : GPS only
+                        blue star Marker : RFID + GPS 
+                        orange Marker : RFID only
+                        Grey Marker : Inactive  */}
                     <div className="w-full border-2 rounded-md p-4">
                         <span className="flex items-center justify-start gap-x-2 font-medium mb-2">
                             <IoIosCar size={30} /> BB-8891776
@@ -123,6 +132,22 @@ export default function DetailedMap() {
                             240 Personnel Update
                         </p>
                     </div>
+                    
+                    {/* Update the styling of last updated time */}
+                    <div className="w-full border-2 rounded-md p-4">
+                        <span className="flex items-center justify-start gap-x-2 font-medium mb-2">
+                            <div className="h-5 w-5 bg-[#FE8235] rounded-full"></div>{" "}
+                            Last updated Time
+                        </span>
+                        <p className="text-sm">
+                            <span className="text-base font-medium">
+                                {" "}
+                                {" "}
+                            </span>{" "}
+                            {lastUpdated}
+                        </p>
+                    </div>
+
                 </div>
             </div>
             <Map 
