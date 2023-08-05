@@ -13,8 +13,8 @@ const stateColorMap = {
 };
 
 function RenderMap(props) {
-    const staleThresholdGPS = process.env.STALE_THRESHOLD_GPS // in seconds to marker will trun grey
-    const staleThresholdRFID = process.env.STALE_THRESHOLD_RFID // in seconds to marker will trun grey; to update it to a larger value
+    const staleThresholdGPS = process.env.REACT_APP_STALE_THRESHOLD_GPS // in seconds to marker will trun grey
+    const staleThresholdRFID = process.env.REACT_APP_STALE_THRESHOLD_RFID // in seconds to marker will trun grey; to update it to a larger value
     const { shiftData } = props ; // This shift Data is coming from Map Element which renders this map.
     const [ markerData, setMarkerData ] = useState([]); // This will be used to render markers on the map
     const [ dutyLocation, setDutyLocation ] = useState({}); // This is stored in separate state to prevent re-rendering of the map
