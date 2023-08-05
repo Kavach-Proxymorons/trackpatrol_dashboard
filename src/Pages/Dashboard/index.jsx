@@ -6,7 +6,7 @@ import useFetch from "../../hooks/useFetch";
 const tid = "dashboard_duites_toast";
 
 export default function Dashboard() {
-    const { response, loading, error } = useFetch("/api/v1/admin/duty/");
+    const { response, loading, error } = useFetch("admin/duty/");
     useEffect(() => {
         if (loading) toast.loading("Loading duties...", { id: tid });
         if (response) toast.success(response.message, { id: tid });
