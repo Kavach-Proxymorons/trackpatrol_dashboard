@@ -87,23 +87,19 @@ export default function Monitor() {
                                 </p>
                             </div>
                         </div>
-                        <Link
-                            to={`/dashboard/${id}/monitor/details`} // to remove this
-                            className="w-[20rem] h-[14rem] shadow-md overflow-hidden rounded-xl flex flex-col justify-between bg-[#F4F6FA] p-0"
-                        >
-                            <div className="flex gap-x-2 items-center py-2 px-3">
-                                <IoIosInformationCircle size={30} color="#000" />
-                                <span className="text-lg font-semibold text-black">
-                                    BANDOBAST INFO
-                                </span>
-                            </div>
-                            <iframe
-                                src={`https://maps.google.com/maps?q=${response?.data?.location}&z=15&output=embed`}
-                                width="360"
-                                height="300"
-                                border="0"
-                            ></iframe>
-                        </Link>
+                        {/* ------------ Duty location Displaying Map ------------ */}
+                        <div className="flex gap-x-2 items-center py-2 px-3">
+                            <IoIosInformationCircle size={30} color="#000" />
+                            <span className="text-lg font-semibold text-black">
+                                BANDOBAST LOCATION
+                            </span>
+                        </div>
+                        <iframe
+                            src={`https://maps.google.com/maps?q=${response?.data?.location}&z=15&output=embed`}
+                            width="360"
+                            height="300"
+                            border="0"
+                        ></iframe>
                     </div>
                     <div className="flex flex-col w-[34rem] bg-[#F4F6FA] p-6 rounded-md gap-y-4 shadow-md">
                         <h1 className="text-3xl font-semibold">{response?.data?.title}</h1>
@@ -201,6 +197,7 @@ export default function Monitor() {
                                         </Link>
                                     </div>
                                     {/* ------------Shift Assigned Personnel Table ------------ */}
+                                    <br />
                                     {shift.personnel_assigned && (
                                         <PersonnelList
                                             shift_id={shift._id}
@@ -208,6 +205,7 @@ export default function Monitor() {
                                         />
                                     )}
                                     {/* ------------Shift Hardware Attached Table ------------ */}
+                                    <br />
                                     {shift.hardwares_attached && (
                                         <HardwareList
                                             shift_id={shift._id}
