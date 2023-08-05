@@ -4,7 +4,15 @@ import { useStateContext } from "../Contexts/ContextProvider";
 
 function RenderMap(props) {
     const { shiftData } = props ; // This shift Data is coming from Map Element which renders this map.
+    const [ dutyLocation, setDutyLocation ] = useState({}); // This is stored in separate state to prevent re-rendering of the map
     
+    const center = useMemo(() => {
+        if (Object.keys(dutyLocation).length !== 0) {
+            return dutyLocation;
+        } else {
+            return { lat: 28.6756404, lng: 77.5035609 }; 
+        }
+    }, [dutyLocation]);  // Duty location updates only once, so useMemo is used to prevent re-rendering of the map
 
     const defaultStyles = [
         {
@@ -20,6 +28,15 @@ function RenderMap(props) {
         zoomControl: false,
         styles: defaultStyles
     };
+
+    useEffect(() => {
+        // setting of the duty location as center of the map only once.
+        if (shiftData && shiftData.duty?.location && Object.keys(dutyLocation).length === 0) { // once duty location is set, it will not be updated
+            const lat = Number(shiftData.duty.location.split(",")[0]);
+            const lng = Number(shiftData.duty.location.split(",")[1]);
+            setDutyLocation({ lat, lng });
+        }
+    }, [shiftData]);
 
     return (
         <GoogleMap
