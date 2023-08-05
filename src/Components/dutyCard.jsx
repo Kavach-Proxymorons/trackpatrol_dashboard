@@ -43,7 +43,7 @@ export default function DashboardCard({ duty }) {
 
     return (
         <Card
-            className="w-[320px] shadow flex flex-col justify-between cursor-pointer"
+            className="w-[320px] flex flex-col justify-between cursor-pointer"
             onClick={() => {
                 Navigate(`/dashboard/${duty._id}`);
             }}
