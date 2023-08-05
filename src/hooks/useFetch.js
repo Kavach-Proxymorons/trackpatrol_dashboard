@@ -10,7 +10,7 @@ const useFetch = (route) => {
     useEffect(() => {
         if (route === '') return;
         const controller = new AbortController();
-        const URL = process.env.REACT_APP_DEV_URL + route;
+        const URL = process.env.REACT_APP_BASE_URL + route;
 
         (async () => {
             setLoading(true);
