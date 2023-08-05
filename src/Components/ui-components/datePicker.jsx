@@ -22,8 +22,8 @@ export function DatePicker({ date, setDate, className }) {
                         id="date"
                         variant={"outline"}
                         className={cn(
-                            "w-96 text-[#7B7D92] justify-between text-left font-normal border-2 border-slate-100 bg-slate-50 hover:bg-secondary",
-                            !date && "text-muted-foreground"
+                            "w-96 text-[#7B7D92] justify-between text-left font-normal border",
+                            !date && "text-muted-foreground", className
                         )}
                     >
                         {date ? (

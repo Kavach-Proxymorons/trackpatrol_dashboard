@@ -10,8 +10,8 @@ a span {
     @apply text-lg text-[#7B7D92] font-medium;
 }
 
-a svg{
-    color: #7B7D92;
+a svg {
+    color: #7b7d92;
 }
 
 a.active {
@@ -26,3 +26,30 @@ a.active svg {
     color: rgb(30 41 59);
 }
 
+.badgeHigh {
+    @apply text-red-500 bg-red-100;
+}
+
+.badgeMedium {
+    @apply text-yellow-500 bg-yellow-100;
+}
+
+.badgeLow {
+    @apply text-green-500 bg-green-100;
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+    background: none;
+}
+
+.time:hover input[type="time"] {
+    @apply cursor-pointer bg-accent text-accent-foreground;
+}
+
+.time:hover input[type="time"]::-webkit-calendar-picker-indicator {
+    @apply cursor-pointer;
+}
+
+.time:hover svg {
+    @apply text-slate-900;
+}

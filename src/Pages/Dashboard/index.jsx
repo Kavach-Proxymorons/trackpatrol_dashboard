@@ -23,7 +23,7 @@ export default function Dashboard() {
                 <h2 className="scroll-m-20  pb-2 text-3xl font-semibold tracking-tight transition-colors">
                     Ongoing Bandobast
                 </h2>
-                <div className="grid 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-6 justify-start content-start my-4">
+                <div className="grid 2xl:grid-cols-5 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-4 justify-start content-start my-4">
                     {response?.data?.duty.map((duty) => (
                         <DutyCard key={duty._id} duty={duty} />
                     ))}
@@ -35,7 +35,3 @@ export default function Dashboard() {
         </>
     );
 }
-
-
-// 
-// auto-cols-fr

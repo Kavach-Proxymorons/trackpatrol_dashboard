@@ -29,7 +29,7 @@ const useFetch = (route) => {
                     if(json.status === 500) throw new Error("Internal server error");
                     throw new Error("Invalid request");
                 }
-                setResponse(json);
+                setResponse((json));
 
             } catch (err) {
                 setError(err);
