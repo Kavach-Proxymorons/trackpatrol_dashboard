@@ -1,10 +1,10 @@
 import { useState, useEffect, useMemo } from "react";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
-import marker from "../Assests/marker.png";
 import { useStateContext } from "../Contexts/ContextProvider";
 
-function RenderMap() {
-    const center = useMemo(() => ({ lat: 26.846, lng: 80.946 }), []);
+function RenderMap(props) {
+    const { shiftData } = props ; // This shift Data is coming from Map Element which renders this map.
+    
 
     const defaultStyles = [
         {
@@ -27,17 +27,39 @@ function RenderMap() {
             center={center}
             options={defaultMapOptions}
             mapContainerClassName="w-full h-full"
-        >
-            <Marker position={center} icon={marker} />
+        >   
+            {markerData.map((point, index) => {
+                if (point.state === "GPS_active") {
+                    return (
+                        <Marker
+                            key={index}
+                            position={{ lat: point.lat, lng: point.lng }}
+                            icon={marker_blue} // Green Dot
+                        />
+                    );
+                } else {
+                    return (
+                        <Marker
+                            key={index}
+                            position={{ lat: point.lat, lng: point.lng }}
+                            icon={marker_blue} // Grey Dot
+                        />
+                    );
+                }
+            })}
+            {/* <Marker position={center} icon={marker} /> */}
         </GoogleMap>
     );
 }
 
-export default function Map() {
+export default function Map(props) {
+    const { shiftData } = props ; // This shift Data is coming from DetailedMap Element which renders this map.
     const { isLoaded } = useLoadScript({
         // googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API,
     });
 
     if (!isLoaded) return <>Loading</>;
-    else return <RenderMap />;
+    else return <RenderMap
+        shiftData = {shiftData}
+    />;
 }
