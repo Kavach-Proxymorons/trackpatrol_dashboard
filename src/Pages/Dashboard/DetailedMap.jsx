@@ -1,6 +1,7 @@
 import { Map } from "../../Components";
 import { useEffect, useState } from "react";
 import { useStateContext } from "../../Contexts/ContextProvider";
+import { useParams } from "react-router-dom";
 import { IoIosArrowBack, IoIosCar } from "react-icons/io";
 import { BiLogoChrome } from "react-icons/bi";
 import Input from "../../Components/ui-components/input";
@@ -9,13 +10,15 @@ import useWindowSize from "../../hooks/useWindowSize";
 
 export default function DetailedMap() {
     const { height } = useWindowSize();
+    const { id, shift_id } = useParams();
+
     return (
         <div
             className={`w-auto relative`}
             style={{ height: `${height - 150}px` }}
         >
             <div className="flex items-center">
-                <Link to="/dashboard/monitor">
+                <Link to={`/dashboard/${id}`}>
                     <IoIosArrowBack
                         size={30}
                         className="hover:bg-[#efefefb3] rounded h-10 w-10 cursor-pointer"

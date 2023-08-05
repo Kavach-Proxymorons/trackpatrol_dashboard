@@ -62,7 +62,7 @@ function App() {
                             <Route path="/" exact element={<Dashboard />} />
                             <Route path="/dashboard" element={<Dashboard />} />
                             <Route path="/dashboard/:id" element={<Monitor />} />
-                            <Route path="/dashboard/:id/monitor/details" element={<DetailedMap />} />
+                            <Route path="/dashboard/:id/:shift_id/monitor/details" element={<DetailedMap />} />
                             <Route path="/personnel" element={<Personnel />} />
                             <Route path="/personnel/register" element={<PersonnelForm />} />
                             <Route path="/hardware" element={<Hardware />} />

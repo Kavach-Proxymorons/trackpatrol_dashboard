@@ -179,7 +179,7 @@ export default function Monitor() {
                                         </div>
                                         {/* ------------Shift Monitor Box ------------ */}
                                         <Link
-                                            to={`/dashboard/${shift._id}/monitor/details`}
+                                            to={`/dashboard/${id}/${shift._id}/monitor/details`}
                                             className="w-[20rem] h-[12rem] shadow-md overflow-hidden rounded-xl flex flex-col justify-between bg-[#F4F6FA] p-0"
                                         >
                                             <div className="flex gap-x-2 items-center py-2 px-3">
