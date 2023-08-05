@@ -26,6 +26,7 @@ import { DatePicker } from "../../../Components/ui-components/datePicker";
 import { AlarmCheck, BadgeInfo } from "lucide-react";
 import useFetch from "../../../hooks/useFetch";
 import { toast } from "react-hot-toast";
+import {Separator} from '../../../Components/ui-components/separator'
 
 const tid = "duty_detail_toast";
 
@@ -80,7 +81,7 @@ export default function Monitor() {
             </Link>
             <div className="flex justify-start gap-x-6 mt-6">
                 <div className="flex flex-col justify-start gap-y-6">
-                    <Card className='shadow'>
+                    <Card>
                         <CardHeader className='pt-4'>
                             <CardTitle className="flex items-center scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight transition-colors first:mt-0">
                                 <div className="w-10">
@@ -89,7 +90,7 @@ export default function Monitor() {
                                 BANDOBAST SCHEDULE
                             </CardTitle>
                         </CardHeader>
-                        <CardContent className="pb-4 shadow">
+                        <CardContent className="pb-4">
                             <p>
                                 <span className="text-[#7B7D92]">
                                     Start Time:{" "}
@@ -104,7 +105,7 @@ export default function Monitor() {
                             </p>
                         </CardContent>
                     </Card>
-                    <Card className='shadow'>
+                    <Card>
                         <CardHeader className='pb-0 pt-4'>
                             <CardTitle className="flex items-center justify-center scroll-m-20 pb-2 text-2xl font-semibold tracking-tight transition-colors first:mt-0">
                                 <div className="w-10">
@@ -125,7 +126,7 @@ export default function Monitor() {
                     </Card>
                 </div>
 
-                <Card className="w-[34rem] shadow">
+                <Card className="w-[34rem]">
                     <CardHeader>
                         <CardTitle className="scroll-m-20 border-b pb-2 text-4xl font-semibold tracking-tight transition-colors first:mt-0">
                             Title: Lorem, ipsum dolor.
@@ -142,7 +143,7 @@ export default function Monitor() {
                     </CardHeader>
                 </Card>
 
-                <Card className="w-[23.5rem] shadow">
+                <Card className="w-[23.5rem]">
                     <CardHeader>
                         <CardTitle className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
                             Add shift
@@ -169,6 +170,7 @@ export default function Monitor() {
                                         }
                                         placeholder="Shift Name"
                                         className="w-full"
+                                        required
                                     />
                                 </div>
                                 <div>
@@ -177,12 +179,14 @@ export default function Monitor() {
                                         <DatePicker
                                             type="date"
                                             className="w-40"
+                                            required
                                         />
                                         <div className="relative time">
                                             <Input
                                                 type="time"
                                                 className="w-40 text-muted-foreground"
                                                 value="00:00"
+                                                required
                                             />
                                             <AlarmCheck className="absolute right-2 top-2 text-muted-foreground" />
                                         </div>
@@ -194,12 +198,14 @@ export default function Monitor() {
                                         <DatePicker
                                             type="date"
                                             className="w-40"
+                                            required
                                         />
                                         <div className="relative time">
                                             <Input
                                                 type="time"
                                                 className="w-40 text-muted-foreground"
                                                 value="00:00"
+                                                required
                                             />
                                             <AlarmCheck className="absolute right-2 top-2 text-muted-foreground" />
                                         </div>
@@ -221,7 +227,7 @@ export default function Monitor() {
             {response?.data?.shifts.map((shift) => {
                 return (
                     <div
-                        className="border-3 mt-6 p-3 cursor-pointer"
+                        className="border rounded-md shadow-sm mt-6 p-3 cursor-pointer"
                         key={shift._id}
                     >
                         {/* below div contains the hardware list and personnel list for every shift */}
@@ -234,7 +240,7 @@ export default function Monitor() {
                                 }));
                             }}
                         >
-                            <h1 className="text-3xl mt-8 font-semibold">
+                            <h1 className="scroll-m-20 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
                                 {shift.shift_name}
                             </h1>
                         </div>
@@ -307,7 +313,7 @@ export default function Monitor() {
                                     />
                                 )}
                                 {/* ------------Shift Hardware Attached Table ------------ */}
-                                <br />
+                                <Separator className='mt-2 mb-6' />
                                 {shift.hardwares_attached && (
                                     <HardwareList
                                         shift_id={shift._id}
