@@ -94,18 +94,18 @@ export default function Monitor() {
                                 <span className="text-[#7B7D92]">
                                     Start Time:{" "}
                                 </span>
-                                October 24, 2023, 8:00 AM
+                                {new Date(response?.data?.start_time).toString().split("G")[0]}
                             </p>
                             <p>
                                 <span className="text-[#7B7D92] pr-2">
                                     End Time:{" "}
                                 </span>
-                                October 24, 2023, 8:00 AM
+                                {new Date(response?.data?.end_time).toString().split("G")[0]}
                             </p>
                         </CardContent>
                     </Card>
                     <Card>
-                        <CardHeader>
+                        <CardHeader className='pb-0'>
                             <CardTitle className="flex items-center scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight transition-colors first:mt-0">
                                 <div className="w-10">
                                     <BadgeInfo size={24} color="#000" />
@@ -115,7 +115,12 @@ export default function Monitor() {
                         </CardHeader>
 
                         <CardContent className="pb-4 w-full h-[10rem] p-0">
-                            <Map />
+                            <iframe
+                                src={`https://maps.google.com/maps?q=${response?.data?.location}&z=15&output=embed`}
+                                width="360"
+                                // height="200"
+                                border="0"
+                            ></iframe>
                         </CardContent>
                     </Card>
                 </div>
@@ -212,85 +217,108 @@ export default function Monitor() {
                 </Card>
             </div>
 
-                {/* loop over duty.shifts array */}
-                {response?.data?.shifts.map((shift) => {
-                    return (
-                        <div className="border-3 mt-6 p-3 cursor-pointer" key={shift._id}>
-                            {/* below div contains the hardware list and personnel list for every shift */}
-                            {/* ------------Shift Name Bar ------------ */}
-                            <div
-                                onClick={() => {
-                                    setShiftToggle((prevShiftToggle) => ({
-                                        ...prevShiftToggle,
-                                        [shift._id]:
-                                            !prevShiftToggle[shift._id] // Toggle the value
-                                    }));
-                                }}
-                            >
-                                <h1 className="text-3xl mt-8 font-semibold">{shift.shift_name}</h1>
-                            </div>
-                            {shiftToggle[shift._id] && (
-                                <div>
-                                    {/* ------------Shift Info Box ------------ */}
-                                    <div className="flex justify-start gap-x-6 mt-6">
-                                        {/* ------------Shift schedule Box ------------ */}
-                                        <div className="bg-[#F4F6FA] px-2 py-3 rounded-md shadow-md">
-                                            <div className="flex gap-x-2 ml-2">
-                                                <LuCalendar size={24} color="#000" />
-                                                <span className="text-lg font-semibold">SHIFT SCHEDULE</span>
-                                            </div>
-                                            <div className="flex flex-col justify-center items-start bg-white mt-2 rounded text-sm pl-2 py-3">
-                                                <p>
-                                                    <span className="text-[#7B7D92]">Start:{" "}</span>
-                                                    {new Date(shift.start_time).toString().split("G")[0]}
-                                                </p>
-                                                <p>
-                                                    <span className="text-[#7B7D92] pr-2">End:{" "}</span>
-                                                    {new Date(shift.end_time).toString().split("G")[0]}
-                                                </p>
-                                            </div>
-                                        </div>
-                                        {/* ------------Shift Monitor Box ------------ */}
-                                        <Link
-                                            to={`/dashboard/${id}/${shift._id}/monitor/details`}
-                                            className="w-[20rem] h-[12rem] shadow-md overflow-hidden rounded-xl flex flex-col justify-between bg-[#F4F6FA] p-0"
-                                        >
-                                            <div className="flex gap-x-2 items-center py-2 px-3">
-                                                <IoIosInformationCircle size={30} color="#000" />
-                                                <span className="text-lg font-semibold text-black">
-                                                    Monitor Info
-                                                </span>
-                                            </div>
-                                            <iframe
-                                                src={`https://maps.google.com/maps?q=${response?.data?.location}&z=15&output=embed`}
-                                                width="360"
-                                                height="200"
-                                                border="0"
-                                            ></iframe>
-                                        </Link>
-                                    </div>
-                                    {/* ------------Shift Assigned Personnel Table ------------ */}
-                                    <br />
-                                    {shift.personnel_assigned && (
-                                        <PersonnelList
-                                            shift_id={shift._id}
-                                            data={shift.personnel_assigned}
-                                        />
-                                    )}
-                                    {/* ------------Shift Hardware Attached Table ------------ */}
-                                    <br />
-                                    {shift.hardwares_attached && (
-                                        <HardwareList
-                                            shift_id={shift._id}
-                                            data={shift.hardwares_attached}
-                                        />
-                                    )}
-                                </div>
-                            )}
+            {/* loop over duty.shifts array */}
+            {response?.data?.shifts.map((shift) => {
+                return (
+                    <div
+                        className="border-3 mt-6 p-3 cursor-pointer"
+                        key={shift._id}
+                    >
+                        {/* below div contains the hardware list and personnel list for every shift */}
+                        {/* ------------Shift Name Bar ------------ */}
+                        <div
+                            onClick={() => {
+                                setShiftToggle((prevShiftToggle) => ({
+                                    ...prevShiftToggle,
+                                    [shift._id]: !prevShiftToggle[shift._id] // Toggle the value
+                                }));
+                            }}
+                        >
+                            <h1 className="text-3xl mt-8 font-semibold">
+                                {shift.shift_name}
+                            </h1>
                         </div>
-                    );
-                })}
-            </div>
-        </>
+                        {shiftToggle[shift._id] && (
+                            <div>
+                                {/* ------------Shift Info Box ------------ */}
+                                <div className="flex justify-start gap-x-6 mt-6">
+                                    {/* ------------Shift schedule Box ------------ */}
+                                    <div className="bg-[#F4F6FA] px-2 py-3 rounded-md shadow-md">
+                                        <div className="flex gap-x-2 ml-2">
+                                            <LuCalendar
+                                                size={24}
+                                                color="#000"
+                                            />
+                                            <span className="text-lg font-semibold">
+                                                SHIFT SCHEDULE
+                                            </span>
+                                        </div>
+                                        <div className="flex flex-col justify-center items-start bg-white mt-2 rounded text-sm pl-2 py-3">
+                                            <p>
+                                                <span className="text-[#7B7D92]">
+                                                    Start:{" "}
+                                                </span>
+                                                {
+                                                    new Date(shift.start_time)
+                                                        .toString()
+                                                        .split("G")[0]
+                                                }
+                                            </p>
+                                            <p>
+                                                <span className="text-[#7B7D92] pr-2">
+                                                    End:{" "}
+                                                </span>
+                                                {
+                                                    new Date(shift.end_time)
+                                                        .toString()
+                                                        .split("G")[0]
+                                                }
+                                            </p>
+                                        </div>
+                                    </div>
+                                    {/* ------------Shift Monitor Box ------------ */}
+                                    <Link
+                                        to={`/dashboard/${id}/${shift._id}/monitor/details`}
+                                        className="w-[20rem] h-[12rem] shadow-md overflow-hidden rounded-xl flex flex-col justify-between bg-[#F4F6FA] p-0"
+                                    >
+                                        <div className="flex gap-x-2 items-center py-2 px-3">
+                                            <IoIosInformationCircle
+                                                size={30}
+                                                color="#000"
+                                            />
+                                            <span className="text-lg font-semibold text-black">
+                                                Monitor Info
+                                            </span>
+                                        </div>
+                                        <iframe
+                                            src={`https://maps.google.com/maps?q=${response?.data?.location}&z=15&output=embed`}
+                                            width="360"
+                                            height="200"
+                                            border="0"
+                                        ></iframe>
+                                    </Link>
+                                </div>
+                                {/* ------------Shift Assigned Personnel Table ------------ */}
+                                <br />
+                                {shift.personnel_assigned && (
+                                    <PersonnelList
+                                        shift_id={shift._id}
+                                        data={shift.personnel_assigned}
+                                    />
+                                )}
+                                {/* ------------Shift Hardware Attached Table ------------ */}
+                                <br />
+                                {shift.hardwares_attached && (
+                                    <HardwareList
+                                        shift_id={shift._id}
+                                        data={shift.hardwares_attached}
+                                    />
+                                )}
+                            </div>
+                        )}
+                    </div>
+                );
+            })}
+        </div>
     );
 }
