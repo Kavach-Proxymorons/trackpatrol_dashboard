@@ -10,7 +10,7 @@ import useWindowSize from "../../hooks/useWindowSize";
 import toast from "react-hot-toast";
 
 export default function DetailedMap() {
-    const upadteFrequency = 5; // in seconds // to store in env
+    const upadteFrequency = process.env.REACT_APP_MAP_UPDATE_FREQUENCY ; // in seconds // to store in env
     const { height } = useWindowSize();
     const { id, shift_id } = useParams(); // duty_id and shift_id from url to be used for fetching data
     const { token } = useStateContext();
@@ -22,8 +22,6 @@ export default function DetailedMap() {
         console.log("fetched");
         /* Function to fetch shift data from shift_id */
         const baseUrl = process.env.NODE_ENV === "development" ? process.env.REACT_APP_DEV_URL : process.env.REACT_APP_PROD_URL;
-        
-        toast.loading("Loading...", { id: toastId });
 
         const response = await fetch(`${baseUrl}admin/shift/${shift_id}`, {
         method: "GET",
@@ -39,10 +37,7 @@ export default function DetailedMap() {
         toast.error(res.message, { id: toastId });
             return;
         }
-
         setShiftData(res.data);
-        console.log("Monkey", shiftData);
-        toast.success(res.message, { id: toastId });
     }
 
     useEffect(() => {

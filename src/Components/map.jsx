@@ -13,8 +13,8 @@ const stateColorMap = {
 };
 
 function RenderMap(props) {
-    const staleThresholdGPS = 10 // in seconds to marker will trun grey
-    const staleThresholdRFID = 30 // in seconds to marker will trun grey; to update it to a larger value
+    const staleThresholdGPS = process.env.STALE_THRESHOLD_GPS // in seconds to marker will trun grey
+    const staleThresholdRFID = process.env.STALE_THRESHOLD_RFID // in seconds to marker will trun grey; to update it to a larger value
     const { shiftData } = props ; // This shift Data is coming from Map Element which renders this map.
     const [ markerData, setMarkerData ] = useState([]); // This will be used to render markers on the map
     const [ dutyLocation, setDutyLocation ] = useState({}); // This is stored in separate state to prevent re-rendering of the map
@@ -50,8 +50,6 @@ function RenderMap(props) {
             setDutyLocation({ lat, lng });
         }
 
-        console.log(shiftData);
-
         if (shiftData && shiftData.personnel_assigned) {
             const markerDataTemp = [];
             const now = new Date(); // for comparing how old is the gps data
@@ -86,7 +84,6 @@ function RenderMap(props) {
                 });
             });
 
-            console.log("Marker Data", markerDataTemp);
             setMarkerData(markerDataTemp);
         }
     }, [shiftData]);
