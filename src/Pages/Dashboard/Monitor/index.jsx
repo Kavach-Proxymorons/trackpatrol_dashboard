@@ -23,7 +23,7 @@ import {
 } from "../../../Components/ui-components/card";
 
 import { DatePicker } from "../../../Components/ui-components/datePicker";
-import { AlarmCheck, BadgeInfo } from "lucide-react";
+import { AlarmCheck, BadgeInfo, ChevronDown } from "lucide-react";
 import useFetch from "../../../hooks/useFetch";
 import { toast } from "react-hot-toast";
 import {Separator} from '../../../Components/ui-components/separator'
@@ -79,7 +79,7 @@ export default function Monitor() {
                     Back
                 </span>
             </Link>
-            <div className="flex justify-start gap-x-6 mt-6">
+            <div className="flex justify-start gap-x-6 my-6">
                 <div className="flex flex-col justify-start gap-y-6">
                     <Card>
                         <CardHeader className='pt-4'>
@@ -227,7 +227,7 @@ export default function Monitor() {
             {response?.data?.shifts.map((shift) => {
                 return (
                     <div
-                        className="border rounded-md shadow-sm mt-6 p-3 cursor-pointer"
+                        className="border rounded-md shadow-sm mb-4 p-3 cursor-pointer"
                         key={shift._id}
                     >
                         {/* below div contains the hardware list and personnel list for every shift */}
@@ -239,10 +239,12 @@ export default function Monitor() {
                                     [shift._id]: !prevShiftToggle[shift._id] // Toggle the value
                                 }));
                             }}
+                            className="flex justify-between items-center cursor-pointer"
                         >
-                            <h1 className="scroll-m-20 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
+                            <h1 className="scroll-m-20 text-3xl font-medium tracking-tight transition-colors first:mt-0">
                                 {shift.shift_name}
                             </h1>
+                            <ChevronDown size={32} />
                         </div>
                         {shiftToggle[shift._id] && (
                             <div>

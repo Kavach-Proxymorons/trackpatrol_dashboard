@@ -16,7 +16,7 @@ export default function HardwareList(props) {
 
   return (
     <>
-      <h1 className="scroll-m-20 text-3xl font-semibold tracking-tight transition-colors first:mt-0">Attached Hardwares</h1>
+      <h1 className="scroll-m-20 text-xl font-medium tracking-tight transition-colors first:mt-0">Attached Hardwares</h1>
       <DataTable
             columns={headers}
             path={"hardware"}

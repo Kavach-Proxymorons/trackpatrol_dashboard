@@ -8,50 +8,57 @@ import Input from "../../Components/ui-components/input";
 import { Link } from "react-router-dom";
 import useWindowSize from "../../hooks/useWindowSize";
 import toast from "react-hot-toast";
+import blueMarker from "../../Assests/blue_marker.png";
+import blueStarMarker from "../../Assests/blue_star_marker.png";
+import greenMarker from "../../Assests/green_marker.png";
+import greyMarker from "../../Assests/grey_marker.png";
+
 
 export default function DetailedMap() {
-    const upadteFrequency = process.env.REACT_APP_MAP_UPDATE_FREQUENCY ; // in seconds // to store in env
+    const upadteFrequency = process.env.REACT_APP_MAP_UPDATE_FREQUENCY; // in seconds // to store in env
     const { height } = useWindowSize();
     const { id, shift_id } = useParams(); // duty_id and shift_id from url to be used for fetching data
     const { token } = useStateContext();
     const [lastUpdated, setLastUpdated] = useState();
-    const [ shiftData, setShiftData ] = useState({});
+    const [shiftData, setShiftData] = useState({});
     const toastId = "asdkfjlaksd";
 
-    
-    const fetchShiftData = async () => {        
+    const fetchShiftData = async () => {
         /* Function to fetch shift data from shift_id */
         console.log("fetched");
 
         const now = new Date(); // current time for updating last updated time
 
-        const baseUrl = process.env.NODE_ENV === "development" ? process.env.REACT_APP_DEV_URL : process.env.REACT_APP_PROD_URL;
+        const baseUrl =
+            process.env.NODE_ENV === "development"
+                ? process.env.REACT_APP_DEV_URL
+                : process.env.REACT_APP_PROD_URL;
         const response = await fetch(`${baseUrl}admin/shift/${shift_id}`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-        },
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
         });
 
         const res = await response.json();
 
         if (!res.success) {
-        toast.error(res.message, { id: toastId });
+            toast.error(res.message, { id: toastId });
             return;
         }
         setShiftData(res.data);
         setLastUpdated(now.toLocaleTimeString());
-    }
+    };
 
     useEffect(() => {
         fetchShiftData();
-        const interval = setInterval(fetchShiftData, upadteFrequency * 1000); 
+        const interval = setInterval(fetchShiftData, upadteFrequency * 1000);
         // Clean up interval when the component unmounts
         return () => {
             clearInterval(interval);
         };
-    },[])
+    }, []);
 
     return (
         <div
@@ -93,66 +100,74 @@ export default function DetailedMap() {
 
                     <div className="w-full border-2 rounded-md p-4">
                         <span className="flex items-center justify-start gap-x-2 font-medium mb-2">
-                            <div className="h-5 w-5 bg-[#5030E5] rounded-full"></div>{" "}
+                            {/* <div className="h-5 w-5 bg-[#5030E5] rounded-full"></div> */}
+                            <img
+                                src={blueMarker}
+                                alt="blue marker"
+                                className="h-6 w-6 rounded-full"
+                            />
+                             GPS Signal Update
+                        </span>
+                        <p className="text-sm">
+                            <span className="text-base font-medium">
+                                Total:{" "}
+                            </span>
+                            6
+                        </p>
+                    </div>
+
+                    <div className="w-full border-2 rounded-md p-4">
+                        <span className="flex items-center justify-start gap-x-2 font-medium mb-2">
+                            <img
+                                src={blueStarMarker}
+                                alt="blue marker"
+                                className="h-6 w-6 rounded-full"
+                            />
+                             RFID + GPS Signal Update
+                        </span>
+                        <p className="text-sm">
+                            <span className="text-base font-medium">
+                                Total:{" "}
+                            </span>
+                            4
+                        </p>
+                    </div>
+
+                    <div className="w-full border-2 rounded-md p-4">
+                        <span className="flex items-center justify-start gap-x-2 font-medium mb-2">
+                            <img
+                                src={greenMarker}
+                                alt="blue marker"
+                                className="h-6 w-6 rounded-full"
+                            />
                             RFID Signal Update
                         </span>
                         <p className="text-sm">
                             <span className="text-base font-medium">
-                                {" "}
                                 Total:{" "}
-                            </span>{" "}
-                            240 Personnel Update
+                            </span>
+                            8
                         </p>
                     </div>
 
-                    <div className="w-full border-2 rounded-md p-4">
-                        <span className="flex items-center justify-start gap-x-2 font-medium mb-2">
-                            <div className="h-5 w-5 bg-[#4ACE52] rounded-full"></div>{" "}
-                            GPS Signal Update
-                        </span>
-                        <p className="text-sm">
-                            <span className="text-base font-medium">
-                                {" "}
-                                Total:{" "}
-                            </span>{" "}
-                            240 Personnel Update
-                        </p>
-                    </div>
-
-                    <div className="w-full border-2 rounded-md p-4">
-                        <span className="flex items-center justify-start gap-x-2 font-medium mb-2">
-                            <div className="h-5 w-5 bg-[#FE8235] rounded-full"></div>{" "}
-                            Issues Tracking
-                        </span>
-                        <p className="text-sm">
-                            <span className="text-base font-medium">
-                                {" "}
-                                Total:{" "}
-                            </span>{" "}
-                            240 Personnel Update
-                        </p>
-                    </div>
-                    
                     {/* Update the styling of last updated time */}
                     <div className="w-full border-2 rounded-md p-4">
                         <span className="flex items-center justify-start gap-x-2 font-medium mb-2">
-                            <div className="h-5 w-5 bg-[#FE8235] rounded-full"></div>{" "}
-                            Last updated Time
+                            <img
+                                src={greyMarker}
+                                alt="blue marker"
+                                className="h-6 w-6 rounded-full"
+                            />
+                            Inactive Personnel
                         </span>
                         <p className="text-sm">
-                            <span className="text-base font-medium">
-                                {" "}
-                                {" "}
-                            </span>{" "}
+                            <span className="text-base font-medium"> </span>{" "}
                             {lastUpdated}
                         </p>
                     </div>
-
                 </div>
             </div>
-            <Map 
-                shiftData = {shiftData}
-            />
+            <Map shiftData={shiftData} />
         </div>
     );
 }

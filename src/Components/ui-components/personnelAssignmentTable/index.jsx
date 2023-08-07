@@ -224,8 +224,9 @@ export default function DataTable({ columns, path, data, fetchData, assignedPers
                   data-state={row.getIsSelected() && "selected"}
                   style={{
                     // check if id is in assignedPersonnelsId array
-                    background: assignedPersonnelsId[shift_id].includes(row.original._id) ? "#BAE6FD" : "inherit", // update the background color here
+                    background: assignedPersonnelsId[shift_id].includes(row.original._id) ? "rgb(186 230 253)" : "inherit", // update the background color here
                   }}
+                  className={assignedPersonnelsId[shift_id].includes(row.original._id) ? 'border-sky-600' : ''}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id} className='p-[13px]'>

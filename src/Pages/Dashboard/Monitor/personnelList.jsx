@@ -85,7 +85,7 @@ export default function PersonnelList(props) {
 
     return (
         <>
-            <h1 className="scroll-m-20 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
+            <h1 className="scroll-m-20 text-xl font-medium tracking-tight transition-colors first:mt-0">
                 Assigned Personnel
             </h1>
             <DataTable

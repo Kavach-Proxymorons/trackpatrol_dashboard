@@ -39,7 +39,6 @@ export default function DashboardCard({ duty }) {
     const startTime = new Date(duty.start_time);
     const endTime = new Date(duty.end_time);
 
-    console.log(duty);
 
     return (
         <Card
