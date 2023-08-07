@@ -26,7 +26,7 @@ import { DatePicker } from "../../../Components/ui-components/datePicker";
 import { AlarmCheck, BadgeInfo, ChevronDown } from "lucide-react";
 import useFetch from "../../../hooks/useFetch";
 import { toast } from "react-hot-toast";
-import {Separator} from '../../../Components/ui-components/separator'
+import { Separator } from "../../../Components/ui-components/separator";
 
 const tid = "duty_detail_toast";
 
@@ -82,7 +82,7 @@ export default function Monitor() {
             <div className="flex justify-start gap-x-6 my-6">
                 <div className="flex flex-col justify-start gap-y-6">
                     <Card>
-                        <CardHeader className='pt-4'>
+                        <CardHeader className="pt-4">
                             <CardTitle className="flex items-center scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight transition-colors first:mt-0">
                                 <div className="w-10">
                                     <LuCalendar size={24} color="#000" />
@@ -95,18 +95,26 @@ export default function Monitor() {
                                 <span className="text-[#7B7D92]">
                                     Start Time:{" "}
                                 </span>
-                                {new Date(response?.data?.start_time).toString().split("G")[0]}
+                                {
+                                    new Date(response?.data?.start_time)
+                                        .toString()
+                                        .split("G")[0]
+                                }
                             </p>
                             <p>
                                 <span className="text-[#7B7D92] pr-2">
                                     End Time:{" "}
                                 </span>
-                                {new Date(response?.data?.end_time).toString().split("G")[0]}
+                                {
+                                    new Date(response?.data?.end_time)
+                                        .toString()
+                                        .split("G")[0]
+                                }
                             </p>
                         </CardContent>
                     </Card>
                     <Card>
-                        <CardHeader className='pb-0 pt-4'>
+                        <CardHeader className="pb-0 pt-4">
                             <CardTitle className="flex items-center justify-center scroll-m-20 pb-2 text-2xl font-semibold tracking-tight transition-colors first:mt-0">
                                 <div className="w-10">
                                     <BadgeInfo size={24} color="#000" />
@@ -126,21 +134,19 @@ export default function Monitor() {
                     </Card>
                 </div>
 
-                <Card className="w-[34rem]">
-                    <CardHeader>
+                <Card className="w-[34rem] flex flex-col justify-between p-6">
+                    <CardHeader className='p-0'>
                         <CardTitle className="scroll-m-20 border-b pb-2 text-4xl font-semibold tracking-tight transition-colors first:mt-0">
-                            Title: Lorem, ipsum dolor.
+                            Title: {response?.data?.title}
                         </CardTitle>
                         <CardDescription className="text-base">
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Numquam facilis quasi, maiores laboriosam
-                            nesciunt voluptates sunt.
+                            {response?.data?.description}
                         </CardDescription>
-                        <CardContent className="flex gap-x-3 px-0 pt-6 pb-0">
-                            <TitlePersonal />
-                            <LocationTime />
-                        </CardContent>
                     </CardHeader>
+                    <CardContent className="flex gap-x-3 px-0 pb-0">
+                        <TitlePersonal />
+                        <LocationTime />
+                    </CardContent>
                 </Card>
 
                 <Card className="w-[23.5rem]">
@@ -315,7 +321,7 @@ export default function Monitor() {
                                     />
                                 )}
                                 {/* ------------Shift Hardware Attached Table ------------ */}
-                                <Separator className='mt-2 mb-6' />
+                                <Separator className="mt-2 mb-6" />
                                 {shift.hardwares_attached && (
                                     <HardwareList
                                         shift_id={shift._id}
