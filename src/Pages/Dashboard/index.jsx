@@ -25,13 +25,25 @@ export default function Dashboard() {
                         Ongoing Bandobast
                     </h2>
                     <div className="grid 2xl:grid-cols-5 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-4 justify-start content-start my-4">
-                        {response?.data?.duty.map((duty) => (
-                            <DutyCard key={duty._id} duty={duty} />
-                        ))}
+                        {response?.data?.duty.map((duty) => {
+                            const today = new Date().getTime();
+                            if (
+                                new Date(duty.start_time).getTime() < today &&
+                                new Date(duty.end_time).getTime() > today
+                            )
+                                return <DutyCard key={duty._id} duty={duty} />;
+                        })}
                     </div>
                     <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight transition-colors">
                         Upcoming Bandobast
                     </h2>
+                    <div className="grid 2xl:grid-cols-5 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-4 justify-start content-start my-4">
+                        {response?.data?.duty.map((duty) => {
+                            const today = new Date().getTime();
+                            if (new Date(duty.start_time).getTime() > today)
+                                return <DutyCard key={duty._id} duty={duty} />;
+                        })}
+                    </div>
                 </div>
             </ScrollArea>
         </>

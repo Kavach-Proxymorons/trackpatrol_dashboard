@@ -39,7 +39,6 @@ export default function DashboardCard({ duty }) {
     const startTime = new Date(duty.start_time);
     const endTime = new Date(duty.end_time);
 
-
     return (
         <Card
             className="w-[320px] flex flex-col justify-between cursor-pointer"

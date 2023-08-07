@@ -39,15 +39,12 @@ a.active svg {
 }
 
 input[type="time"]::-webkit-calendar-picker-indicator {
-    background: none;
+    background: rgba(255, 255, 255, 0.0);
+    padding: 0 2.2rem;
 }
 
 .time:hover input[type="time"] {
     @apply cursor-pointer bg-accent text-accent-foreground;
-}
-
-.time:hover input[type="time"]::-webkit-calendar-picker-indicator {
-    @apply cursor-pointer;
 }
 
 .time:hover svg {

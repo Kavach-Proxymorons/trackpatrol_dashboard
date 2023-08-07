@@ -10,7 +10,7 @@ import { IoIosInformationCircle } from "react-icons/io";
 import HardwareList from "./hardwarelist";
 import PersonnelList from "./personnelList";
 import { useStateContext } from "../../../Contexts/ContextProvider";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { DatePickerWithRange } from "../../../Components/ui-components/datePickerwithRange";
 import { useParams } from "react-router-dom";
 import {
@@ -29,10 +29,27 @@ import { toast } from "react-hot-toast";
 import { Separator } from "../../../Components/ui-components/separator";
 
 const tid = "duty_detail_toast";
+const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "June",
+    "July",
+    "Aug",
+    "Sept",
+    "Oct",
+    "Nov",
+    "Dec"
+];
 
 export default function Monitor() {
     const { id } = useParams();
-    const [date, setDate] = useState({});
+    const [startDate, setStartDate] = useState();
+    const [endDate, setEndDate] = useState();
+    const startTimeRef = useRef();
+    const endTimeRef = useRef();
     const { registerShift, setRegisterShift, postShift } = useStateContext();
 
     const { response, loading, error } = useFetch(`/api/v1/admin/duty/${id}`);
@@ -40,8 +57,28 @@ export default function Monitor() {
         if (loading) toast.loading("Loading duties...", { id: tid });
         if (response) toast.success(response.message, { id: tid });
         if (error) toast.error(error.message, { id: tid });
-        console.log(response);
+
+        setRegisterShift((prev) => {
+            return {
+                ...prev,
+                duty: id
+            };
+        });
     }, [loading, error, response]);
+
+    const combineDateAndTime = function (date, time) {
+        if (date === undefined || date === null) return;
+        if (time == undefined || date === null) return;
+        const timeString = time[0] + time[1] + ":" + time[2] + time[3] + ":00";
+
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+        const dateString = "" + year + "-" + month + "-" + day;
+        const combined = new Date(dateString + " " + timeString);
+
+        return combined;
+    };
 
     useEffect(() => {
         document.title = "Monitor | Bandobast";
@@ -56,16 +93,27 @@ export default function Monitor() {
     }
     const [shiftToggle, setShiftToggle] = useState(initialShiftToggle);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleSelect = () => {
         setRegisterShift((prev) => {
             return {
                 ...prev,
-                duty: id
+                start_time: combineDateAndTime(
+                    startDate,
+                    startTimeRef.current.value
+                ),
+                end_time: combineDateAndTime(endDate, endTimeRef.current.value)
             };
         });
-        postShift(registerShift);
-        setDate({});
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        postShift();
+        setEndDate();
+        setStartDate();
+        startTimeRef.current.value = "00:00";
+        endTimeRef.current.value = "00:00";
+        setRegisterShift({});
     };
 
     return (
@@ -95,21 +143,35 @@ export default function Monitor() {
                                 <span className="text-[#7B7D92]">
                                     Start Time:{" "}
                                 </span>
-                                {
-                                    new Date(response?.data?.start_time)
-                                        .toString()
-                                        .split("G")[0]
-                                }
+                                {new Date(
+                                    response?.data?.start_time
+                                ).getDate() +
+                                    " " +
+                                    months[
+                                        new Date(
+                                            response?.data?.start_time
+                                        ).getMonth()
+                                    ] +
+                                    " " +
+                                    new Date(
+                                        response?.data?.start_time
+                                    ).getFullYear()}
                             </p>
                             <p>
                                 <span className="text-[#7B7D92] pr-2">
                                     End Time:{" "}
                                 </span>
-                                {
-                                    new Date(response?.data?.end_time)
-                                        .toString()
-                                        .split("G")[0]
-                                }
+                                {new Date(response?.data?.end_time).getDate() +
+                                    " " +
+                                    months[
+                                        new Date(
+                                            response?.data?.end_time
+                                        ).getMonth()
+                                    ] +
+                                    " " +
+                                    new Date(
+                                        response?.data?.end_time
+                                    ).getFullYear()}
                             </p>
                         </CardContent>
                     </Card>
@@ -134,10 +196,10 @@ export default function Monitor() {
                     </Card>
                 </div>
 
-                <Card className="w-[34rem] flex flex-col justify-between p-6">
-                    <CardHeader className='p-0'>
+                <Card className="w-[34rem] h-[25rem] flex flex-col justify-between p-6">
+                    <CardHeader className="p-0">
                         <CardTitle className="scroll-m-20 border-b pb-2 text-4xl font-semibold tracking-tight transition-colors first:mt-0">
-                            Title: {response?.data?.title}
+                            {response?.data?.title}
                         </CardTitle>
                         <CardDescription className="text-base">
                             {response?.data?.description}
@@ -150,82 +212,110 @@ export default function Monitor() {
                 </Card>
 
                 <Card className="w-[23.5rem]">
-                    <CardHeader>
+                    <CardHeader className="pb-0">
                         <CardTitle className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
                             Add shift
                         </CardTitle>
-                        <CardDescription className="text-base">
-                            Add shift to the Bandobast Duty.
-                        </CardDescription>
-                        <CardContent className="flex gap-x-3 px-0 py-0 pt-4">
-                            <form
-                                className="flex flex-col gap-y-2"
-                                onSubmit={handleSubmit}
-                            >
-                                <div className="w-auto">
-                                    <Label>Shift Name</Label>
-                                    <Input
-                                        type="text"
-                                        name="shift_name"
-                                        value={registerShift.shift_name}
-                                        onChange={(e) =>
-                                            setRegisterShift((prev) => ({
-                                                ...prev,
-                                                shift_name: e.target.value
-                                            }))
-                                        }
-                                        placeholder="Shift Name"
-                                        className="w-full"
+                    </CardHeader>
+                    <CardContent className="flex gap-x-3 pt-4">
+                        <form
+                            className="flex flex-col gap-y-2"
+                            onSubmit={handleSubmit}
+                        >
+                            <div className="w-auto">
+                                <Label>Shift Name</Label>
+                                <Input
+                                    type="text"
+                                    name="shift_name"
+                                    value={registerShift.shift_name}
+                                    onChange={(e) =>
+                                        setRegisterShift((prev) => ({
+                                            ...prev,
+                                            shift_name: e.target.value
+                                        }))
+                                    }
+                                    placeholder="Shift Name"
+                                    className="w-full"
+                                    required
+                                />
+                            </div>
+                            <div className="w-auto">
+                                <Label>Range</Label>
+                                <Input
+                                    type="number"
+                                    name="distance_radius"
+                                    step="500"
+                                    value={registerShift.distance_radius}
+                                    onChange={(e) =>
+                                        setRegisterShift((prev) => ({
+                                            ...prev,
+                                            distance_radius: e.target.value
+                                        }))
+                                    }
+                                    placeholder="distance in meters"
+                                    className="w-full"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <Label>Start Time</Label>
+                                <div className="flex gap-x-2 justify-between">
+                                    <DatePicker
+                                        type="date"
+                                        className="w-40"
+                                        date={startDate}
+                                        setDate={setStartDate}
+                                        onSelect={handleSelect}
                                         required
                                     />
-                                </div>
-                                <div>
-                                    <Label>Start Time</Label>
-                                    <div className="flex gap-x-2 justify-between">
-                                        <DatePicker
-                                            type="date"
-                                            className="w-40"
+                                    <div className="relative time">
+                                        <Input
+                                            type="time"
+                                            className="w-40 text-muted-foreground"
+                                            placeholder="00:00"
+                                            defaultValue="00:00"
+                                            ref={startTimeRef}
+                                            onSelect={handleSelect}
                                             required
                                         />
-                                        <div className="relative time">
-                                            <Input
-                                                type="time"
-                                                className="w-40 text-muted-foreground"
-                                                value="00:00"
-                                                required
-                                            />
-                                            <AlarmCheck className="absolute right-2 top-2 text-muted-foreground" />
-                                        </div>
+                                        <AlarmCheck className="absolute right-2 top-2 text-muted-foreground" />
                                     </div>
                                 </div>
-                                <div>
-                                    <Label>End Time</Label>
-                                    <div className="flex gap-x-2 w-full">
-                                        <DatePicker
-                                            type="date"
-                                            className="w-40"
+                            </div>
+                            <div>
+                                <Label>End Time</Label>
+                                <div className="flex gap-x-2 w-full">
+                                    <DatePicker
+                                        type="date"
+                                        className="w-40"
+                                        date={endDate}
+                                        setDate={setEndDate}
+                                        onSelect={handleSelect}
+                                        required
+                                    />
+                                    <div className="relative time">
+                                        <Input
+                                            type="time"
+                                            className="w-40 text-muted-foreground"
+                                            placeholder="00:00"
+                                            name="end_time"
+                                            defaultValue="00:00"
+                                            ref={endTimeRef}
+                                            onSelect={handleSelect}
                                             required
                                         />
-                                        <div className="relative time">
-                                            <Input
-                                                type="time"
-                                                className="w-40 text-muted-foreground"
-                                                value="00:00"
-                                                required
-                                            />
-                                            <AlarmCheck className="absolute right-2 top-2 text-muted-foreground" />
-                                        </div>
+                                        <AlarmCheck className="absolute right-2 top-2 text-muted-foreground" />
                                     </div>
                                 </div>
-                                <Button
-                                    type="submit"
-                                    className="w-32 self-center mt-4"
-                                >
-                                    Create
-                                </Button>
-                            </form>
-                        </CardContent>
-                    </CardHeader>
+                            </div>
+                            <Button
+                                type="submit"
+                                className="w-32 self-center mt-4"
+                            >
+                                Create
+                            </Button>
+                        </form>
+                    </CardContent>
                 </Card>
             </div>
 
