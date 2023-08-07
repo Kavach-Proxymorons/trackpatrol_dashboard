@@ -6,10 +6,22 @@ import { DatePickerWithRange } from "../ui-components/datePickerwithRange";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import { IoIosArrowBack } from "react-icons/io";
 import { Link } from "react-router-dom";
+import LocationPicker from "../LocationPicker";
 
 export default function CreateBandobast() {
     const { registerDuty, setRegisterDuty, postDuty } = useStateContext();
+    const [selectedLocation, setSelectedLocation] = useState({
+        lat: 28.4739155,
+        lng: 77.4885724
+    });
     const [date, setDate] = useState({});
+
+    useEffect(() => {
+        setRegisterDuty((prev) => ({
+            ...prev,
+            location: `${selectedLocation?.lat},${selectedLocation?.lng}`
+        }));
+    }, [selectedLocation])
 
     const handleChange = (e) => {
         setRegisterDuty((prev) => ({
@@ -85,7 +97,8 @@ export default function CreateBandobast() {
                             type="text"
                             placeholder="Location"
                             name="location"
-                            value={registerDuty.location}
+                            value={`${selectedLocation?.lat},${selectedLocation?.lng}`}
+                            // value={registerDuty.location}
                             onChange={handleChange}
                         />
                     </div>
@@ -107,6 +120,9 @@ export default function CreateBandobast() {
                             Optional
                         </p>
                     </div>
+                </div>
+                <div className="mt-8 flex justify-center">
+                    <LocationPicker selectedLocation={selectedLocation} setSelectedLocation={setSelectedLocation} />
                 </div>
                 <div className="mt-8 flex justify-center">
                     <Button type="submit" className="px-12">

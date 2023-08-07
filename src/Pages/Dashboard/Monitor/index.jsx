@@ -1,5 +1,4 @@
 import { TitlePersonal, LocationTime } from "../../../Components";
-import { Map } from "../../../Components";
 import { LuCalendar } from "react-icons/lu";
 import { IoIosArrowBack } from "react-icons/io";
 import { Link } from "react-router-dom";
@@ -52,7 +51,7 @@ export default function Monitor() {
     const endTimeRef = useRef();
     const { registerShift, setRegisterShift, postShift } = useStateContext();
 
-    const { response, loading, error } = useFetch(`/api/v1/admin/duty/${id}`);
+    const { response, loading, error } = useFetch(`/api/v1/admin/duty/${id}`, tid);
     useEffect(() => {
         if (loading) toast.loading("Loading duties...", { id: tid });
         if (response) toast.success(response.message, { id: tid });
