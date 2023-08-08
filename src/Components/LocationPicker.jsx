@@ -2,8 +2,8 @@ import React, { useMemo } from 'react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
 const containerStyle = {
-    width: '700px',
-    height: '350px',
+    width: '100%',
+    height: '600px',
 };
 
 function LocationPicker({ selectedLocation, setSelectedLocation }) {

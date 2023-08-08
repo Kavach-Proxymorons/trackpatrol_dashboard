@@ -7,6 +7,14 @@ import { useStateContext } from "../../Contexts/ContextProvider";
 import { IoIosArrowBack } from "react-icons/io";
 import { Link } from "react-router-dom";
 import LocationPicker from "../LocationPicker";
+import {
+    Sheet,
+    SheetContent,
+    SheetDescription,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger
+} from "../ui-components/sheet";
 
 export default function CreateBandobast() {
     const { registerDuty, setRegisterDuty, postDuty } = useStateContext();
@@ -21,7 +29,7 @@ export default function CreateBandobast() {
             ...prev,
             location: `${selectedLocation?.lat},${selectedLocation?.lng}`
         }));
-    }, [selectedLocation])
+    }, [selectedLocation]);
 
     const handleChange = (e) => {
         setRegisterDuty((prev) => ({
@@ -91,16 +99,34 @@ export default function CreateBandobast() {
                         />
                     </div>
 
-                    <div className="justify-self-start">
+                    <div className="justify-self-start ">
                         <Label htmlFor="location">Location</Label>
-                        <Input
+                        {/* <Input
                             type="text"
                             placeholder="Location"
                             name="location"
                             value={`${selectedLocation?.lat},${selectedLocation?.lng}`}
                             // value={registerDuty.location}
                             onChange={handleChange}
-                        />
+                        /> */}
+                        <Sheet>
+                            <SheetTrigger>
+                                <Input type='button' value='Pick a location' name='location' />
+                            </SheetTrigger>
+                            <SheetContent className="w-[1000px] sm:w-[1000px]">
+                                <SheetHeader className='pb-24'>
+                                    <SheetTitle>Select Location</SheetTitle>
+                                    <SheetDescription>
+                                        This will be the location of the duty
+                                        and will be used to track the personnel.
+                                    </SheetDescription>
+                                </SheetHeader>
+                                <LocationPicker
+                                    selectedLocation={selectedLocation}
+                                    setSelectedLocation={setSelectedLocation}
+                                />
+                            </SheetContent>
+                        </Sheet>
                     </div>
                     <div className="justify-self-end">
                         <Label htmlFor="Date">Duration</Label>
@@ -121,9 +147,12 @@ export default function CreateBandobast() {
                         </p>
                     </div>
                 </div>
-                <div className="mt-8 flex justify-center">
-                    <LocationPicker selectedLocation={selectedLocation} setSelectedLocation={setSelectedLocation} />
-                </div>
+                {/* <div className="mt-8 flex justify-center">
+                    <LocationPicker
+                        selectedLocation={selectedLocation}
+                        setSelectedLocation={setSelectedLocation}
+                    />
+                </div> */}
                 <div className="mt-8 flex justify-center">
                     <Button type="submit" className="px-12">
                         Create
