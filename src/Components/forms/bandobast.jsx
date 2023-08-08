@@ -20,16 +20,25 @@ export default function CreateBandobast() {
     const { registerDuty, setRegisterDuty, postDuty } = useStateContext();
     const [selectedLocation, setSelectedLocation] = useState({
         lat: 28.4739155,
-        lng: 77.4885724
+        lng: 77.4885724,
+        placeholder: true,
     });
     const [date, setDate] = useState({});
 
-    useEffect(() => {
+    // useEffect(() => {
+    //     setRegisterDuty((prev) => ({
+    //         ...prev,
+    //         location: `${selectedLocation?.lat},${selectedLocation?.lng}`
+    //     }));
+    //     console.log(selectedLocation);
+    // }, [selectedLocation]);
+
+    const handleSelect = (e) => {
         setRegisterDuty((prev) => ({
             ...prev,
             location: `${selectedLocation?.lat},${selectedLocation?.lng}`
         }));
-    }, [selectedLocation]);
+    };
 
     const handleChange = (e) => {
         setRegisterDuty((prev) => ({
@@ -95,7 +104,7 @@ export default function CreateBandobast() {
                             placeholder="Venue"
                             name="venue"
                             value={registerDuty.venue}
-                            onChange={handleChange}
+                            onSelect={handleSelect}
                         />
                     </div>
 
@@ -111,10 +120,17 @@ export default function CreateBandobast() {
                         /> */}
                         <Sheet>
                             <SheetTrigger>
-                                <Input type='button' value='Pick a location' name='location' />
+                                <Input
+                                    type="text"
+                                    placeholder="Click here to pick a location"
+                                    value={selectedLocation?.placeholder ? "Click here to pic a location" :  `${selectedLocation?.lat},${selectedLocation?.lng}`}
+                                    // value={registerDuty.location}
+                                    onChange={handleChange}
+                                    name="location"
+                                />
                             </SheetTrigger>
                             <SheetContent className="w-[1000px] sm:w-[1000px]">
-                                <SheetHeader className='pb-24'>
+                                <SheetHeader className="pb-24">
                                     <SheetTitle>Select Location</SheetTitle>
                                     <SheetDescription>
                                         This will be the location of the duty

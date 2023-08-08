@@ -18,7 +18,7 @@ function LocationPicker({ selectedLocation, setSelectedLocation }) {
 
     const mapCenter = useMemo(() => {
         return selectedLocation || { lat: 0, lng: 0 };
-    }, [selectedLocation]);
+    }, []);
 
     return (
         <LoadScript googleMapsApiKey="">
