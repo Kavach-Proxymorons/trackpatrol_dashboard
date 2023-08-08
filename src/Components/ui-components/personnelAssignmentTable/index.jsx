@@ -43,7 +43,7 @@ import {
   TableRow,
 } from "./table";
 
-export default function DataTable({ columns, path, data, fetchData, assignedPersonnelsId, shift_id }) {
+export default function DataTable({ columns, path, data, fetchData, assignedPersonnelsId, setAddPersonnelRespData, shift_id }) {
   const [sorting, setSorting] = useState([]);
   const [columnFilters, setColumnFilters] = useState([]);
   const [columnVisibility, setColumnVisibility] = useState([]);
@@ -80,6 +80,9 @@ export default function DataTable({ columns, path, data, fetchData, assignedPers
       });
 
       const res = await response.json();
+      console.log("api response", res);
+      setAddPersonnelRespData(res.data)
+
       fetchData(shift_id)
       setRowSelection({})
     } catch (error) {

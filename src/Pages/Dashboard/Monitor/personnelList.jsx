@@ -18,6 +18,7 @@ export default function PersonnelList(props) {
     const [assignedAndAvailablePersonnel, setAssignedAndAvailablePersonnel] =
         useState([]);
     const [assignedPersonnelsId, setAssignedPersonnelsId] = useState({}); // key: is  value is array of personnel id
+    const [addPersonnelRespData, setAddPersonnelRespData] = useState({}); // key: is  value is array of personnel id
     const { token, authenticate } = useContext(AuthContext);
 
     const getAssignedAndAvailablePersonnel = async (shift_id) => {
@@ -88,12 +89,46 @@ export default function PersonnelList(props) {
             <h1 className="scroll-m-20 text-xl font-medium tracking-tight transition-colors first:mt-0">
                 Assigned Personnel
             </h1>
+{/* {
+{
+    "sid_added": [
+      "401"
+    ],
+    "sid_not_added": [],
+    "sid_not_added_because_clashing_shifts": [
+      {
+        "sid": "401",
+        "clashing_shift_name": "shift 1",
+        "clashing_shift_duty": "64d24eac8c423c29c9a2715e"
+      }
+    ]
+  
+} */}
+            <div>
+                {addPersonnelRespData?.sid_not_added?.map((sid) => {
+                    return (
+                        <div>
+                            sid: {sid} not added - personnel dosen't exist
+                        </div>
+                    )
+                })}
+            </div>
+            <div className="">
+                {addPersonnelRespData?.sid_not_added_because_clashing_shifts?.map((obj) => {
+                    return (
+                        <div>
+                            sid: {obj.sid} not added - personnel already assigned to shift {obj.clashing_shift_name} with duty {obj.clashing_shift_duty}, link: <a href={`/dashboard/${obj.clashing_shift_duty}`}>link</a>
+                        </div>
+                    )
+                })}
+            </div>
             <DataTable
                 columns={headers}
                 path={"hardware"}
                 data={assignedAndAvailablePersonnel}
                 fetchData={getAssignedAndAvailablePersonnel}
                 assignedPersonnelsId={assignedPersonnelsId}
+                setAddPersonnelRespData={setAddPersonnelRespData}
                 shift_id={shift_id}
             />
         </>
