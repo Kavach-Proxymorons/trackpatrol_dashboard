@@ -54,53 +54,46 @@ function App() {
             />
 
             <div className="h-screen bg-background">
-                {isLoggedIn && <Sidebar />}
+                {/* {isLoggedIn && <Sidebar />}
                 <div
                     className={`${
                         isLoggedIn ? (activeMenu ? "ml-52" : "ml-[84px]") : ""
                     } `}
                 >
-                    <Navbar />
-                    <div className="">
-                        <Routes>
-                            <Route path="/login" element={<Login />} />
-                            <Route path="/" exact element={<Dashboard />} />
-                            <Route path="/dashboard" element={<Dashboard />} />
-                            <Route
-                                path="/dashboard/:id"
-                                element={<Monitor />}
-                            />
-                            <Route
-                                path="/dashboard/:id/:shift_id/monitor/details"
-                                element={<DetailedMap />}
-                            />
-                            <Route path="/personnel" element={<Personnel />} />
-                            <Route
-                                path="/personnel/register"
-                                element={<PersonnelForm />}
-                            />
-                            <Route path="/hardware" element={<Hardware />} />
-                            <Route
-                                path="/hardware/register"
-                                element={<HardwareForm />}
-                            />
-                            <Route
-                                path="/bandobast/register"
-                                element={<BandobastForm />}
-                            />
-                            <Route path="/admin" element={<Admin />} />
-                            <Route path="/setting" element={<Setting />} />
-                            <Route path="/logout" element={<Logout />} />
-                            {/* <Route
-                                path="/printreport"
-                                element={<PrintReport />}
-                            /> */}
-                            <Route path="*" element={<>ERROR 404</>} />
-                        </Routes>
-                    </div>
+                    <Navbar /> */}
+                <div className="">
+                    <Routes>
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/" exact element={<Dashboard />} />
+                        <Route path="/dashboard" element={<Dashboard />} />
+                        <Route path="/dashboard/:id" element={<Monitor />} />
+                        <Route
+                            path="/dashboard/:id/:shift_id/monitor/details"
+                            element={<DetailedMap />}
+                        />
+                        <Route path="/personnel" element={<Personnel />} />
+                        <Route
+                            path="/personnel/register"
+                            element={<PersonnelForm />}
+                        />
+                        <Route path="/hardware" element={<Hardware />} />
+                        <Route
+                            path="/hardware/register"
+                            element={<HardwareForm />}
+                        />
+                        <Route
+                            path="/bandobast/register"
+                            element={<BandobastForm />}
+                        />
+                        <Route path="/admin" element={<Admin />} />
+                        <Route path="/setting" element={<Setting />} />
+                        <Route path="/logout" element={<Logout />} />
+                        <Route path="/print" element={<PrintReport />} />
+                        <Route path="*" element={<>ERROR 404</>} />
+                    </Routes>
                 </div>
+                {/* </div> */}
             </div>
-            <PrintReport />
         </div>
     );
 }
