@@ -22,7 +22,7 @@ export function DatePicker({ date, setDate, endDate, className }) {
             toast.error("Date should be before end date", { id: tid });
             return;
         } else if (d.getTime() < today.getTime() - 86400000) {
-            toast.error("Date should be after today or today", { id: tid });
+            toast.error("Date should not be in past.", { id: tid });
             return;
         } else {
             setDate(d);
