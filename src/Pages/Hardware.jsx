@@ -1,13 +1,12 @@
-import { useEffect,useContext } from "react";
+import { useEffect, useContext } from "react";
 import DataTable from "../Components/ui-components/dataTable";
 import { headers } from "../Components/ui-components/dataTable/skeletons/hardware";
-import {Sidebar, Navbar} from '../Components';
+import { Sidebar, Navbar } from "../Components";
 import { useStateContext } from "../Contexts/ContextProvider";
 import AuthContext from "../Contexts/AuthContext";
 
 export default function Hardware() {
-    const { hardwares, getHardwares, activeMenu } =
-        useStateContext();
+    const { hardwares, getHardwares, activeMenu } = useStateContext();
     const { isLoggedIn } = useContext(AuthContext);
 
     useEffect(() => {

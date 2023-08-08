@@ -1,6 +1,7 @@
 import { useEffect, useContext } from "react";
 import { toast } from "react-hot-toast";
 import { DutyCard, OngoingDutyCard } from "../../Components";
+import {Separator} from '../../Components/ui-components/separator';
 import useFetch from "../../hooks/useFetch";
 import { ScrollArea } from "../../Components/ui-components/scroll-area";
 import { Navbar, Sidebar } from "../../Components";
@@ -50,6 +51,7 @@ export default function Dashboard() {
                                     );
                             })}
                         </div>
+                        <Separator className='my-8' />
                         <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight transition-colors">
                             Upcoming Bandobast
                         </h2>

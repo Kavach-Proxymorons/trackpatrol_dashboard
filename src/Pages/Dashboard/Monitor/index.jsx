@@ -33,7 +33,7 @@ import useFetch from "../../../hooks/useFetch";
 import { toast } from "react-hot-toast";
 import { Separator } from "../../../Components/ui-components/separator";
 
-const tid = "duty_detail_toast";
+const tid = toast();
 const months = [
     "Jan",
     "Feb",
@@ -292,6 +292,7 @@ export default function Monitor() {
                                                 date={startDate}
                                                 setDate={setStartDate}
                                                 onSelect={handleSelect}
+                                                endDate={new Date(response?.data?.end_time)}
                                                 required
                                             />
                                             <div className="relative time">
@@ -317,6 +318,7 @@ export default function Monitor() {
                                                 date={endDate}
                                                 setDate={setEndDate}
                                                 onSelect={handleSelect}
+                                                endDate={new Date(response?.data?.end_time)}
                                                 required
                                             />
                                             <div className="relative time">

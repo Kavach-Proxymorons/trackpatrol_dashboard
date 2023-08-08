@@ -28,6 +28,10 @@ module.exports = {
             4: "repeat(4, 320px)",
             5: "repeat(5, 320px)",
             6: "repeat(6, 320px)",
+            "3p": "repeat(3, 1fr)",
+        },
+        gridTemplateRows: {
+           '5p': "repeat(5,1fr)",
         },
         extend: {
             colors: {

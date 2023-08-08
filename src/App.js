@@ -18,6 +18,7 @@ import {
 } from "./Pages";
 
 import { Navbar, Sidebar } from "./Components";
+import { T } from "./Components/ui-components/toaster";
 import { PersonnelForm, HardwareForm, BandobastForm } from "./Components/forms";
 import "./App.css";
 import AuthContext from "./Contexts/AuthContext";
@@ -94,6 +95,7 @@ function App() {
                 </div>
                 {/* </div> */}
             </div>
+            <T />
         </div>
     );
 }

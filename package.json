@@ -13,6 +13,7 @@
         "@radix-ui/react-select": "^1.2.2",
         "@radix-ui/react-separator": "^1.0.3",
         "@radix-ui/react-slot": "^1.0.2",
+        "@radix-ui/react-toast": "^1.1.4",
         "@react-google-maps/api": "^2.19.0",
         "@tanstack/react-table": "^8.9.3",
         "@testing-library/jest-dom": "^5.16.5",

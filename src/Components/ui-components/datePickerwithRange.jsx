@@ -8,16 +8,24 @@ import { Button } from "./button";
 import { Calendar } from "./calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 import { useStateContext } from "../../Contexts/ContextProvider";
+import { toast } from "react-hot-toast";
 
+const today = new Date();
 export function DatePickerWithRange({ date, setDate, className }) {
     const { setRegisterDuty, setRegisterShift } = useStateContext();
-
     useEffect(() => {
+        console.log("here");
+        if (date.from < today - 86400000 || date.to < today - 86400000) {
+            toast.error("Please select a valid date", { id: "datePicker" });
+            return;
+        }
+
         setRegisterDuty((prev) => ({
             ...prev,
             start_time: date.from,
             end_time: date.to
         }));
+
         setRegisterShift((prev) => ({
             ...prev,
             start_time: date.from,
@@ -26,12 +34,21 @@ export function DatePickerWithRange({ date, setDate, className }) {
     }, [date]);
 
     const handleDateSubmit = (selectedDate) => {
-        if (selectedDate?.from) {
+        console.log(today);
+        if (selectedDate?.to) {
+            if (selectedDate?.to < today - 86400000) {
+                toast.error("Please select a valid date", { id: "datePicker" });
+                return;
+            }
             setDate({
                 from: selectedDate.from,
                 to: selectedDate.to
             });
         } else if (selectedDate?.from) {
+            if (selectedDate?.from < today - 86400000) {
+                toast.error("Please select a valid date", { id: "datePicker" });
+                return;
+            }
             setDate({
                 from: selectedDate.from,
                 to: selectedDate.from
@@ -76,7 +93,7 @@ export function DatePickerWithRange({ date, setDate, className }) {
                         defaultMonth={date?.from}
                         selected={date}
                         onSelect={handleDateSubmit}
-                        numberOfMonths={2}
+                        numberOfMonths={1}
                     />
                 </PopoverContent>
             </Popover>
