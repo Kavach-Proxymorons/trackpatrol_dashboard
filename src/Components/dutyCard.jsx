@@ -69,11 +69,11 @@ export default function DashboardCard({ duty }) {
                     </div>
                 </CardContent>
                 <Separator className="my-4" />
-                <CardFooter className="flex justify-between pb-4 px-4">
-                    <div className="flex items-center gap-x-2">
+                <CardFooter className="flex justify-start pb-4 px-4">
+                    {/* <div className="flex items-center gap-x-2">
                         <User2 size={20} />
                         <p className="pt-1">200 Pers.</p>
-                    </div>
+                    </div> */}
                     <div className="flex items-center gap-x-2">
                         <CalendarRange size={20} />
                         <p className="pt-1">

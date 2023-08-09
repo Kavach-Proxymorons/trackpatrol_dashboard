@@ -99,10 +99,10 @@ export default function Sidebar() {
                         </div>
                     </div>
                     <div className="px-4 mb-4 rounded-md">
-                        <NavLink className="" to="/setting">
+                        {/* <NavLink className="" to="/setting">
                             <AiOutlineSetting size={25} />
                             {activeMenu && <span>SETTINGS</span>}
-                        </NavLink>
+                        </NavLink> */}
                         <NavLink to="/logout">
                             <IoLogOut size={25} />
                             {activeMenu && <span>Logout</span>}

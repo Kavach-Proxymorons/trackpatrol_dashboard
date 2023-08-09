@@ -72,7 +72,7 @@ export default function Monitor() {
         `/api/v1/admin/duty/${id}`,
         tid
     );
-    const {response: data} = useFetch(`/api/v1/admin/shift/${id}/report`);
+    const { response: data } = useFetch(`/api/v1/admin/shift/${id}/report`);
     // console.log();
     useEffect(() => {
         if (loading) toast.loading("Loading duties...", { id: tid });
@@ -148,8 +148,6 @@ export default function Monitor() {
         setRegisterShift({});
     };
 
-    
-
     return (
         <>
             {isLoggedIn && <Sidebar />}
@@ -170,7 +168,15 @@ export default function Monitor() {
                         </span>
                     </Link>
                     <div className="flex justify-start gap-x-6 my-6">
-                        <div className="flex flex-col justify-start gap-y-6">
+                        <Card className="w-[34rem]  flex flex-col justify-between p-6">
+                            <CardHeader className="p-0">
+                                <CardTitle className="scroll-m-20 border-b pb-2 text-4xl font-semibold tracking-tight transition-colors first:mt-0">
+                                    {response?.data?.title}
+                                </CardTitle>
+                                <CardDescription className="text-base">
+                                    {response?.data?.description}
+                                </CardDescription>
+                            </CardHeader>
                             <Card>
                                 <CardHeader className="pt-4">
                                     <CardTitle className="flex items-center scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight transition-colors first:mt-0">
@@ -222,13 +228,70 @@ export default function Monitor() {
                                     </p>
                                 </CardContent>
                             </Card>
+                            {/* <CardContent className="flex gap-x-3 px-0 pb-0">
+                                <TitlePersonal />
+                                <LocationTime />
+                            </CardContent> */}
+                        </Card>
+                        <div className="flex flex-col justify-start gap-y-6">
+                            {/* <Card>
+                                <CardHeader className="pt-4">
+                                    <CardTitle className="flex items-center scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight transition-colors first:mt-0">
+                                        <div className="w-10">
+                                            <LuCalendar
+                                                size={24}
+                                                color="#000"
+                                            />
+                                        </div>
+                                        BANDOBAST SCHEDULE
+                                    </CardTitle>
+                                </CardHeader>
+                                <CardContent className="pb-4">
+                                    <p>
+                                        <span className="text-[#7B7D92]">
+                                            Start Time:{" "}
+                                        </span>
+                                        {new Date(
+                                            response?.data?.start_time
+                                        ).getDate() +
+                                            " " +
+                                            months[
+                                                new Date(
+                                                    response?.data?.start_time
+                                                ).getMonth()
+                                            ] +
+                                            " " +
+                                            new Date(
+                                                response?.data?.start_time
+                                            ).getFullYear()}
+                                    </p>
+                                    <p>
+                                        <span className="text-[#7B7D92] pr-2">
+                                            End Time:{" "}
+                                        </span>
+                                        {new Date(
+                                            response?.data?.end_time
+                                        ).getDate() +
+                                            " " +
+                                            months[
+                                                new Date(
+                                                    response?.data?.end_time
+                                                ).getMonth()
+                                            ] +
+                                            " " +
+                                            new Date(
+                                                response?.data?.end_time
+                                            ).getFullYear()}
+                                    </p>
+                                </CardContent>
+                            </Card> */}
                             <Card>
                                 <CardHeader className="pb-0 pt-4">
                                     <CardTitle className="flex items-center justify-center scroll-m-20 pb-2 text-2xl font-semibold tracking-tight transition-colors first:mt-0">
                                         <div className="w-10">
                                             <BadgeInfo size={24} color="#000" />
                                         </div>
-                                        BANDOBAST INFO
+                                        BANDOBAST LOCATION
                                     </CardTitle>
                                 </CardHeader>
 
@@ -236,27 +299,12 @@ export default function Monitor() {
                                     <iframe
                                         src={`https://maps.google.com/maps?q=${response?.data?.location}&z=15&output=embed`}
                                         width="360"
-                                        height="190"
+                                        height="400"
                                         border="0"
                                     ></iframe>
                                 </CardContent>
                             </Card>
                         </div>
-
-                        <Card className="w-[34rem] h-[25rem] flex flex-col justify-between p-6">
-                            <CardHeader className="p-0">
-                                <CardTitle className="scroll-m-20 border-b pb-2 text-4xl font-semibold tracking-tight transition-colors first:mt-0">
-                                    {response?.data?.title}
-                                </CardTitle>
-                                <CardDescription className="text-base">
-                                    {response?.data?.description}
-                                </CardDescription>
-                            </CardHeader>
-                            <CardContent className="flex gap-x-3 px-0 pb-0">
-                                <TitlePersonal />
-                                <LocationTime />
-                            </CardContent>
-                        </Card>
 
                         <Card className="w-[23.5rem]">
                             <CardHeader className="pb-0">
@@ -401,31 +449,33 @@ export default function Monitor() {
                                     <div className="flex justify-between items-center w-full">
                                         <h1 className="scroll-m-20 text-2xl font-medium tracking-tight transition-colors first:mt-0">
                                             {shift.shift_name}
+                                            {console.log(shift)}
                                         </h1>
                                         <div className="flex gap-x-6 pr-8">
                                             <p>
                                                 <span className="font-medium">
                                                     Start Time:{" "}
                                                 </span>
-                                                8 Aug 9:00 AM{" "}
+                                                {/* 8 Aug 8:00 AM */}
+                                                {new Date(shift.start_time).toLocaleString()}
                                             </p>
                                             <p>
                                                 <span className="font-medium">
                                                     End Time:{" "}
                                                 </span>
-                                                8 Aug 9:00 AM
+                                                {new Date(shift.end_time).toLocaleString()}
                                             </p>
                                             <p>
                                                 <span className="font-medium">
                                                     Total Personnel:{" "}
                                                 </span>
-                                                3
+                                                {shift.personnel_assigned?.length}
                                             </p>
                                             <p>
                                                 <span className="font-medium">
                                                     Total Hardware:{" "}
                                                 </span>
-                                                5
+                                                {shift.hardwares_attached?.length}
                                             </p>
                                         </div>
                                     </div>
@@ -493,12 +543,13 @@ export default function Monitor() {
                                                     height="200"
                                                     border="0"
                                                 ></iframe>
-                                                
                                             </Link>
                                             <BarChart
                                                 width={730}
                                                 height={250}
-                                                data={data?.alloted_personnel_table}
+                                                data={
+                                                    data?.alloted_personnel_table
+                                                }
                                             >
                                                 <CartesianGrid strokeDasharray="3 3" />
                                                 <XAxis dataKey="score" />
