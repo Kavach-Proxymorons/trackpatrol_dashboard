@@ -39,7 +39,6 @@ import {
 export default function Profile() {
     const {user} = useContext(AuthContext);
 
-    console.log(user);
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
