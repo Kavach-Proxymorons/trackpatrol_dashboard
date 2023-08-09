@@ -16,24 +16,10 @@ export const personnelHeader = [
         )
     },
     {
-        accessorKey: "official_name",
+        accessorKey: "name",
         header: "OFFICIAL NAME",
         cell: ({ row }) => (
-            <div className="capitalize">{row.getValue("official_name")}</div>
-        )
-    },
-    {
-        accessorKey: "blood_group",
-        header: "BLOOD GROUP",
-        cell: ({ row }) => (
-            <div className="capitalize">{row.getValue("blood_group")}</div>
-        )
-    },
-    {
-        accessorKey: "gender",
-        header: "GENDER",
-        cell: ({ row }) => (
-            <div className="capitalize">{row.getValue("gender")}</div>
+            <div className="capitalize">{row.getValue("name")}</div>
         )
     },
     {
@@ -41,6 +27,20 @@ export const personnelHeader = [
         header: "DESIGNATION",
         cell: ({ row }) => (
             <div className="capitalize">{row.getValue("designation")}</div>
+        )
+    },
+    {
+        accessorKey: "score",
+        header: "SCORE",
+        cell: ({ row }) => (
+            <div className="capitalize">{row.getValue("score")}</div>
+        )
+    },
+    {
+        accessorKey: "gender",
+        header: "GENDER",
+        cell: ({ row }) => (
+            <div className="capitalize">{row.getValue("gender")}</div>
         )
     },
     {

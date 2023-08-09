@@ -71,7 +71,7 @@ export default function PersonnelList(props) {
             [shift_id]: allAssignedPersonnelId
         });
 
-        console.log(allAssignedPersonnelId);
+        // console.log(allAssignedPersonnelId);
 
         // sort available personnel such that all who are assigned are placed a the beginning of the array
         const assignedPersonnel = allPersonnel.filter((personnel) =>
@@ -81,9 +81,20 @@ export default function PersonnelList(props) {
             (personnel) => !allAssignedPersonnelId.includes(personnel._id)
         );
 
+        // fetch available personnels
+        const response3 = await fetch(`${baseUrl}admin/shift/${shift_id}/availablePersonnel`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+        const res3 = await response3.json();
+
         const availablePersonnel = [
             ...assignedPersonnel,
-            ...notAssignedPersonnel
+            ...res3
         ];
 
         setAssignedAndAvailablePersonnel(availablePersonnel);

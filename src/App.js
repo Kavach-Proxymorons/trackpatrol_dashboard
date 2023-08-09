@@ -89,7 +89,7 @@ function App() {
                         <Route path="/admin" element={<Admin />} />
                         <Route path="/setting" element={<Setting />} />
                         <Route path="/logout" element={<Logout />} />
-                        <Route path="/print" element={<PrintReport />} />
+                        <Route path="/print/:id" element={<PrintReport />} />
                         <Route path="*" element={<>ERROR 404</>} />
                     </Routes>
                 </div>

@@ -130,9 +130,8 @@ export default function Monitor() {
         <>
             {isLoggedIn && <Sidebar />}
             <div
-                className={`${
-                    isLoggedIn ? (activeMenu ? "ml-52" : "ml-[84px]") : ""
-                } `}
+                className={`${isLoggedIn ? (activeMenu ? "ml-52" : "ml-[84px]") : ""
+                    } `}
             >
                 <Navbar />
                 <div className="mx-8 my-6">
@@ -169,9 +168,9 @@ export default function Monitor() {
                                         ).getDate() +
                                             " " +
                                             months[
-                                                new Date(
-                                                    response?.data?.start_time
-                                                ).getMonth()
+                                            new Date(
+                                                response?.data?.start_time
+                                            ).getMonth()
                                             ] +
                                             " " +
                                             new Date(
@@ -187,9 +186,9 @@ export default function Monitor() {
                                         ).getDate() +
                                             " " +
                                             months[
-                                                new Date(
-                                                    response?.data?.end_time
-                                                ).getMonth()
+                                            new Date(
+                                                response?.data?.end_time
+                                            ).getMonth()
                                             ] +
                                             " " +
                                             new Date(
@@ -461,6 +460,7 @@ export default function Monitor() {
                                                 ></iframe>
                                             </Link>
                                         </div>
+                                        <Link to={`/print/${shift._id}`} className="w-24 mt-"><Button className="">Print</Button></Link>
                                         {/* ------------Shift Assigned Personnel Table ------------ */}
                                         <br />
 
