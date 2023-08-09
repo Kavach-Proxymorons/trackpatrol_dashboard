@@ -87,7 +87,7 @@ function App() {
                             element={<BandobastForm />}
                         />
                         <Route path="/admin" element={<Admin />} />
-                        <Route path='admin/register' element={<AdminForm /> } />
+                        {/* <Route path='admin/register' element={<AdminForm /> } /> */}
                         <Route path="/setting" element={<Setting />} />
                         <Route path="/logout" element={<Logout />} />
                         <Route path="/print/:id" element={<PrintReport />} />
