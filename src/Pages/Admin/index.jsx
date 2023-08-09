@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 
 import { useStateContext } from "../../Contexts/ContextProvider";
-import DataTable from "../../Components/ui-components/dataTable";
+import DataTable from "./adminTable";
 import AuthContext from "../../Contexts/AuthContext";
 import { Sidebar, Navbar } from "../../Components";
 import useFetch from "../../hooks/useFetch";
