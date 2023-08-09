@@ -4,6 +4,18 @@ import { headers } from "../../../Components/ui-components/personnelAssignmentTa
 import { useStateContext } from "../../../Contexts/ContextProvider";
 import toast from "react-hot-toast";
 import AuthContext from "../../../Contexts/AuthContext";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger
+} from "../../../Components/ui-components/alert-dialog";
+import { Button } from "../../../Components/ui-components/button";
 
 const toastId = "monkey";
 
@@ -100,7 +112,7 @@ export default function PersonnelList(props) {
             <h1 className="scroll-m-20 text-xl font-medium tracking-tight transition-colors first:mt-0">
                 Assigned Personnel
             </h1>
-{/* {
+            {/* {
 {
     "sid_added": [
       "401"
@@ -115,24 +127,60 @@ export default function PersonnelList(props) {
     ]
   
 } */}
-            <div>
-                {addPersonnelRespData?.sid_not_added?.map((sid) => {
-                    return (
-                        <div>
-                            sid: {sid} not added - personnel dosen't exist
-                        </div>
-                    )
-                })}
-            </div>
-            <div className="">
-                {addPersonnelRespData?.sid_not_added_because_clashing_shifts?.map((obj) => {
-                    return (
-                        <div>
-                            sid: {obj.sid} not added - personnel already assigned to shift {obj.clashing_shift_name} with duty {obj.clashing_shift_duty}, link: <a href={`/dashboard/${obj.clashing_shift_duty}`}>link</a>
-                        </div>
-                    )
-                })}
-            </div>
+            {addPersonnelRespData && (
+                <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                        <Button variant="outline">Show Dialog</Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                        <AlertDialogHeader>
+                            <AlertDialogTitle>
+                                Personnel already asigned to other duty.
+                            </AlertDialogTitle>
+                            <AlertDialogDescription>
+                                <div>
+                                    {addPersonnelRespData?.sid_not_added?.map(
+                                        (sid) => {
+                                            return (
+                                                <div>
+                                                    sid: {sid} not added -
+                                                    personnel dosen't exist
+                                                </div>
+                                            );
+                                        }
+                                    )}
+                                </div>
+                                <div className="">
+                                    {addPersonnelRespData?.sid_not_added_because_clashing_shifts?.map(
+                                        (obj) => {
+                                            return (
+                                                <div key={obj.sid}>
+                                                    sid: {obj.sid} not added -
+                                                    personnel already assigned
+                                                    to shift{" "}
+                                                    {obj.clashing_shift_name}{" "}
+                                                    with duty{" "}
+                                                    {obj.clashing_shift_duty},
+                                                    link:{" "}
+                                                    <a
+                                                        href={`/dashboard/${obj.clashing_shift_duty}`}
+                                                    >
+                                                        link
+                                                    </a>
+                                                </div>
+                                            );
+                                        }
+                                    )}
+                                </div>
+                            </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                            {/* <AlertDialogCancel>Cancel</AlertDialogCancel> */}
+                            <AlertDialogAction>Continue</AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
+            )}
             <DataTable
                 columns={headers}
                 path={"hardware"}
