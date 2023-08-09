@@ -26,6 +26,15 @@ import {
     CardHeader,
     CardTitle
 } from "../../../Components/ui-components/card";
+import {
+    BarChart,
+    CartesianGrid,
+    XAxis,
+    YAxis,
+    Tooltip,
+    Legend,
+    Bar
+} from "recharts";
 
 import { DatePicker } from "../../../Components/ui-components/datePicker";
 import { AlarmCheck, BadgeInfo, ChevronDown } from "lucide-react";
@@ -51,8 +60,8 @@ const months = [
 
 export default function Monitor() {
     const { id } = useParams();
-    const [startDate, setStartDate] = useState();
-    const [endDate, setEndDate] = useState();
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
     const startTimeRef = useRef();
     const endTimeRef = useRef();
     const { registerShift, setRegisterShift, postShift, activeMenu } =
@@ -63,6 +72,8 @@ export default function Monitor() {
         `/api/v1/admin/duty/${id}`,
         tid
     );
+    const {response: data} = useFetch(`/api/v1/admin/shift/${id}/report`);
+    // console.log();
     useEffect(() => {
         if (loading) toast.loading("Loading duties...", { id: tid });
         if (response) toast.success(response.message, { id: tid });
@@ -72,6 +83,17 @@ export default function Monitor() {
             return {
                 ...prev,
                 duty: id
+            };
+        });
+
+        startTimeRef.current.value = "10:00";
+        endTimeRef.current.value = "08:00";
+
+        setRegisterShift(() => {
+            return {
+                ...registerShift,
+                shift_name: "Shift 1",
+                distance_radius: 1000
             };
         });
     }, [loading, error, response]);
@@ -126,12 +148,15 @@ export default function Monitor() {
         setRegisterShift({});
     };
 
+    
+
     return (
         <>
             {isLoggedIn && <Sidebar />}
             <div
-                className={`${isLoggedIn ? (activeMenu ? "ml-52" : "ml-[84px]") : ""
-                    } `}
+                className={`${
+                    isLoggedIn ? (activeMenu ? "ml-52" : "ml-[84px]") : ""
+                } `}
             >
                 <Navbar />
                 <div className="mx-8 my-6">
@@ -168,9 +193,9 @@ export default function Monitor() {
                                         ).getDate() +
                                             " " +
                                             months[
-                                            new Date(
-                                                response?.data?.start_time
-                                            ).getMonth()
+                                                new Date(
+                                                    response?.data?.start_time
+                                                ).getMonth()
                                             ] +
                                             " " +
                                             new Date(
@@ -186,9 +211,9 @@ export default function Monitor() {
                                         ).getDate() +
                                             " " +
                                             months[
-                                            new Date(
-                                                response?.data?.end_time
-                                            ).getMonth()
+                                                new Date(
+                                                    response?.data?.end_time
+                                                ).getMonth()
                                             ] +
                                             " " +
                                             new Date(
@@ -379,18 +404,28 @@ export default function Monitor() {
                                         </h1>
                                         <div className="flex gap-x-6 pr-8">
                                             <p>
-                                                <span className="font-medium">Start Time: </span>8 Aug
-                                                9:00 AM{" "}
+                                                <span className="font-medium">
+                                                    Start Time:{" "}
+                                                </span>
+                                                8 Aug 9:00 AM{" "}
                                             </p>
                                             <p>
-                                                <span className="font-medium">End Time: </span>8 Aug 9:00
-                                                AM
+                                                <span className="font-medium">
+                                                    End Time:{" "}
+                                                </span>
+                                                8 Aug 9:00 AM
                                             </p>
                                             <p>
-                                                <span className="font-medium">Total Personnel: </span>3
+                                                <span className="font-medium">
+                                                    Total Personnel:{" "}
+                                                </span>
+                                                3
                                             </p>
                                             <p>
-                                                <span className="font-medium">Total Hardware: </span>5
+                                                <span className="font-medium">
+                                                    Total Hardware:{" "}
+                                                </span>
+                                                5
                                             </p>
                                         </div>
                                     </div>
@@ -458,9 +493,30 @@ export default function Monitor() {
                                                     height="200"
                                                     border="0"
                                                 ></iframe>
+                                                
                                             </Link>
+                                            <BarChart
+                                                width={730}
+                                                height={250}
+                                                data={data?.alloted_personnel_table}
+                                            >
+                                                <CartesianGrid strokeDasharray="3 3" />
+                                                <XAxis dataKey="score" />
+                                                <YAxis />
+                                                <Tooltip />
+                                                <Legend />
+                                                <Bar
+                                                    dataKey="sid"
+                                                    fill="#8884d8"
+                                                />
+                                            </BarChart>
                                         </div>
-                                        <Link to={`/print/${shift._id}`} className="w-24 mt-"><Button className="">Print</Button></Link>
+                                        <Link
+                                            to={`/print/${shift._id}`}
+                                            className="w-24 mt-"
+                                        >
+                                            <Button className="">Print</Button>
+                                        </Link>
                                         {/* ------------Shift Assigned Personnel Table ------------ */}
                                         <br />
 

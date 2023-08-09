@@ -11,6 +11,7 @@ import { useParams } from "react-router-dom";
 const PrintReport = () => {
     const { id } = useParams();
     const { response } = useFetch(`/api/v1/admin/shift/${id}/report`);
+    console.log(response); 
 
     return (response &&
         <ScrollArea className="100vh">
