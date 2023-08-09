@@ -8,11 +8,13 @@ import { useStateContext } from "../Contexts/ContextProvider";
 import useFetch from "../hooks/useFetch";
 
 import "./Notifications.css";
+import { set } from "date-fns";
 const tid = "notification_toast";
 
 export default function Notifications() {
     const [version, setVersion] = useState(0);
     const { activeMenu } = useStateContext();
+    const [stream, setStream] = useState([]);
     const { isLoggedIn } = useContext(AuthContext);
     const { response, error, loading } = useFetch(
         "/api/v1/app/duty/getIssues",
@@ -22,13 +24,16 @@ export default function Notifications() {
     useEffect(() => {
         const interval = setInterval(() => {
             setVersion((v) => v + 1);
-        }, 7000);
+        }, 3000);
         return () => clearInterval(interval);
-    }, []);
+    }, [stream, version]);
 
     useEffect(() => {
         if (loading) toast.loading("Loading issues...", { id: tid });
-        if (response) toast.success(response.message, { id: tid });
+        if (response) {
+            setStream(() => response.data);
+            toast.success(response.message, { id: tid });
+        }
         if (error) toast.error(error.message, { id: tid });
     }, [loading, error, response]);
 
@@ -44,8 +49,11 @@ export default function Notifications() {
             >
                 <Navbar />
                 <div className="">
-                    {response?.data.map((notification) => (
-                        <div className="border m-2 rounded-lg p-2 grid grid-cols-4 justify-between items-center px-4 ">
+                    {stream.map((notification) => (
+                        <div
+                            key={notification._id}
+                            className="border m-2 rounded-lg p-2 grid grid-cols-4 justify-between items-center px-4 "
+                        >
                             <div>
                                 <div>Sid: {notification.issue_creator.sid}</div>
                                 <div>
