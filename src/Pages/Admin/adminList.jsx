@@ -43,26 +43,5 @@ export const header = [
             <div className="capitalize">{row.getValue("last_login")}</div>
         )
     },
-    // {
-    //     accessorKey: "posted_at",
-    //     header: "POSTED AT",
-    //     cell: ({ row }) => (
-    //         <div className="capitalize">{row.getValue("posted_at")}</div>
-    //     )
-    // }
-    // {
-    //   accessorKey: "amount",
-    //   header: () => <div className="text-right">Amount</div>,
-    //   cell: ({ row }) => {
-    //     const amount = parseFloat(row.getValue("amount"));
-
-    //     // Format the amount as a dollar amount
-    //     const formatted = new Intl.NumberFormat("en-US", {
-    //       style: "currency",
-    //       currency: "USD",
-    //     }).format(amount);
-
-    //     return <div className="text-right font-medium">{formatted}</div>;
-    //   },
-    // },
+   
 ];

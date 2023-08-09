@@ -60,8 +60,8 @@ const months = [
 
 export default function Monitor() {
     const { id } = useParams();
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
+    const [startDate, setStartDate] = useState();
+    const [endDate, setEndDate] = useState();
     const startTimeRef = useRef();
     const endTimeRef = useRef();
     const { registerShift, setRegisterShift, postShift, activeMenu } =
@@ -83,17 +83,6 @@ export default function Monitor() {
             return {
                 ...prev,
                 duty: id
-            };
-        });
-
-        startTimeRef.current.value = "10:00";
-        endTimeRef.current.value = "08:00";
-
-        setRegisterShift(() => {
-            return {
-                ...registerShift,
-                shift_name: "Shift 1",
-                distance_radius: 1000
             };
         });
     }, [loading, error, response]);
@@ -323,12 +312,13 @@ export default function Monitor() {
                                             type="text"
                                             name="shift_name"
                                             value={registerShift.shift_name}
-                                            onChange={(e) =>
+                                            onChange={(e) => {
+                                                console.log(e.target.value)
                                                 setRegisterShift((prev) => ({
                                                     ...prev,
                                                     shift_name: e.target.value
-                                                }))
-                                            }
+                                                }));
+                                            }}
                                             placeholder="Shift Name"
                                             className="w-full"
                                             required
@@ -457,25 +447,35 @@ export default function Monitor() {
                                                     Start Time:{" "}
                                                 </span>
                                                 {/* 8 Aug 8:00 AM */}
-                                                {new Date(shift.start_time).toLocaleString()}
+                                                {new Date(
+                                                    shift.start_time
+                                                ).toLocaleString()}
                                             </p>
                                             <p>
                                                 <span className="font-medium">
                                                     End Time:{" "}
                                                 </span>
-                                                {new Date(shift.end_time).toLocaleString()}
+                                                {new Date(
+                                                    shift.end_time
+                                                ).toLocaleString()}
                                             </p>
                                             <p>
                                                 <span className="font-medium">
                                                     Total Personnel:{" "}
                                                 </span>
-                                                {shift.personnel_assigned?.length}
+                                                {
+                                                    shift.personnel_assigned
+                                                        ?.length
+                                                }
                                             </p>
                                             <p>
                                                 <span className="font-medium">
                                                     Total Hardware:{" "}
                                                 </span>
-                                                {shift.hardwares_attached?.length}
+                                                {
+                                                    shift.hardwares_attached
+                                                        ?.length
+                                                }
                                             </p>
                                         </div>
                                     </div>

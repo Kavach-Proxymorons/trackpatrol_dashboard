@@ -17,9 +17,7 @@ import {
     PrintReport
 } from "./Pages";
 
-import { Navbar, Sidebar } from "./Components";
-import { T } from "./Components/ui-components/toaster";
-import { PersonnelForm, HardwareForm, BandobastForm, AdminForm } from "./Components/forms";
+import { PersonnelForm, HardwareForm, BandobastForm, AdminForm} from "./Components/forms";
 import "./App.css";
 import AuthContext from "./Contexts/AuthContext";
 
@@ -87,7 +85,7 @@ function App() {
                             element={<BandobastForm />}
                         />
                         <Route path="/admin" element={<Admin />} />
-                        {/* <Route path='admin/register' element={<AdminForm /> } /> */}
+                        <Route path='admin/register' element={<AdminForm /> } />
                         <Route path="/setting" element={<Setting />} />
                         <Route path="/logout" element={<Logout />} />
                         <Route path="/print/:id" element={<PrintReport />} />
@@ -96,7 +94,6 @@ function App() {
                 </div>
                 {/* </div> */}
             </div>
-            <T />
         </div>
     );
 }
