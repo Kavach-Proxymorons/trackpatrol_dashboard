@@ -141,7 +141,7 @@ export default function CreateBandobast() {
                                                     : `${selectedLocation?.lat},${selectedLocation?.lng}`
                                             }
                                             // value={registerDuty.location}
-                                            onChange={handleChange}
+                                            onSelect={handleSelect}
                                             name="location"
                                         />
                                     </SheetTrigger>
