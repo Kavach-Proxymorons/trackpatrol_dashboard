@@ -1,33 +1,46 @@
 import { useContext, useEffect, useState } from "react";
-import { toast } from "react-hot-toast";
 import { Navbar, Sidebar } from "../Components";
 import { Badge } from "../Components/ui-components/badge";
 import { Button } from "../Components/ui-components/button";
 import AuthContext from "../Contexts/AuthContext";
 import { useStateContext } from "../Contexts/ContextProvider";
-import useFetch from "../hooks/useFetch";
 
 import "./Notifications.css";
 const tid = "notification_toast";
 
 export default function Notifications() {
-    const [version, setVersion] = useState(0);
+    const { token, authenticate } = useContext(AuthContext);
     const { activeMenu } = useStateContext();
     const { isLoggedIn } = useContext(AuthContext);
-    const { response, error, loading } = useFetch("/api/v1/app/duty/getIssues", tid);
+    const [response, setResponse] = useState(null);
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setVersion(v => v + 1);
-        }, 7000);
+            const URL = process.env.REACT_APP_BASE_URL + "/api/v1/app/duty/getIssues";
+            (async () => {
+                try {
+                    const response = await fetch(URL, {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token}`
+                        }
+                    });
+                    const json = await response.json();
+                    if (json.status > 299) {
+                        if (json.status === 401) return authenticate(tid);
+                        if (json.status === 500) throw new Error("Internal server error");
+                        throw new Error(json.message);
+                    }
+                    setResponse((json));
+
+                } catch (err) {
+                    console.log(err)
+                }
+            })();
+        }, 3000);
         return () => clearInterval(interval);
     }, []);
-
-    useEffect(() => {
-        if (loading) toast.loading("Loading issues...", { id: tid });
-        if (response) toast.success(response.message, { id: tid });
-        if (error) toast.error(error.message, { id: tid });
-    }, [loading, error, response]);
 
     const handleAttended = async () => {
 
@@ -39,18 +52,30 @@ export default function Notifications() {
             <div className={`${isLoggedIn ? (activeMenu ? "ml-52" : "ml-[84px]") : ""} `}>
                 <Navbar />
                 <div className="">
-                    {response?.data.map((notification) => (
-                        <div className="border-3 m-2 rounded-lg p-2 flex ">
+                    {response?.data.filter(notification => notification.issue_status === "pending").map((notification) => (
+                        <div key={notification._id} className="border m-2 rounded-lg grid grid-cols-4 justify-between items-center px-4">
                             <div>
                                 <div>Sid: {notification.issue_creator.sid}</div>
                                 <div>Creator: {notification.issue_creator.official_name} ({notification.issue_creator.designation})</div>
                                 <div>Category: {notification.issue_category}</div>
                                 <div>Created At: {notification.createdAt}</div>
                             </div>
-                            {/* <div>Severity: High</div> */}
-                            <Badge variant={"outline"} className={`badgeHigh`}>Severe</Badge>
-                            {notification.issue_status === "pending" ? <Badge variant={"outline"} className={`badgeHigh`}>Pending</Badge> : <Badge variant={"outline"} className={`badgeHigh`}>Attended</Badge>}
                             <div>Description: {notification.issue_description}</div>
+                            <div className="flex gap-x-4">
+
+                                {
+                                    notification.severity && notification.severity === "high" ? <Badge variant={"outline"} className={`badgeHigh`}>Severe</Badge>
+                                        : notification.severity === "medium" ? <Badge variant={"outline"} className={`badgeMedium`}>Moderate</Badge>
+                                            : <Badge variant={"outline"} className={`badgeLow`}>Low</Badge>
+                                }
+
+                                {
+                                    notification.issue_status === "pending" ?
+                                        <Badge variant={"outline"} className={`badgeHigh`}>Pending</Badge>
+                                        :
+                                        <Badge variant={"outline"} className={`badgeHigh`}>Attended</Badge>
+                                }
+                            </div>
                             <Button onClick={handleAttended}>Mark Attended</Button>
                         </div>
                     ))}
