@@ -212,7 +212,7 @@ function RenderMap(props) {
 export default function Map(props) {
     const { shiftData } = props; // This shift Data is coming from DetailedMap Element which renders this map.
     const { isLoaded } = useLoadScript({
-        // googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API,
+        googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API,
     });
 
     if (!isLoaded) return <>Loading</>;

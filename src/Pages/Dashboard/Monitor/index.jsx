@@ -544,7 +544,7 @@ export default function Monitor() {
                                                     border="0"
                                                 ></iframe>
                                             </Link>
-                                            <BarChart
+                                            {/* <BarChart
                                                 width={730}
                                                 height={250}
                                                 data={
@@ -560,7 +560,7 @@ export default function Monitor() {
                                                     dataKey="sid"
                                                     fill="#8884d8"
                                                 />
-                                            </BarChart>
+                                            </BarChart> */}
                                         </div>
                                         <Link
                                             to={`/print/${shift._id}`}
