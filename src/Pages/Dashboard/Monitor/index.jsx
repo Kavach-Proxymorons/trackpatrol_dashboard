@@ -292,7 +292,11 @@ export default function Monitor() {
                                                 date={startDate}
                                                 setDate={setStartDate}
                                                 onSelect={handleSelect}
-                                                endDate={new Date(response?.data?.end_time)}
+                                                endDate={
+                                                    new Date(
+                                                        response?.data?.end_time
+                                                    )
+                                                }
                                                 required
                                             />
                                             <div className="relative time">
@@ -318,7 +322,11 @@ export default function Monitor() {
                                                 date={endDate}
                                                 setDate={setEndDate}
                                                 onSelect={handleSelect}
-                                                endDate={new Date(response?.data?.end_time)}
+                                                endDate={
+                                                    new Date(
+                                                        response?.data?.end_time
+                                                    )
+                                                }
                                                 required
                                             />
                                             <div className="relative time">
@@ -366,9 +374,27 @@ export default function Monitor() {
                                     }}
                                     className="flex justify-between items-center cursor-pointer"
                                 >
-                                    <h1 className="scroll-m-20 text-3xl font-medium tracking-tight transition-colors first:mt-0">
-                                        {shift.shift_name}
-                                    </h1>
+                                    <div className="flex justify-between items-center w-full">
+                                        <h1 className="scroll-m-20 text-2xl font-medium tracking-tight transition-colors first:mt-0">
+                                            {shift.shift_name}
+                                        </h1>
+                                        <div className="flex gap-x-6 pr-8">
+                                            <p>
+                                                <span className="font-medium">Start Time: </span>8 Aug
+                                                9:00 AM{" "}
+                                            </p>
+                                            <p>
+                                                <span className="font-medium">End Time: </span>8 Aug 9:00
+                                                AM
+                                            </p>
+                                            <p>
+                                                <span className="font-medium">Total Personnel: </span>3
+                                            </p>
+                                            <p>
+                                                <span className="font-medium">Total Hardware: </span>5
+                                            </p>
+                                        </div>
+                                    </div>
                                     <ChevronDown size={32} />
                                 </div>
                                 {shiftToggle[shift._id] && (
@@ -437,20 +463,26 @@ export default function Monitor() {
                                         </div>
                                         {/* ------------Shift Assigned Personnel Table ------------ */}
                                         <br />
-                                        {shift.personnel_assigned && (
-                                            <PersonnelList
-                                                shift_id={shift._id}
-                                                data={shift.personnel_assigned}
-                                            />
-                                        )}
-                                        {/* ------------Shift Hardware Attached Table ------------ */}
-                                        <Separator className="mt-2 mb-6" />
-                                        {shift.hardwares_attached && (
-                                            <HardwareList
-                                                shift_id={shift._id}
-                                                data={shift.hardwares_attached}
-                                            />
-                                        )}
+
+                                        <div>
+                                            {shift.personnel_assigned && (
+                                                <PersonnelList
+                                                    shift_id={shift._id}
+                                                    data={
+                                                        shift.personnel_assigned
+                                                    }
+                                                />
+                                            )}
+                                            <Separator className="mt-2 mb-6" />
+                                            {shift.hardwares_attached && (
+                                                <HardwareList
+                                                    shift_id={shift._id}
+                                                    data={
+                                                        shift.hardwares_attached
+                                                    }
+                                                />
+                                            )}
+                                        </div>
                                     </div>
                                 )}
                             </div>

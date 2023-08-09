@@ -274,7 +274,7 @@ export const ContextProvider = ({ children }) => {
     // assigned and idle hardwares
     const assignedAndIdleHardwares = [...assignedHardwares, ...idleHardwares];
 
-    setAssignedAndIdleHardwares(assignedAndIdleHardwares);
+    setAssignedAndIdleHardwares(() =>  assignedAndIdleHardwares);
 
     toast.success(res.message, { id: toastId });
 
