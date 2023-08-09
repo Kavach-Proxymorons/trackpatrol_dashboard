@@ -63,7 +63,7 @@ function App() {
                 <div className="">
                     <Routes>
                         <Route path="/login" element={<Login />} />
-                        {/* <Route path="/" exact element={<Dashboard />} /> */}
+                        <Route path="/" exact element={<Dashboard />} />
                         <Route path="/dashboard" element={<Dashboard />} />
                         <Route path="/dashboard/:id" element={<Monitor />} />
                         <Route

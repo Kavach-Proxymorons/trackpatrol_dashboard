@@ -61,9 +61,12 @@ export default function Dashboard() {
                         </div>
                         <Separator className="my-8" />
                         <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight transition-colors">
-                            Upcoming Bandobast
+                            Bandobast Duties
                         </h2>
-                        <div className="grid 2xl:grid-cols-5 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-4 justify-start content-start my-4">
+                            <div>
+                                {/* datatable */}
+                            </div>
+                        {/* <div className="grid 2xl:grid-cols-5 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-4 justify-start content-start my-4">
                             {response?.data?.duty.map((duty) => {
                                 const today = new Date().getTime();
                                 if (new Date(duty.start_time).getTime() > today)
@@ -71,7 +74,7 @@ export default function Dashboard() {
                                         <DutyCard key={duty._id} duty={duty} />
                                     );
                             })}
-                        </div>
+                        </div> */}
                     </div>
                 </ScrollArea>
             </div>
