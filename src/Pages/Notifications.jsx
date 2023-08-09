@@ -13,6 +13,7 @@ export default function Notifications() {
     const { activeMenu } = useStateContext();
     const { isLoggedIn } = useContext(AuthContext);
     const [response, setResponse] = useState(null);
+    const [version, setVersion] = useState(0);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -42,8 +43,20 @@ export default function Notifications() {
         return () => clearInterval(interval);
     }, []);
 
-    const handleAttended = async () => {
-
+    const handleAttended = async (id) => {
+        const URL = process.env.REACT_APP_BASE_URL + `/api/v1/app/duty/markComplete/${id}`;
+        try {
+            const response = await fetch(URL, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+            setVersion(v => v + 1);
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     return (
@@ -51,8 +64,13 @@ export default function Notifications() {
             {isLoggedIn && <Sidebar />}
             <div className={`${isLoggedIn ? (activeMenu ? "ml-52" : "ml-[84px]") : ""} `}>
                 <Navbar />
+
                 <div className="">
-                    {response?.data.filter(notification => notification.issue_status === "pending").map((notification) => (
+                    <h1 className="p-4 scroll-m-20 border-b pb-2 text-4xl font-semibold tracking-tight transition-colors first:mt-0">
+                         Incoming Notifications
+                         
+                         </h1>
+                    {response?.data?.reverse().filter(notification => notification.issue_status === "pending").map((notification) => (
                         <div key={notification._id} className="border m-2 rounded-lg grid grid-cols-4 justify-between items-center px-4">
                             <div>
                                 <div>Sid: {notification.issue_creator.sid}</div>
@@ -76,7 +94,7 @@ export default function Notifications() {
                                         <Badge variant={"outline"} className={`badgeHigh`}>Attended</Badge>
                                 }
                             </div>
-                            <Button onClick={handleAttended}>Mark Attended</Button>
+                            <Button onClick={() => { handleAttended(notification._id) }}>Mark Attended</Button>
                         </div>
                     ))}
                 </div>
