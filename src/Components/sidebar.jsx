@@ -2,12 +2,12 @@ import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../Assests/logo.png";
 import { HiUsers } from "react-icons/hi";
-import { HiMiniCpuChip } from "react-icons/hi2";
+import { HiEnvelope, HiMiniCpuChip } from "react-icons/hi2";
 import { BsFillCarFrontFill } from "react-icons/bs";
 import { BiSolidDashboard } from "react-icons/bi";
 import { AiOutlineSetting } from "react-icons/ai";
 import { MdAdminPanelSettings } from "react-icons/md";
-import { IoLogOut } from "react-icons/io5";
+import { IoLogOut, IoNotifications } from "react-icons/io5";
 import { useStateContext } from "../Contexts/ContextProvider";
 
 export default function Sidebar() {
@@ -51,9 +51,8 @@ export default function Sidebar() {
     return (
         <>
             <div
-                className={`md:overflow-hidden overflow-auto md:hover:overflow-auto fixed ${
-                    activeMenu ? "w-52" : ""
-                } bg-background z-50 h-screen transition-all duration-500 ease-in-out`}
+                className={`md:overflow-hidden overflow-auto md:hover:overflow-auto fixed ${activeMenu ? "w-52" : ""
+                    } bg-background z-50 h-screen transition-all duration-500 ease-in-out`}
             >
                 <div className="flex flex-col justify-between h-screen border-r-3">
                     <div className="">
@@ -85,7 +84,10 @@ export default function Sidebar() {
                                 <BsFillCarFrontFill size={25} />
                                 {activeMenu && <span>Bandobast</span>}
                             </NavLink>
-
+                            <NavLink to="/notifications">
+                                <IoNotifications size={25} />
+                                {activeMenu && <span>Notifications</span>}
+                            </NavLink>
                             <NavLink to="/personnel">
                                 <HiUsers size={25} />
                                 {activeMenu && <span>Personnel</span>}

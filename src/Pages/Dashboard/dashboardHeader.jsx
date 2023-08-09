@@ -1,40 +1,9 @@
 import { ArrowUpDown, ChevronDown, MoreHorizontal, Plus } from "lucide-react";
-import { Button } from "../../button";
-import { Checkbox } from "../../checkbox";
-import {
-    DropdownMenu,
-    DropdownMenuCheckboxItem,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger
-} from "../../dropdown-menu";
+import { Button } from "../../Components/ui-components/button";
 
 export const headers = [
     {
-        id: "select",
-        header: ({ table }) => (
-            <Checkbox
-                checked={table.getIsAllPageRowsSelected()}
-                onCheckedChange={(value) =>
-                    table.toggleAllPageRowsSelected(!!value)
-                }
-                aria-label="Select all"
-            />
-        ),
-        cell: ({ row }) => (
-            <Checkbox
-                checked={row.getIsSelected()}
-                onCheckedChange={(value) => row.toggleSelected(!!value)}
-                aria-label="Select row"
-            />
-        ),
-        enableSorting: false,
-        enableHiding: false
-    },
-    {
-        accessorKey: "sid",
+        accessorKey: "title",
         header: ({ column }) => {
             return (
                 <Button
@@ -44,17 +13,17 @@ export const headers = [
                     }
                     className="text-sm px-0"
                 >
-                    sid
+                    Title
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             );
         },
         cell: ({ row }) => (
-            <div className="lowercase">{row.getValue("sid")}</div>
+            <div className="lowercase">{row.getValue("title")}</div>
         )
     },
     {
-        accessorKey: "official_name",
+        accessorKey: "description",
         header: ({ column }) => {
             return (
                 <Button
@@ -64,17 +33,17 @@ export const headers = [
                     }
                     className="text-sm px-0"
                 >
-                    OFFICIAL NAME
+                    Description
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             );
         },
         cell: ({ row }) => (
-            <div className="capitalize">{row.getValue("official_name")}</div>
+            <div className="capitalize">{row.getValue("description")}</div>
         )
     },
     {
-        accessorKey: "gender",
+        accessorKey: "venue",
         header: ({ column }) => {
             return (
                 <Button
@@ -84,98 +53,74 @@ export const headers = [
                     }
                     className="text-sm px-0"
                 >
-                    GENDER
+                    Venue
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             );
         },
         cell: ({ row }) => (
-            <div className="capitalize">{row.getValue("gender")}</div>
+            <div className="capitalize">{row.getValue("venue")}</div>
         )
     },
-    {
-        accessorKey: "designation",
-        header: ({ column }) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() =>
-                        column.toggleSorting(column.getIsSorted() === "asc")
-                    }
-                    className="text-sm px-0"
-                >
-                    DESIGNATION
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                </Button>
-            );
-        },
-        cell: ({ row }) => (
-            <div className="capitalize">{row.getValue("designation")}</div>
-        )
-    },
-    {
-        accessorKey: "posted_at",
-        header: ({ column }) => {
-          return (
-              <Button
-                  variant="ghost"
-                  onClick={() =>
-                      column.toggleSorting(column.getIsSorted() === "asc")
-                  }
-                  className="text-sm px-0"
-              >
-                  POSTED AT
-                  <ArrowUpDown className="ml-2 h-4 w-4" />
-              </Button>
-          );
-      },
-        cell: ({ row }) => (
-            <div className="capitalize">{row.getValue("posted_at")}</div>
-        )
-    },
-    // {
-    //   accessorKey: "amount",
-    //   header: () => <div className="text-right">Amount</div>,
-    //   cell: ({ row }) => {
-    //     const amount = parseFloat(row.getValue("amount"));
 
-    //     // Format the amount as a dollar amount
-    //     const formatted = new Intl.NumberFormat("en-US", {
-    //       style: "currency",
-    //       currency: "USD",
-    //     }).format(amount);
-
-    //     return <div className="text-right font-medium">{formatted}</div>;
-    //   },
-    // },
-    // {
-    //     id: "actions",
-    //     enableHiding: false,
-    //     cell: ({ row }) => {
-    //         const payment = row.original;
-    //         return (
-    //             <DropdownMenu>
-    //                 <DropdownMenuTrigger asChild>
-    //                     <Button variant="ghost" className="h-8 w-8 p-0">
-    //                         <span className="sr-only">Open menu</span>
-    //                         <MoreHorizontal className="h-4 w-4" />
-    //                     </Button>
-    //                 </DropdownMenuTrigger>
-    //                 <DropdownMenuContent align="end">
-    //                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
-    //                     <DropdownMenuItem
-    //                         onClick={() =>
-    //                             navigator.clipboard.writeText(payment.id)
-    //                         }
-    //                     >
-    //                         Lorem.
-    //                     </DropdownMenuItem>
-    //                     <DropdownMenuSeparator />
-    //                     <DropdownMenuItem>Lorem</DropdownMenuItem>
-    //                     <DropdownMenuItem>Lorem</DropdownMenuItem>
-    //                 </DropdownMenuContent>
-    //             </DropdownMenu>
-    //         );
-    //     }
-    // }
+    {
+        accessorKey: "police_station",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === "asc")
+                    }
+                    className="text-sm px-0"
+                >
+                    Police Station
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            );
+        },
+        cell: ({ row }) => (
+            <div className="capitalize">{row.getValue("police_station")}</div>
+        )
+    },
+    {
+        accessorKey: "start_time",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === "asc")
+                    }
+                    className="text-sm px-0"
+                >
+                    Start time
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            );
+        },
+        cell: ({ row }) => (
+            <div className="capitalize">{row.getValue("start_time")}</div>
+        )
+    },
+    {
+        accessorKey: "end_time",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === "asc")
+                    }
+                    className="text-sm px-0"
+                >
+                    End time
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            );
+        },
+        cell: ({ row }) => (
+            <div className="capitalize">{row.getValue("end_time")}</div>
+        )
+    }
 ];

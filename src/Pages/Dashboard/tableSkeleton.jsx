@@ -21,8 +21,8 @@ import {
     RefreshCcw
 } from "lucide-react";
 
-import { Button } from "../button";
-import { Checkbox } from "../checkbox";
+import { Button } from "../../Components/ui-components/button";
+import { Checkbox } from "../../Components/ui-components/checkbox";
 import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
@@ -31,8 +31,8 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger
-} from "../dropdown-menu";
-import Input from "../input";
+} from "../../Components/ui-components/dropdown-menu";
+import Input from "../../Components/ui-components/input";
 import {
     Table,
     TableBody,
@@ -40,9 +40,9 @@ import {
     TableHead,
     TableHeader,
     TableRow
-} from "../table";
+} from "../../Components/ui-components/table";
 
-export default function DataTable({ columns, path, data, fetchData }) {
+export default function DataTable({ columns, path, data}) {
     const [sorting, setSorting] = useState([]);
     const [columnFilters, setColumnFilters] = useState([]);
     const [columnVisibility, setColumnVisibility] = useState([]);
@@ -68,23 +68,61 @@ export default function DataTable({ columns, path, data, fetchData }) {
         }
     });
 
+    const filterOption = [
+        "title",
+        "description",
+        "venue",
+        "start_time",
+        "end_time",
+        'police_station',
+    ];
+
+    const [searchByName, setSearchByName] = useState('title');
+
     return (
         <div className="w-auto">
             <div className="flex justify-between items-center py-4">
-                <Input
-                    placeholder={`Search by ${path} id`}
-                    value={table.getColumn("sid")?.getFilterValue() ?? ""}
-                    onChange={(event) =>
-                        table
-                            .getColumn("sid")
-                            ?.setFilterValue(event.target.value)
-                    }
-                    className="max-w-sm"
-                />
+                <div className="inline-flex gap-x-2">
+                    <Input
+                        placeholder={`Search by ${path} ${searchByName}`}
+                        value={
+                            table.getColumn(searchByName)?.getFilterValue() ??
+                            ""
+                        }
+                        onChange={(event) =>
+                            table
+                                .getColumn(searchByName)
+                                ?.setFilterValue(event.target.value)
+                        }
+                        className="max-w-sm"
+                    />
+                    <DropdownMenu>
+                        <DropdownMenuTrigger>
+                            <Button variant="outline">
+                                Filter
+                                <ChevronDown className="ml-2 h-4 w-4" />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                            <DropdownMenuLabel>Options</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            {filterOption.map((filterField) => {
+                                return (
+                                    <DropdownMenuItem
+                                        key={filterField}
+                                        onClick={() => {
+                                            // console.log(filterField);
+                                            setSearchByName(filterField);
+                                        }}
+                                    >
+                                        {filterField}
+                                    </DropdownMenuItem>
+                                );
+                            })}
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                </div>
                 <div className="flex gap-x-3">
-                    <Button variant="outline" onClick={fetchData}>
-                        <RefreshCcw className="h-6 w-6" />
-                    </Button>
                     <Button
                         variant="outline"
                         onClick={() => Navigate(`/${path}/register`)}

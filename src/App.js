@@ -20,6 +20,7 @@ import {
 import { PersonnelForm, HardwareForm, BandobastForm, AdminForm} from "./Components/forms";
 import "./App.css";
 import AuthContext from "./Contexts/AuthContext";
+import Notifications from "./Pages/Notifications";
 
 function App() {
     const { isLoggedIn } = useContext(AuthContext);
@@ -90,6 +91,7 @@ function App() {
                         />
                         <Route path="/admin" element={<Admin />} />
                         <Route path='admin/register' element={<AdminForm /> } />
+                        <Route path="/notifications" element={<Notifications />} />
                         <Route path="/setting" element={<Setting />} />
                         <Route path="/logout" element={<Logout />} />
                         <Route path="/print/:id" element={<PrintReport />} />
