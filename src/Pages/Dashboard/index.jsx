@@ -1,13 +1,16 @@
 import { useEffect, useContext } from "react";
 import { toast } from "react-hot-toast";
 import { DutyCard, OngoingDutyCard } from "../../Components";
-import {Separator} from '../../Components/ui-components/separator';
+import { Separator } from "../../Components/ui-components/separator";
 import useFetch from "../../hooks/useFetch";
 import { ScrollArea } from "../../Components/ui-components/scroll-area";
 import { Navbar, Sidebar } from "../../Components";
 import AuthContext from "../../Contexts/AuthContext";
 import { useStateContext } from "../../Contexts/ContextProvider";
+import {Button} from '../../Components/ui-components/button';
+import { Link } from "react-router-dom";
 const tid = "dashboard_duites_toast";
+
 
 export default function Dashboard() {
     const { isLoggedIn } = useContext(AuthContext);
@@ -35,9 +38,14 @@ export default function Dashboard() {
                 <Navbar />
                 <ScrollArea className="h-[calc(100vh-6rem)]">
                     <div className="px-8 pt-8 bg-background">
-                        <h2 className="scroll-m-20  pb-2 text-3xl font-semibold tracking-tight transition-colors">
-                            Ongoing Bandobast
-                        </h2>
+                        <div className="flex justify-between pr-12">
+                            <h2 className="scroll-m-20  pb-2 text-3xl font-semibold tracking-tight transition-colors">
+                                Ongoing Bandobast
+                            </h2>
+                            <Link to='/bandobast/register' className="p-0">
+                                <Button variant='outline'>Create Bandobast</Button>
+                            </Link>
+                        </div>
                         <div className="grid 2xl:grid-cols-5 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-4 justify-start content-start my-4">
                             {response?.data?.duty.map((duty) => {
                                 const today = new Date().getTime();
@@ -51,7 +59,7 @@ export default function Dashboard() {
                                     );
                             })}
                         </div>
-                        <Separator className='my-8' />
+                        <Separator className="my-8" />
                         <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight transition-colors">
                             Upcoming Bandobast
                         </h2>

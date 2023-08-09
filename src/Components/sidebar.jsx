@@ -73,15 +73,19 @@ export default function Sidebar() {
                         <div
                             className={`flex flex-col px-4 gap-y-1 mt-20 py-3 drop-shadow`}
                         >
-                            <NavLink to="/">
+                            <NavLink to="/bandobast">
                                 <BiSolidDashboard size={25} />
                                 {activeMenu && <span>Dashboard</span>}
                             </NavLink>
-
-                            <NavLink to="/bandobast/register">
+                            {/* <NavLink to="/bandobast/register">
+                                <BsFillCarFrontFill size={25} />
+                                {activeMenu && <span>Bandobast</span>}
+                            </NavLink> */}
+                            <NavLink to="/dashboard">
                                 <BsFillCarFrontFill size={25} />
                                 {activeMenu && <span>Bandobast</span>}
                             </NavLink>
+
                             <NavLink to="/personnel">
                                 <HiUsers size={25} />
                                 {activeMenu && <span>Personnel</span>}
