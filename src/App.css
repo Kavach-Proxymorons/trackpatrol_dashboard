@@ -50,3 +50,9 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 .time:hover svg {
     @apply text-slate-900;
 }
+
+.map-container {
+    height: 100%;
+    width: 100%;
+    @apply rounded-lg m-3;
+}

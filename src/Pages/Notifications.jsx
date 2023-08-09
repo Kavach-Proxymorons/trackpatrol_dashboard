@@ -4,8 +4,6 @@ import { Badge } from "../Components/ui-components/badge";
 import { Button } from "../Components/ui-components/button";
 import AuthContext from "../Contexts/AuthContext";
 import { useStateContext } from "../Contexts/ContextProvider";
-
-import "./Notifications.css";
 const tid = "notification_toast";
 
 export default function Notifications() {
@@ -62,7 +60,11 @@ export default function Notifications() {
     return (
         <>
             {isLoggedIn && <Sidebar />}
-            <div className={`${isLoggedIn ? (activeMenu ? "ml-52" : "ml-[84px]") : ""} `}>
+            <div
+                className={`${
+                    isLoggedIn ? (activeMenu ? "ml-52" : "ml-[84px]") : ""
+                } `}
+            >
                 <Navbar />
 
                 <div className="">
@@ -74,8 +76,14 @@ export default function Notifications() {
                         <div key={notification._id} className="border m-2 rounded-lg grid grid-cols-4 justify-between items-center px-4">
                             <div>
                                 <div>Sid: {notification.issue_creator.sid}</div>
-                                <div>Creator: {notification.issue_creator.official_name} ({notification.issue_creator.designation})</div>
-                                <div>Category: {notification.issue_category}</div>
+                                <div>
+                                    Creator:{" "}
+                                    {notification.issue_creator.official_name} (
+                                    {notification.issue_creator.designation})
+                                </div>
+                                <div>
+                                    Category: {notification.issue_category}
+                                </div>
                                 <div>Created At: {notification.createdAt}</div>
                             </div>
                             <div>Description: {notification.issue_description}</div>

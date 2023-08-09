@@ -22,7 +22,7 @@ export default function Dashboard() {
     useEffect(() => {
         if (loading) toast.loading("Loading duty...", { id: tid });
         if (response) {
-            setDuties(response.data.duty);
+            setDuties(() => response.data.duty);
             console.log(response.data.duty);
             toast.success(response.message, { id: tid });
         }
