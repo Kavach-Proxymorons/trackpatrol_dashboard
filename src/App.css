@@ -39,7 +39,7 @@ a.active svg {
 }
 
 input[type="time"]::-webkit-calendar-picker-indicator {
-    background: rgba(255, 255, 255, 0.0);
+    background: rgba(255, 255, 255, 0);
     padding: 0 2.2rem;
 }
 
@@ -55,4 +55,28 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     height: 100%;
     width: 100%;
     @apply rounded-lg m-3;
+}
+
+.spinner {
+    animation: spin 20s linear infinite;
+
+    @keyframes spin {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+}
+
+#curve {
+    fill: transparent;
+
+}
+
+.text {
+    fill: white;
+    transform-origin: 50% 50%;
+    
 }

@@ -96,6 +96,7 @@ import Input from "../Components/ui-components/input";
 import Label from "../Components/ui-components/label";
 import {
     ArrowUpRight,
+    Asterisk,
     Eye,
     EyeOff,
     GithubIcon,
@@ -121,7 +122,7 @@ export default function AuthenticationPage() {
     };
 
     const handleDefaultLogin = (e) => {
-        login('SP_Ghaziabad', 'admin@1234');
+        login("SP_Ghaziabad", "admin@1234");
     };
 
     async function onSubmit(e) {
@@ -139,23 +140,7 @@ export default function AuthenticationPage() {
 
     return (
         <div className="">
-            {/* <div className="md:hidden">
-                <img
-                    src="/examples/authentication-light.png"
-                    width={1280}
-                    height={843}
-                    alt="Authentication"
-                    className="block dark:hidden"
-                />
-                <img
-                    src="/examples/authentication-dark.png"
-                    width={1280}
-                    height={843}
-                    alt="Authentication"
-                    className="hidden dark:block"
-                />
-            </div> */}
-            <div className="relative h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2x lg:px-0">
+            <div className="relative h-screen flex-col items-center justify-center md:grid lg:grid-cols-2x lg:px-0 px-6">
                 <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
                     <div className="absolute inset-0 bg-zinc-900" />
                     <div className="relative z-20 flex items-center text-lg font-medium">
@@ -173,6 +158,31 @@ export default function AuthenticationPage() {
                         </svg>
                         KAVACH - TRACKPATROL
                     </div>
+
+                    {/* <div className="relative z-20 ">
+                        <p>KAVACH TRACKPATROL</p>
+                        <Asterisk size={500} className="opacity-30"/>
+                    </div> */}
+                    <div className="relative z-20 flex justify-center items-center mt-auto opacity-40">
+                        <svg className="spinner w-[250px] h-[250px]">
+                            <path
+                                id="curve"
+                                d="M 25 125 A 100 100 0 1 1 25 127"
+                            ></path>
+                            <text className="text">
+                                <textPath
+                                    href="#curve"
+                                    textLength={Math.floor(
+                                        Math.PI * 2 * 98
+                                    )}
+                                    className="text-xl"
+                                >
+                                    KAVACH - 2023 - TRACKPATROL -
+                                </textPath>
+                            </text>
+                        </svg>
+                    </div>
+
                     <div className="relative z-20 mt-auto">
                         <blockquote className="space-y-2">
                             <p className="text-lg">
@@ -180,7 +190,9 @@ export default function AuthenticationPage() {
                                 of work and helped me deliver stunning designs
                                 to my clients faster than ever before.&rdquo;
                             </p>
-                            <footer className="text-sm">Team: PROXYMORONS</footer>
+                            <footer className="text-sm">
+                                Team: PROXYMORONS
+                            </footer>
                         </blockquote>
                     </div>
                 </div>
@@ -188,10 +200,10 @@ export default function AuthenticationPage() {
                     <div className="flex w-full flex-col justify-center space-y-6 ">
                         <div className="flex flex-col space-y-2 text-center">
                             <h1 className="text-2xl font-semibold tracking-tight">
-                                Create an account
+                                Sign up to Trackpatrol
                             </h1>
                             <p className="text-sm text-muted-foreground">
-                                Enter your email below to signup.
+                                Enter your username and password below to signup.
                             </p>
                         </div>
                         <div className={cn("grid gap-6 justify-center")}>
@@ -207,7 +219,7 @@ export default function AuthenticationPage() {
                                         <Input
                                             name="username"
                                             placeholder="username"
-                                            type='text'
+                                            type="text"
                                             autoCapitalize="none"
                                             autoComplete="email"
                                             autoCorrect="off"
@@ -276,7 +288,7 @@ export default function AuthenticationPage() {
                                 Default Login
                             </Button>
                         </div>
-                        <p className="px-8 text-center text-sm text-muted-foreground">
+                        <div className="px-8 text-center text-sm text-muted-foreground">
                             By clicking continue, you agree to our{" "}
                             <div className="flex justify-center items-center">
                                 <Link
@@ -294,7 +306,7 @@ export default function AuthenticationPage() {
                                 </Link>
                                 .
                             </div>
-                        </p>
+                        </div>
                     </div>
                 </div>
             </div>
