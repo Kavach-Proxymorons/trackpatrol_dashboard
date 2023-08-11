@@ -164,7 +164,7 @@ export default function AuthenticationPage() {
                         <Asterisk size={500} className="opacity-30"/>
                     </div> */}
                     <div className="relative z-20 flex justify-center items-center mt-auto opacity-40">
-                        <svg className="spinner w-[250px] h-[250px]">
+                        <svg className="spin spinner w-[250px] h-[250px]">
                             <path
                                 id="curve"
                                 d="M 25 125 A 100 100 0 1 1 25 127"
@@ -172,9 +172,7 @@ export default function AuthenticationPage() {
                             <text className="text">
                                 <textPath
                                     href="#curve"
-                                    textLength={Math.floor(
-                                        Math.PI * 2 * 98
-                                    )}
+                                    textLength={Math.floor(Math.PI * 2 * 98)}
                                     className="text-xl"
                                 >
                                     KAVACH - 2023 - TRACKPATROL -
@@ -186,13 +184,13 @@ export default function AuthenticationPage() {
                     <div className="relative z-20 mt-auto">
                         <blockquote className="space-y-2">
                             <p className="text-lg">
-                                &ldquo;This library has saved me countless hours
-                                of work and helped me deliver stunning designs
-                                to my clients faster than ever before.&rdquo;
+                                &ldquo;TrackPatrol is an innovative and robust
+                                mapping application designed to provide
+                                real-time location tracking and management
+                                solutions for personnel and emergency
+                                situations. &rdquo;
                             </p>
-                            <footer className="text-sm">
-                                Team: PROXYMORONS
-                            </footer>
+                            <footer className="text-sm">~ PROXYMORONS</footer>
                         </blockquote>
                     </div>
                 </div>
@@ -203,7 +201,8 @@ export default function AuthenticationPage() {
                                 Sign up to Trackpatrol
                             </h1>
                             <p className="text-sm text-muted-foreground">
-                                Enter your username and password below to signup.
+                                Enter your username and password below to
+                                signup.
                             </p>
                         </div>
                         <div className={cn("grid gap-6 justify-center")}>
