@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useStateContext } from "../../../Contexts/ContextProvider";
+import AuthContext from "../../../Contexts/AuthContext";
 import {
     ColumnDef,
     ColumnFiltersState,
@@ -57,7 +58,10 @@ export default function DataTable({
     const [rowSelection, setRowSelection] = useState({});
     const { hardwares, getHardwares } = useStateContext();
     const [searchByName, setSearchByName] = useState("hardware_id");
+    const { token } = useContext(AuthContext);
     const Navigate = useNavigate();
+
+    console.log(token);
 
     const baseUrl =
         process.env.NODE_ENV === "development"
@@ -66,6 +70,7 @@ export default function DataTable({
 
     const handleAttachClick = async () => {
         try {
+            console.log(token);
             // array of selected hardware_id
             const selectedHardware = Object.keys(rowSelection).filter(
                 (hardware_id) => rowSelection[hardware_id]
@@ -83,7 +88,7 @@ export default function DataTable({
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: `Bearer ${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGI1N2ZkNmNlNmYyMTc4YjVhNWM5NWQiLCJpYXQiOjE2OTExMTkyMDgsImV4cCI6MTY5MzcxMTIwOH0.f1tZ8kR033p5B3ieiZvy3X8IEQ-2l7qjAjBBP2o3UMI"}`
+                        Authorization: `Bearer ${token}`
                     },
                     body: JSON.stringify({
                         hardware_array: selectedHardwareIds
@@ -118,7 +123,7 @@ export default function DataTable({
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: `Bearer ${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGI1N2ZkNmNlNmYyMTc4YjVhNWM5NWQiLCJpYXQiOjE2OTExMTkyMDgsImV4cCI6MTY5MzcxMTIwOH0.f1tZ8kR033p5B3ieiZvy3X8IEQ-2l7qjAjBBP2o3UMI"}`
+                        Authorization: `Bearer ${token}`
                     },
                     body: JSON.stringify({
                         hardware_array: selectedHardwareIds

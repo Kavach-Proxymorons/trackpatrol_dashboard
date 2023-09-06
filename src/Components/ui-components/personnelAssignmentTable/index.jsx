@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useStateContext } from "../../../Contexts/ContextProvider";
+import AuthContext from "../../../Contexts/AuthContext";
+
 import {
     ColumnDef,
     ColumnFiltersState,
@@ -57,6 +59,7 @@ export default function DataTable({
     const [columnVisibility, setColumnVisibility] = useState([]);
     const [rowSelection, setRowSelection] = useState({});
     const [searchByName, setSearchByName] = useState("sid");
+    const { token } = useContext(AuthContext);
 
     const baseUrl =
         process.env.NODE_ENV === "development"
@@ -82,7 +85,7 @@ export default function DataTable({
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: `Bearer ${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGI1N2ZkNmNlNmYyMTc4YjVhNWM5NWQiLCJpYXQiOjE2OTExMTkyMDgsImV4cCI6MTY5MzcxMTIwOH0.f1tZ8kR033p5B3ieiZvy3X8IEQ-2l7qjAjBBP2o3UMI"}`
+                        Authorization: `Bearer ${token}`
                     },
                     body: JSON.stringify({
                         personnel_array: selectedPersonnelIds
@@ -120,7 +123,7 @@ export default function DataTable({
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: `Bearer ${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGI1N2ZkNmNlNmYyMTc4YjVhNWM5NWQiLCJpYXQiOjE2OTExMTkyMDgsImV4cCI6MTY5MzcxMTIwOH0.f1tZ8kR033p5B3ieiZvy3X8IEQ-2l7qjAjBBP2o3UMI"}`
+                        Authorization: `Bearer ${token}`
                     },
                     body: JSON.stringify({
                         personnel_array: selectedPersonnelIds
