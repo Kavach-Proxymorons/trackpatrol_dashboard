@@ -101,7 +101,7 @@ export default function PersonnelRegisterForm() {
                         className={`grid grid-cols-2 justify-items-center place-content-center gap-x-32 gap-y-6 mt-12`}
                     >
                         <div>
-                            <Label>Member Id</Label>
+                            <Label>Username</Label>
                             <Input
                                 type="text"
                                 placeholder="Username"
@@ -111,7 +111,7 @@ export default function PersonnelRegisterForm() {
                             />
                         </div>
                         <div>
-                            <Label>Member Id</Label>
+                            <Label>Name</Label>
                             <Input
                                 type="text"
                                 placeholder="Name"
@@ -122,7 +122,7 @@ export default function PersonnelRegisterForm() {
                         </div>
 
                         <div>
-                            <Label>Member Name</Label>
+                            <Label>password</Label>
                             <Input
                                 type="text"
                                 placeholder="Password"
@@ -133,7 +133,7 @@ export default function PersonnelRegisterForm() {
                         </div>
 
                         <div>
-                            <Label>Password</Label>
+                            <Label>Police Station</Label>
                             <Input
                                 type="text"
                                 placeholder="Police Station"
@@ -144,7 +144,7 @@ export default function PersonnelRegisterForm() {
                         </div>
 
                         <div>
-                            <Label>Blood Group</Label>
+                            <Label>Role</Label>
                             <Input
                                 type="text"
                                 placeholder="Role"

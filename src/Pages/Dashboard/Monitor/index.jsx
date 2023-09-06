@@ -42,7 +42,7 @@ import useFetch from "../../../hooks/useFetch";
 import { toast } from "react-hot-toast";
 import { Separator } from "../../../Components/ui-components/separator";
 
-const tid = toast();
+const tid = "toast-id";
 const months = [
     "Jan",
     "Feb",

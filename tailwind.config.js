@@ -29,6 +29,7 @@ module.exports = {
             5: "repeat(5, 320px)",
             6: "repeat(6, 320px)",
             "3p": "repeat(3, 1fr)",
+            "2x": 'repeat(2, minmax(0, 1fr))',
         },
         gridTemplateRows: {
            '5p': "repeat(5,1fr)",
