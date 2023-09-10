@@ -19,6 +19,10 @@ export default function AuthenticationPage() {
     const [isLoading, setIsLoading] = useState(false);
     const { login } = useContext(AuthContext);
     const [eye, setEye] = useState(false);
+    const [credentials, setcredentials] = useState({
+        username: "SP_Ghaziabad",
+        password: "admin@1234",
+    })
     const passwordRef = useRef();
 
     const handlerVisiblePassword = () => {
@@ -31,18 +35,21 @@ export default function AuthenticationPage() {
         }
     };
 
-    const handleDefaultLogin = (e) => {
-        login("SP_Ghaziabad", "admin@1234");
-    };
+    const onChangeHander = (e) => {
+        setcredentials({
+            ...credentials,
+            [e.target.name]: e.target.value,
+        });
+    }
 
     async function onSubmit(e) {
         e.preventDefault();
         setIsLoading(true);
 
-        const username = e.target.username.value;
-        const password = e.target.password.value;
-        login(username, password);
+        const username = credentials.username;
+        const password = credentials.password;
 
+        login(username, password);
         setTimeout(() => {
             setIsLoading(false);
         }, 3000);
@@ -124,7 +131,8 @@ export default function AuthenticationPage() {
                                             name="username"
                                             placeholder="username"
                                             type="text"
-                                            value='SP_Ghaziabad'
+                                            value={credentials.username}
+                                            onChange={onChangeHander}
                                             autoCapitalize="none"
                                             autoComplete="email"
                                             autoCorrect="off"
@@ -141,7 +149,8 @@ export default function AuthenticationPage() {
                                         <Input
                                             name="password"
                                             placeholder="some@1234"
-                                            value='admin@1234'
+                                            value={credentials.password}
+                                            onChange={onChangeHander}
                                             type="password"
                                             autoCapitalize="none"
                                             ref={passwordRef}
