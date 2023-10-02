@@ -96,13 +96,13 @@ export default function AuthenticationPage() {
                     <div className="relative z-20 mt-auto">
                         <blockquote className="space-y-2">
                             <p className="text-lg">
-                                &ldquo;TrackPatrol is an innovative and robust
-                                mapping application designed to provide
-                                real-time location tracking and management
-                                solutions for personnel and emergency
-                                situations. &rdquo;
+                                &ldquo; TrackPatrol is our solution to the problem statement given by the Bureau of Police Research & Development (BPR&D)|Ministry of Education (MoE) 
+                                to track police personnel deployed on Bandobast Duties. 
+                                It can be used for assigning, managing, real-time monitoring Bandobast duties and generating reports. 
+                                It includes a real-time location-tracking app with notifications. 
+                                Trackpatrol facilitates registering, managing, and attaching hardware like UHF RFID and biometric scanners to further enhance police personnel monitoring. 
+                                &rdquo;
                             </p>
-                            <footer className="text-sm">~ PROXYMORONS</footer>
                         </blockquote>
                     </div>
                 </div>
