@@ -95,7 +95,7 @@ export default function AuthenticationPage() {
 
                     <div className="relative z-20 mt-auto">
                         <blockquote className="space-y-2">
-                            <p className="text-lg">
+                            <p className="text-md">
                                 &ldquo; TrackPatrol is our solution to the problem statement given by the Bureau of Police Research & Development (BPR&D)|Ministry of Education (MoE) 
                                 to track police personnel deployed on Bandobast Duties. 
                                 It can be used for assigning, managing, real-time monitoring Bandobast duties and generating reports. 
